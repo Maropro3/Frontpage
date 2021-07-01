@@ -1,0 +1,206 @@
+
+body {
+   
+    background-color: rgb(31, 31, 31);
+}
+
+text {
+   
+    font-family: sans-serif;
+
+}
+
+svg {
+    font: 10px sans-serif;
+    padding: 10px;
+  }
+  
+.axis,
+.frame {
+shape-rendering: crispEdges;
+}
+
+.axis line {
+stroke: #585858;
+stroke-dasharray: 3, 3;
+}
+
+.axis path {
+display: none;
+}
+
+.tick {
+    fill: #2c1a14
+}
+
+.tick text{
+    fill: #aca4a1
+}
+
+
+.cell00 text {
+    font-weight: bold;
+    text-transform: capitalize;
+    fill: #aca4a1
+
+}
+.cell11 text {
+    font-weight: bold;
+    text-transform: capitalize;
+    fill: #aca4a1
+}
+
+.cell22 text {
+    font-weight: bold;
+    text-transform: capitalize;
+    fill: #aca4a1
+    }
+
+.cell33 text {
+    font-weight: bold;
+    text-transform: capitalize;
+    fill: #aca4a1
+    }
+
+.cell44 text {
+    font-weight: bold;
+    text-transform: capitalize;
+    fill:#aca4a1
+    }
+    
+
+.frame {
+fill: none;
+stroke: rgb(151, 144, 144);
+}
+
+circle {
+fill-opacity: .7;
+}
+
+circle.hidden {
+fill: rgb(102, 97, 97) !important;
+}
+circle.selected {
+    fill: rgb(102, 97, 97) !important;
+   stroke-width: 2px;
+   stroke: white;
+}
+    
+
+.extent {
+fill: rgb(173, 159, 159);
+fill-opacity: .125;
+stroke: rgb(160, 155, 155);
+}
+
+.legend{
+    outline: solid 1px #afafab;
+    outline-offset: 5px;
+    border-radius: 10px;
+    
+    
+}
+
+
+#menus {
+    font-size: 1.8em;
+    position: absolute;
+    left: 340px;
+    top: 20px;
+    margin: 10px;
+    font-family: sans-serif;
+    color: #bdb5b0
+    
+}
+
+#menus select{
+    font-size: 1.8rem;
+    background-color: rgb(6, 58, 100);
+    color: #c4bcb7;
+    min-width: 160px;
+    z-index: 1;
+}
+
+
+#menus select option{
+    font-size: 1rem;
+    background-color: rgb(6, 58, 100);
+}
+
+#menus select option:hover{
+    font-size: 1rem;
+    background-color: purple;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .sideButton{
+    position: sticky;
+    top: 0px;
+  }
+
+  
+.title-text {
+    font-size: 1.5em;
+    text-anchor: middle;
+}
+
+
+.title-label {
+    fill: #bdb5b0;
+   
+}
+
+.tick line {
+    stroke: #504e4e;
+    
+}
+
+.axis-label {
+    font-size: 1.8em;
+    fill: #948e8d
+}
+
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(54, 54, 54);
+    font-family: sans-serif;
+    color: blanchedalmond;
+    font-size: 1.2em;
+    border: 1px;
+    border-style: groove;
+    text-align: center;
+    font-size: 1em;
+    padding: 1px;
+
+}
+.line-pathS{
+
+    fill: none;
+   
+    stroke-width: 1.5;
+   
+    stroke-linejoin: round;
+    stroke-linecap: round;
+
+}
