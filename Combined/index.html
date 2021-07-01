@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Exoplanet Discoveries</title>
+    <link rel="shortcut icon" href="favicon1.ico"/>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://unpkg.com/d3-simple-slider"></script>
+    <!-- <script defer src="./app.js"></script> -->
+    <link rel="stylesheet" href="../styles.css"> 
+    <link rel="stylesheet" href="styles.css"> 
+    
+
+  </head>
+  <body>
+   
+      <nav id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="../Combined/index.html">Exoplanets Through Time</a>
+        <a href="../SPLOM/index.html">Clustering Exoplanets</a>
+        <a href="../ScatterPlotHAB/index.html">Searching for Earths</a>
+        <a href="#">About</a>
+        </nav>
+        
+          <div class=sideButton><i onclick="openNav()" class="fa fa-bars w3-xlarge w3-button w3-theme" ></i> </div>
+      
+      
+  <script>function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+  
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }</script>
+
+
+<div>
+  <div id = "menus">
+    X Axis:
+    <span id = "x_menu"></span>
+    &nbsp; &nbsp; &nbsp; Y Axis: 
+    <span id = "y_menu"></span>
+  </div>
+<div id ="graphLP">
+  <svg  id="svgLP" width="920" height="650">
+  </svg>
+</div>
+<div id="slider-range"></div>
+
+
+  <svg id = "svgM"></svg>
+ </svg>
+
+</div>
+    
+    
+   
+    
+    </div>
+    <script src = "bundleSP.js"></script>
+    <!-- <script src = "bundle.js"></script> -->
+  
+    
+  </body>
+</html>

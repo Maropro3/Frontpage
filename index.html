@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<title>Exoplanet Visualization</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+<body>
+  
+<nav id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="./Combined/index.html">Exoplanets Through Time</a>
+    <a href="./SPLOM/index.html">Clustering Exoplanets</a>
+    <a href="./ScatterPlotHAB/index.html">Searching for Earths</a>
+    <a href="#">About</a>
+    </nav>
+    
+<script>function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }</script>
+<!-- Header -->
+<header class="w3-container w3-theme w3-padding" id="myHeader" style="background-image: url('backPley.png');">
+  <div class=sideButton><i onclick="openNav()" class="fa fa-bars w3-xlarge w3-button w3-theme" ></i> </div>
+  <div class="w3-center">
+  <h4></h4>
+  <h1 class="w3-xxxlarge w3-animate-bottom">Explore The Stars</h1>
+  <!-- <div id="image1"  > <img src="AndromedaHD1.png" height="10%" alt="Italian Trulli"></div> -->
+  </div>
+  <div id="wrapper">
+    <div id="wrapper-inner">
+  <div id="scroll-down">
+    <span class="arrow-down">
+    <!-- css generated icon -->
+    </span>
+    <span id="scroll-title">
+      Scroll down
+    </span>
+  </div>
+    </div>
+    </div>
+    <script>
+      $('#wrapper-inner').on('click', function() {
+      $(window).scrollTop($('#bottomScroll').offset().top);
+      //console.log("ok")
+})
+    </script>
+</header>
+
+<!-- Modal -->
+
+<div data-aos="fade-up" data-aos-duration="1000" class="w3-row-padding w3-center w3-margin-top">
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:460px">
+  <h3>Exoplanets Through Time</h3><br>
+  <i class="fa fa-desktop w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+  <a href="./Combined/index.html" class="buttonExplore">Explore</a>
+  </div>
+</div>
+
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:460px">
+  <h3>Clustering Exoplanets</h3><br>
+  <i class="fa fa-css3 w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+  <a href="./SPLOM/index.html" class="buttonExplore">Explore</a></br>
+  <a href="./HRDiagram/index.html" class="buttonExplore">Explore</a>
+  </div>
+</div>
+
+<div class="w3-third">
+  <div class="w3-card w3-container" style="min-height:460px">
+  <h3>Searching for Earths</h3><br>
+  <i class="fa fa-diamond w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+  <a href="./ScatterPlotHAB/index.html" class="buttonExplore">Explore</a>
+  </div>
+</div>
+</div>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<div id = "bottomScroll"></div>
+<script>
+  AOS.init();
+</script>
+</body>

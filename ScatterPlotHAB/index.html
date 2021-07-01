@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Exoplanets Scatterplot</title>
+    <link rel="shortcut icon" href="favicon1.ico"/>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://unpkg.com/d3-simple-slider"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://unpkg.com/d3fc"></script>
+    <script src="https://unpkg.com/mathjs@9.4.2/lib/browser/math.js"></script>
+    <script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-path@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-shape@3"></script>
+   <script src="https://unpkg.com/d3-sankey@0"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/sankey.js"></script> -->
+    <script defer src="./app.js"></script>
+    <script 
+      src="https://unpkg.com/gpu.js@latest/dist/gpu-browser.min.js">
+    </script>
+    <script 
+      src="https://cdn.jsdelivr.net/npm/gpu.js@latest/dist/gpu-browser.min.js">
+    </script>
+    <link rel="stylesheet" href="../styles.css"> 
+    <link rel="stylesheet" href="styles.css"> 
+    
+  
+
+  </head>
+  <body>
+    <nav id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="../index.html">Home</a>
+      <a href="../Combined/index.html">Exoplanets Through Time</a>
+      <a href="../SPLOM/index.html">Clustering Exoplanets</a>
+      <a href="../ScatterPlotHAB/index.html">Searching for Earths</a>
+      <a href="#">About</a>
+      </nav>
+      
+        <div class=sideButton><i onclick="openNav()" class="fa fa-bars w3-xlarge w3-button w3-theme" ></i> </div>
+      
+      
+  <script>function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+  
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }</script>
+
+<div id="sankey"></div>
+    <div id = "menus">
+      Habitability Metric:
+      <span id = "h_menu"></span>
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span id = "showText">Show only planets inside the habitable zone:</span>  <span><label class="switchH">
+        <input type="checkbox"  id = "habButton">
+        <span class="sliderH round"></span>
+      </label></span>
+      <span id = "y_menu"></span>
+     
+    </div>
+   
+    <div id = "graph">
+      <svg id = "svgM">
+     
+     </svg>
+    </div>
+    <div id="slider-range"></div>
+
+    </svg>
+    <div id="slider-rangeY"></div>
+    <script src = "sankey.js"></script>
+    <script src = "bundle.js"></script>
+   
+  </body>
+</html>

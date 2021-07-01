@@ -1,0 +1,209 @@
+body {
+    margin:0px;
+    overflow: hidden;
+    background-color: rgb(31, 31, 31);
+}
+.line-path{
+
+    fill: none;
+    
+    stroke-width: 4;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+
+}
+
+.line-path2{
+
+    fill: none;
+    
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+
+}
+
+text {
+    font-size: 1em;
+    font-family: sans-serif;
+    fill: #b3aca7
+}
+
+.tick text {
+    font-size: 1.4em;
+    fill: #a09996
+}
+
+.title {
+    font-size: 1.5em;
+    text-anchor: middle;
+}
+
+.titleLP {
+     fill:#bdb5b0;
+     font-size: 1.4em;
+     text-anchor: middle;
+     
+}
+.title-label {
+    fill: #bdb5b0;
+   
+}
+/* 
+.tick line {
+    stroke: #504e4e;
+    opacity: 0.1;
+    
+} */
+
+.xAxisLP line {
+    stroke: #504e4e;
+    opacity: 0.3;
+    
+}
+
+.yAxisLP line {
+    stroke: #504e4e;
+    opacity: 0.3;
+    
+}
+
+.yAxis line {
+    stroke: #504e4e;
+    opacity: 0.8;
+    
+}
+
+.xAxis line {
+    stroke: #504e4e;
+    opacity: 0.8;
+    
+}
+
+.xAxis2 line {
+    stroke: #6b6969;
+    opacity: 0.9;
+    
+}
+
+.axis-label {
+    font-size: 1.8em;
+    fill: #948e8d
+}
+
+#menus {
+    font-size: 1.4em;
+    position: relative;
+    margin: 10px;
+    font-family: sans-serif;
+    color: #bdb5b0
+    
+}
+
+#menus select{
+    font-size: 1.4rem;
+    background-color: rgb(6, 58, 100);
+    color: #c4bcb7;
+    min-width: 160px;
+    z-index: 1;
+}
+
+
+#menus select option{
+    font-size: 1rem;
+    background-color: rgb(6, 58, 100);
+}
+
+#menus select option:hover{
+    font-size: 1rem;
+    background-color: purple;
+}
+
+.tooltipLP {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(54, 54, 54);
+    font-family: sans-serif;
+    color: blanchedalmond;
+    font-size: 1em;
+
+}
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(54, 54, 54);
+    font-family: sans-serif;
+    color: blanchedalmond;
+    font-size: 1.2em;
+    border: 1px;
+    border-style: groove;
+    text-align: center;
+    font-size: 1em;
+    padding: 1px;
+
+}
+
+.legendText{
+    font-size: 1.3em;
+}
+
+.legend{
+    outline: solid 1px #C0C0BB;
+    outline-offset: 5px;
+    border-radius: 10px;
+  
+}
+
+.legendBack {
+    fill:rgb(54, 54, 54);
+    opacity: 1;
+}
+
+.sliders{
+    position:inherit;
+}
+
+/* Nav */
+
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    font-family: Verdana,sans-serif;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Position and style the close button (top right corner) */
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  .sideButton{
+    position: sticky;
+    top: 0px;
+  }
+
