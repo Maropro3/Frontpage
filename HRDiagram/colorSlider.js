@@ -5,7 +5,6 @@ export const colorSlider = (selection, props) => {
     var methodsF = [];
     let select = selection.selectAll('select').data([null]);
   
-    
     const title = select.enter()
     .merge(select)
     .append('text')

@@ -24,7 +24,7 @@ var dataJ = [];
 var dropSelect ="Star Colour (B-V) Range"
 var svgS = d3.select("body").append("svg")
   .attr('class', 'svgS')
-  .attr("width", 1400)
+  .attr("width", 1460)
   .attr("height", 1000)
   .attr("transform", "translate(" + paddingS*2  + "," + paddingS * 1.4+ ")")
 
@@ -153,7 +153,7 @@ const renderS = () =>{
    const gTree = svgS.selectAll('.treemap').data([null]);
 
    gTreeEnter
-   .attr('transform', `translate(${ widthS+60},${heightS -400})`)
+   .attr('transform', `translate(${ widthS+60},${heightS -440})`)
    .merge(gTreeEnter)
    .call(treemap, {
        dataJ
@@ -161,6 +161,62 @@ const renderS = () =>{
    });
 
    gTree.exit().remove();
+
+   const shapeP = d3.symbol().size(40)
+
+   var plNames = ["Pre-Labeled Stars","Classified Stars"]
+    //const shape = d3.scaleOrdinal().domain(plNames).range([d3.symbolTriangle, d3.symbolTriangle])
+  // const shape = d3.scaleOrdinal(plNames,d3.symbols.map(s => d3.symbol().size(220).type(s)()))
+  const shape = d3.scaleOrdinal(plNames,d3.symbols.map(function(s){
+
+    console.log(s)
+    return d3.symbol().size(220).type(s)()
+  }))
+   const colorScaleSol = d3.scaleOrdinal()
+   .domain(plNames)
+   .range(['#4adeff',  '#f7543b',
+   '#b3acab','#d2b0ff',
+   '#aaf2a2', '#ff3636',
+   '#fcee90', '#eb83c8',
+   '#edb861'
+   ]);
+
+  
+   //d3.symbols.map(s => d3.symbol().size(220).type(s)())
+    console.log(shape.range())
+   //
+   d3.selectAll('.legendST').remove()
+
+   const gLegendEnterS = svgS.append('g')
+   .attr('class', 'legendST');
+
+   const gLegendS = svgS.selectAll('.legendST').data([null]);
+
+  //  gLegendEnterS
+  //  .attr('transform', `translate(${ widthS- widthS/4 -90},${heightS/8 + 345 })`)
+  //  .merge(gLegendEnterS)
+  //  .call(colorLegend, {
+  //      colorScale: colorScaleSol,
+  //      shapes: shape,
+  //      spacing: 30,
+  //      textOffset: 20,
+  //      label: plNames,
+  //     // onLegendChange: onLegendChange,
+  //  });
+
+   gLegendS.exit().remove();
+
+
+  // var aa =  d3.nest()
+  //   .key(d => d.st_spectype)
+  //   .entries(dataSt)
+
+  //   var nn =  d3.nest()
+  //   .key(d => d.st_spectype)
+  //   .entries(dataSt2)
+
+  //   console.log(aa)
+  //   console.log(nn)
 }
 
 

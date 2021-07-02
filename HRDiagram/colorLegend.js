@@ -1,69 +1,12 @@
+import { symbol } from "d3-shape";
+
 export const colorLegend = (selection, props) => {
-  const { colorScale, circleRadius, spacing, textOffset, onLegendChange} = props;
+  const { colorScale, shapes, spacing, textOffset} = props;
 
   var contClick = 0;
   var methodsF = [];
   let select = selection.selectAll('select').data([null]);
 
-  const onCLick = function(event, d){
-    if(contClick == 0) {
-      d3.selectAll('.gLegend')
-      .attr('opacity', 0.2)
-      d3.select(this)   
-      .attr('opacity', 1);
-      contClick++;
-      methodsF.push(d3.select(this).selectAll('text').text());
-      
-      onLegendChange(methodsF);
-    }
-    else if(methodsF.length === 8) {
-      d3.selectAll('.gLegend')
-      .attr('opacity', 0.2)
-      d3.select(this)   
-      .attr('opacity', 1);
-      methodsF = [];
-      methodsF.push(d3.select(this).selectAll('text').text());
-      onLegendChange(methodsF);
-     }
-    else {
-      if ( d3.select(this).attr('opacity') == 1) { 
-
-        d3.select(this)   
-        .attr('opacity', 0.2);
-        methodsF = methodsF.filter (
-           v => v !== d3.select(this).selectAll('text').text()
-        );
-        onLegendChange(methodsF);
-        }
-      else {
-        d3.select(this)   
-      .attr('opacity', 1);
-      methodsF.push(d3.select(this).selectAll('text').text());
-      onLegendChange(methodsF);
-      }
-    }
-   
- 
-  };
-
-  const onDBCLick = function(event, d){
-    if(d3.selectAll('.gLegend').attr('opacity') == 1) {
-      d3.selectAll('.gLegend')
-      .attr('opacity', 0.2)
-      d3.select(this)   
-      .attr('opacity', 1);
-      methodsF = [];
-     onLegendChange(methodsF);
-    }
-    else {
-      d3.selectAll('.gLegend')
-      .attr('opacity', 1)
-      methodsF = [];
-      onLegendChange(methodsF);
-    }
-    contClick = 0;
-   
-  };
 
   const onMouseover = function(event, d){
 
@@ -80,47 +23,50 @@ export const colorLegend = (selection, props) => {
     
   }
   const title = select.enter()
-  .merge(select)
-  .append('text')
-  .attr('x', 0)
-  .attr('y', 0)
-  .attr('fill', 'black')
-  .attr('font-family', 'Helvetica Neue, Arial')
-  .attr('font-weight', 'bold')
-  .attr('font-size', '13px')
-  .text('Select Clusters:')
-  .style('fill', '#b3aca7');
+    .merge(select)
+    .append('text')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('fill', 'black')
+    .attr('font-family', 'Helvetica Neue, Arial')
+    .attr('font-weight', 'bold')
+    .attr('font-size', '10px')
+    .text('Solar System Objects:');
+  
+   
+    const entries = select.enter()
+    .merge(select).selectAll('g')
+    .data(colorScale.domain())
+    .join('g')
+    .attr('transform', (d, i) =>
+    `translate(30, ${i * spacing + 28})`)
+    .attr('class', 'gLegendS')
+    // .on('click', onCLick)
+    // .on('dblclick', onDBCLick)
+    // .on('mouseover', onMouseover)
+    // .on('mouseout', onMouseout);
+  
+  const symbolsP =  [{symbol:d3.symbol().type(d3.symbolSquare).size(40)},
+    {symbol:d3.symbol().type(d3.symbolTriangle).size(40)}]  
+  const symbols = entries.append('path')
+ // .attr("transform", d => `translate(${xScale(xValue(d))},${yScale(yValue(d))})`)
+    .attr("d", shapes)
+    //.attr("d",d3.symbol().type(d3.symbolSquare).size(40) )
+    .attr('fill', colorScale);
+  
+  
+  
+  const labels = entries.append('text')
+    .attr('x', textOffset +5) 
+    .attr('dy', '0.38em') 
+    .attr('fill', 'black')
+    .attr('font-family', 'Helvetica Neue, Arial')
+    .attr('font-size', '9px')
+    .attr('class', 'legendText')
+    .style('user-select', 'none') 
+    .text(d => d);
 
-  const entries = select.enter()
-  .merge(select).selectAll('g')
-  .data(colorScale.domain())
-  .join('g')
-  .attr('transform', (d, i) =>
-  `translate(${i * spacing + 116},-5 )`)
-  .attr('class', 'gLegend')
-  .on('click', onCLick)
-  .on('dblclick', onDBCLick)
-  .on('mouseover', onMouseover)
-  .on('mouseout', onMouseout);
-
-const symbols = entries.append('circle')
-  .attr('cx', circleRadius) 
-  .attr('r', circleRadius)
-  .attr('fill',colorScale);
-
-const labels = entries.append('text')
-  .attr('x', textOffset +5) 
-  .attr('dy', '0.34em') 
-  .attr('fill', 'black')
-  .attr('font-family', 'Helvetica Neue, Arial')
-  .attr('font-size', '12px')
-  .attr('class', 'legendText')
-  .style('user-select', 'none') 
-  .style('fill', '#a8a09e')
-  .text(d => d);
 }
-
-
 
 
 

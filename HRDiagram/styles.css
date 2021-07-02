@@ -139,6 +139,23 @@ stroke: rgb(160, 155, 155);
     padding: 1px;
 
 }
+
+.tooltip2 {
+  position: absolute;
+  pointer-events: none;
+  background-color: rgb(54, 54, 54);
+  font-family: sans-serif;
+  color: blanchedalmond;
+  font-size: 1.2em;
+  border: 1px;
+  border-style: groove;
+  text-align: center;
+  font-size: 1em;
+  padding: 1px;
+
+}
+
+
 .line-pathS{
 
     fill: none;
@@ -266,4 +283,8 @@ stroke: rgb(160, 155, 155);
      color: #bdb5b0;
       font-size: 13.8px;
      
+  }
+
+  .domain{
+    stroke:rgb(119, 119, 119);
   }

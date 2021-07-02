@@ -270,14 +270,33 @@ x2Range.reverse()
 
     var zoom = d3.zoom()
     .extent([[0, 0], [innerWidth, innerHeight]])
-    .on("zoom", zoomed);
+    .on("zoom", function(event){
+        console.log(event)
+
+        if(event.sourceEvent.x < 350 || event.sourceEvent.x >1260 || event.sourceEvent.y<90 || event.sourceEvent.y>730 ){
+
+            return event;
+        }
+        else{
+           // return zoomed
+        }
+      
+    } );
 
     function zoomed(event) {
         // create new scale ojects based on event
-       
+
+        if(event.sourceEvent.x < 350 || event.sourceEvent.x >1260 || event.sourceEvent.y<90 || event.sourceEvent.y>730 ){
+            console.log(event)
+            window.scrollBy(0, event.sourceEvent.deltaY);
+            return event;
+        }
+        else{
             var new_xScale = event.transform.rescaleX(xScale);
             var new_yScale = event.transform.rescaleY(yScale);
             var new_x2Scale = event.transform.rescaleX(x2Scale);
+
+           
         // update axes
             // gX.call(xAxis.scale(new_xScale));
             // gY.call(yAxis.scale(new_yScale));
@@ -325,6 +344,14 @@ x2Range.reverse()
                .attr('cy', d => new_yScale(yValue(d)))
                 .attr('cx', d => new_xScale(xValue(d)))
              //   .attr('r', 3.5 + event.transform.k/6);
+        
+
+        }
+
+       
+        
+       
+            
     }
    
     var xLre = [];
