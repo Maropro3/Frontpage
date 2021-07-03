@@ -289,7 +289,10 @@ a.buttonExplore {
 .w3-padding{
     height: 1200px;
 }
-.fa-bars:before{content:"\f0c9"}
+.fa-bars:before{
+  content:"\2261";
+  font-size: 1.4em;
+}
 
 .sidenav {
     height: 100%; /* 100% Full-height */
@@ -330,6 +333,8 @@ a.buttonExplore {
   .sideButton{
     position: sticky;
     top: 0px;
+    /* width: 100%; */
+    /* background-color: grey; */
   }
   
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
