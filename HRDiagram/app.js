@@ -101,28 +101,7 @@ const renderS = () =>{
 
   //  console.log(result)
   
-    svgS.call(scatterPlotS, {
-        title: `Hertzsprung–Russell diagram`,
-        xValue: d => d.st_bv,
-        xLabel: "Colour(B-V)",
-        x2Value: d => d.st_teff,
-        x2Label: "Temperature (K)",
-        xColName: "st_bv",
-        yValue: d => d.st_lum,
-        yLabel: "Luminosity (log(Solar))",
-        yColName: "st_lum",
-        margin: { top:70, right: 80, bottom: 150, left:70},
-        widthS,
-        heightS,
-        //flag,
-       // dateRange: dateRange,
-        colorScale:sss,
-        colorValue: d => d.st_bv,
-        data: dataSt,
-        data2: dataSt2,
-      
-
-   });
+  
 
    d3.selectAll('.legend').remove()
 
@@ -145,6 +124,29 @@ const renderS = () =>{
 
    gLegend.exit().remove();
 
+   svgS.call(scatterPlotS, {
+    title: `Hertzsprung–Russell diagram`,
+    xValue: d => d.st_bv,
+    xLabel: "Colour(B-V)",
+    x2Value: d => d.st_teff,
+    x2Label: "Temperature (K)",
+    xColName: "st_bv",
+    yValue: d => d.st_lum,
+    yLabel: "Luminosity (log(Solar))",
+    yColName: "st_lum",
+    margin: { top:70, right: 80, bottom: 150, left:70},
+    widthS,
+    heightS,
+    //flag,
+   // dateRange: dateRange,
+    colorScale:sss,
+    colorValue: d => d.st_bv,
+    data: dataSt,
+    data2: dataSt2,
+  
+
+});
+
    d3.selectAll('.treemap').remove()
 
    const gTreeEnter = svgS.append('g')
@@ -165,20 +167,16 @@ const renderS = () =>{
    const shapeP = d3.symbol().size(40)
 
    var plNames = ["Pre-Labeled Stars","Classified Stars"]
-    //const shape = d3.scaleOrdinal().domain(plNames).range([d3.symbolTriangle, d3.symbolTriangle])
-  // const shape = d3.scaleOrdinal(plNames,d3.symbols.map(s => d3.symbol().size(220).type(s)()))
-  const shape = d3.scaleOrdinal(plNames,d3.symbols.map(function(s){
+    const shape = d3.scaleOrdinal().domain(plNames).range(["M8.368283871884005,0A8.368283871884005,8.368283871884005,0,1,1,-8.368283871884005,0A8.368283871884005,8.368283871884005,0,1,1,8.368283871884005,0","M0,-13.013688138352256L11.270184524741271,6.506844069176128L-11.270184524741271,6.506844069176128Z"])
+  //const shape = d3.scaleOrdinal(plNames,d3.symbols.map(s => d3.symbol().size(220).type(s)()))
+  //const shape = d3.scaleOrdinal(plNames,d3.symbols.map(function(s){
 
-    console.log(s)
-    return d3.symbol().size(220).type(s)()
-  }))
+    //console.log(s)
+  //   return d3.symbol().size(220).type(s)()
+  // }))
    const colorScaleSol = d3.scaleOrdinal()
    .domain(plNames)
-   .range(['#4adeff',  '#f7543b',
-   '#b3acab','#d2b0ff',
-   '#aaf2a2', '#ff3636',
-   '#fcee90', '#eb83c8',
-   '#edb861'
+   .range(["#edd79a"
    ]);
 
   
@@ -192,17 +190,17 @@ const renderS = () =>{
 
    const gLegendS = svgS.selectAll('.legendST').data([null]);
 
-  //  gLegendEnterS
-  //  .attr('transform', `translate(${ widthS- widthS/4 -90},${heightS/8 + 345 })`)
-  //  .merge(gLegendEnterS)
-  //  .call(colorLegend, {
-  //      colorScale: colorScaleSol,
-  //      shapes: shape,
-  //      spacing: 30,
-  //      textOffset: 20,
-  //      label: plNames,
-  //     // onLegendChange: onLegendChange,
-  //  });
+   gLegendEnterS
+   .attr('transform', `translate(${ widthS +80},${ 206})`)
+   .merge(gLegendEnterS)
+   .call(colorLegend, {
+       colorScale: colorScaleSol,
+       shapes: shape,
+       spacing: 30,
+       textOffset: 20,
+       label: plNames,
+      // onLegendChange: onLegendChange,
+   });
 
    gLegendS.exit().remove();
 

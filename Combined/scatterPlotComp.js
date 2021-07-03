@@ -43,12 +43,7 @@ export const scatterPlot = (selection, props) => {
     .attr('y', 60)
     .attr("width", innerWidth)
     .attr("height", innerHeight)
-    .append("rect")
-    .attr('x',50)
-    .attr('y', 800)
-    .attr("width", innerWidth)
-    .attr("height", innerHeight)
-    .style("fill", "none");
+
 
     svgZMEnter.merge(svgZM)
    // .attr('transform', `translate(${margin.left},${margin.top})`);
@@ -226,57 +221,69 @@ export const scatterPlot = (selection, props) => {
 
     function zoomed(event) {
         // create new scale ojects based on event
-            var new_xScale = event.transform.rescaleX(xScale);
-            var new_yScale = event.transform.rescaleY(yScale);
-        // update axes
-            // gX.call(xAxis.scale(new_xScale));
-            // gY.call(yAxis.scale(new_yScale));
 
-            // var yAxisZ = d3.axisLeft(new_yScale)
-            // .tickSize(-innerWidth)
-            // .tickPadding(10);
-        
-            // var xAxisZ = d3.axisBottom(new_xScale)
-            // .tickSize(-innerHeight)
-            // .tickPadding(10);
-
-            xAxisG.merge(xAxisGEnter)
-            .call(xAxis.scale(new_xScale))
-            .selectAll('.domain')
-            .remove();
-
-            yAxisG.merge(yAxisGEnter)
-            .call(yAxis.scale(new_yScale))
-            .selectAll('.domain')
-            .remove();
-
-            // xAxisGEnter
-            // .call(xAxis.scale(new_xScale))
-            // .selectAll('.domain')
-            // .merge(xAxisG.select('.axis-label'))
-            // .call(xAxis.scale(new_xScale))
-            // .attr('x', innerWidth/2)
-            // .text(xLabel + xUnits)
-            // .remove();
+        if(event.sourceEvent.x < 991 || event.sourceEvent.x >1640 || event.sourceEvent.y<180 || event.sourceEvent.y>640){
           
-            // yAxisGEnter
-            // .call(yAxis.scale(new_yScale))
-            // .selectAll('.domain')
-            // .merge(xAxisG.select('.axis-label'))
-            // .call(yAxis.scale(new_xScale))
-            // .attr('x', innerHeight/2)
-            // .text(yLabel + yUnits)
-            // .remove();
+            window.scrollBy(0, event.sourceEvent.deltaY);
+            return;
 
-            // var newX = event.transform.rescaleX(xScale);
-            // var newY = event.transform.rescaleY(yScale);
+        }
+        else{
+           
+                var new_xScale = event.transform.rescaleX(xScale);
+                var new_yScale = event.transform.rescaleY(yScale);
+            // update axes
+                // gX.call(xAxis.scale(new_xScale));
+                // gY.call(yAxis.scale(new_yScale));
+    
+                // var yAxisZ = d3.axisLeft(new_yScale)
+                // .tickSize(-innerWidth)
+                // .tickPadding(10);
+            
+                // var xAxisZ = d3.axisBottom(new_xScale)
+                // .tickSize(-innerHeight)
+                // .tickPadding(10);
+    
+                xAxisG.merge(xAxisGEnter)
+                .call(xAxis.scale(new_xScale))
+                .selectAll('.domain')
+                .remove();
+    
+                yAxisG.merge(yAxisGEnter)
+                .call(yAxis.scale(new_yScale))
+                .selectAll('.domain')
+                .remove();
+    
+                // xAxisGEnter
+                // .call(xAxis.scale(new_xScale))
+                // .selectAll('.domain')
+                // .merge(xAxisG.select('.axis-label'))
+                // .call(xAxis.scale(new_xScale))
+                // .attr('x', innerWidth/2)
+                // .text(xLabel + xUnits)
+                // .remove();
+              
+                // yAxisGEnter
+                // .call(yAxis.scale(new_yScale))
+                // .selectAll('.domain')
+                // .merge(xAxisG.select('.axis-label'))
+                // .call(yAxis.scale(new_xScale))
+                // .attr('x', innerHeight/2)
+                // .text(yLabel + yUnits)
+                // .remove();
+    
+                // var newX = event.transform.rescaleX(xScale);
+                // var newY = event.transform.rescaleY(yScale);
+    
+                // xAxis.call(d3.axisBottom(newX));
+                // yAxis.call(d3.axisLeft(newY));
+            
+                  d3.selectAll('.circleG')
+                   .attr('cy', d => new_yScale(yValue(d)))
+                    .attr('cx', d => new_xScale(xValue(d)));
+        }
 
-            // xAxis.call(d3.axisBottom(newX));
-            // yAxis.call(d3.axisLeft(newY));
-        
-              d3.selectAll('.circleG')
-               .attr('cy', d => new_yScale(yValue(d)))
-                .attr('cx', d => new_xScale(xValue(d)));
+      
     }
     
     const circles =  gZ.merge(gZEnter).selectAll('circle').data(dataF);

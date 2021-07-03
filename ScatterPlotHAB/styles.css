@@ -1,5 +1,5 @@
 body {
-    position: fixed;
+   
     left: 0;
     right: 0;
     top: 0;
@@ -107,7 +107,7 @@ text {
 .tooltip {
     position: absolute;
     pointer-events: none;
-    background-color: rgb(54, 54, 54);
+    background-color: rgb(31, 31, 31);
     font-family: sans-serif;
     color: blanchedalmond;
     font-size: 1.1em;
@@ -265,3 +265,24 @@ text {
   #showText{
       font-size: 0.75em;
   }
+
+  .mainColumn{
+    width: 80%;
+  }
+/* 
+  .columnleft{
+    width: 10%;
+    height: 100%;
+    float: left;
+  padding: 10px;
+  }
+
+  .columnright{
+    width: 10%;
+    height: 100%;
+    float: right;
+  padding: 10px;
+  } */
+
+  
+

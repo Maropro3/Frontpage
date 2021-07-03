@@ -86,15 +86,15 @@
      .domain([0, 1])
      .range([0, width]);
 
-   // Linear scale for y-axis
+
      const yScale = d3
      .scaleLinear()
      .domain([min,max])
      .range([height, 0]);
-     // An array interpolated over our domain where height is the height of the bar
+     
      const expandedDomain = d3.range(min, max, (max - min) / height);
 
-     // Defining the legend bar
+    
      const svgBar = fc
        .autoBandwidth(fc.seriesSvgBar())
        .xScale(xScale)
@@ -106,7 +106,7 @@
          select.selectAll("path").style("fill", d => colorScale(d));
        });
 
-     // Drawing the legend bar
+
      const legendSvg = select.enter()
      .merge(select);
      
@@ -121,7 +121,7 @@
      .axisRight(yScale)
      .tickValues([...domain, (domain[1] + domain[0]) / 2])
      .tickSizeOuter(0);
-   // Drawing and translating the label
+
    Math.abs(legendBar.node().getBoundingClientRect().x);
 
    legendSvg.append("g")
@@ -369,7 +369,7 @@
            "<br/>"+"<span style='color:" + color3 + ";'>"+"<b>" + habZ + "</b>"+"</span>"
            )
            .style("left", (event.pageX -80) + "px")
-           .style("top", (event.pageY+530 ) + "px")
+           .style("top", (event.pageY-136 ) + "px")
            .transition()
                .duration(200) 
                .style("fill-opacity", .9) 
@@ -407,6 +407,18 @@
 
        function zoomed(event) {
            // create new scale ojects based on event
+
+
+           if(event.sourceEvent.x < 432 || event.sourceEvent.x >1330 || event.sourceEvent.y<268 || event.sourceEvent.y>830){
+             
+               window.scrollBy(0, event.sourceEvent.deltaY*3.5);
+               return;
+
+           }
+           else {
+
+               console.log(event.sourceEvent.x);
+               // console.log(event.sourceEvent.y)
                var new_xScale = event.transform.rescaleX(xScale);
                var new_yScale = event.transform.rescaleY(yScale);
            // update axes
@@ -440,6 +452,10 @@
 
 
               d3.selectAll('.textLines').style('visibility', 'hidden');
+
+           }
+          
+           
        }
        
 

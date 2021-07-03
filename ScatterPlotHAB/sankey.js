@@ -79,6 +79,9 @@ const data = {
    var edgeColor = "input"
    var width = 1254
    var height = 760;
+
+// var width = screen.width*0.8
+// var height =  screen.height*0.8;
    var padding = 20;
    const svgBackground = "#eee";
    const svgBorder = "1px solid #333";

@@ -3,6 +3,56 @@
   factory();
 }((function () { 'use strict';
 
+  const colorLegend = (selection, props) => {
+    const { colorScale, shapes, spacing, textOffset} = props;
+    let select = selection.selectAll('select').data([null]);
+    select.enter()
+      .merge(select)
+      .append('text')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('fill', 'black')
+      .attr('font-family', 'Helvetica Neue, Arial')
+      //.attr('font-weight', 'bold')
+      .style('font-size', '17px')
+      .text('Markers:')
+      .style("fill", "#afafab");
+    
+     
+      const entries = select.enter()
+      .merge(select).selectAll('g')
+      .data(colorScale.domain())
+      .join('g')
+      .attr('transform', (d, i) =>
+      `translate(30, ${i * spacing + 28})`)
+      .attr('class', 'gLegendS');
+      // .on('click', onCLick)
+      // .on('dblclick', onDBCLick)
+      // .on('mouseover', onMouseover)
+      // .on('mouseout', onMouseout);
+    
+    [{symbol:d3.symbol().type(d3.symbolSquare).size(40)},
+      {symbol:d3.symbol().type(d3.symbolTriangle).size(40)}];  
+    entries.append('path')
+   // .attr("transform", d => `translate(${xScale(xValue(d))},${yScale(yValue(d))})`)
+      .attr("d", shapes)
+      //.attr("d",d3.symbol().type(d3.symbolSquare).size(40) )
+      .attr('fill', colorScale);
+    
+    
+    
+    entries.append('text')
+      .attr('x', textOffset +5) 
+      .attr('dy', '0.38em') 
+      .attr('fill', 'black')
+      .attr('font-family', 'Helvetica Neue, Arial')
+      .attr('font-size', '9px')
+      .attr('class', 'legendText')
+      .style('user-select', 'none') 
+      .text(d => d);
+
+  };
+
   const scatterPlotS = (selection, props) => {
 
       const {
@@ -83,17 +133,17 @@
       .nice();
 
       // const x2Dom = [2000,2900,3110,3320,3570,3870,4250,4670,5000,5200,5870,6820,8050,10100,1350,20000]
-       const x2Dom = [2800,3450,4680,7400,21000];
+       const x2Dom = [2800,3450,4680,7400,18000];
        const x2Range = [0,190,405,620,850];
       // const x2Dom = [2800,2900,3090,3320,3450,3580,3890,4230,4680,21000]
       // const x2Range = [0,60,121,182,242,303,364,425,640,850]
      // x2Dom.reverse
   x2Range.reverse();
-      console.log(innerWidth);
+     
       const x2Scale = d3.scaleSqrt()
       .domain(x2Dom)
       .range(x2Range)
-      .exponent(1/2);
+      .exponent(1/4);
      
 
 
@@ -115,7 +165,7 @@
 
       const x2Axis = d3.axisTop(x2Scale)
       .tickSize(-7)
-      .ticks(5)
+      .ticks(4)
       .tickPadding(20);
 
       const yAxisG = g.select('.yAxis');
@@ -275,7 +325,7 @@
       d3.zoom()
       .extent([[0, 0], [innerWidth, innerHeight]])
       .on("zoom", function(event){
-          console.log(event);
+          //console.log(event)
 
           if(event.sourceEvent.x < 350 || event.sourceEvent.x >1260 || event.sourceEvent.y<90 || event.sourceEvent.y>730 ){
 
@@ -284,73 +334,92 @@
         
       } );
 
+      var yScaleAux;
+      var xScaleAux = xScale;
       function zoomed(event) {
           // create new scale ojects based on event
 
-          if(event.sourceEvent.x < 350 || event.sourceEvent.x >1260 || event.sourceEvent.y<90 || event.sourceEvent.y>730 ){
-              console.log(event);
-              window.scrollBy(0, event.sourceEvent.deltaY);
-              return event;
-          }
-          else {
-              var new_xScale = event.transform.rescaleX(xScale);
-              var new_yScale = event.transform.rescaleY(yScale);
-              var new_x2Scale = event.transform.rescaleX(x2Scale);
+         
+
+          if (event.sourceEvent && event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+          if (event.sourceEvent && event.sourceEvent.type === "end") return;
+          
+          if (event.sourceEvent && event.sourceEvent.type !=="brush") { 
+
+              if(event.sourceEvent.x < 350 || event.sourceEvent.x >1260 || event.sourceEvent.y<90 || event.sourceEvent.y>730 ){
+                  console.log( window.scrollBy(0, event.sourceEvent.deltaY));
+                  window.scrollBy(0, event.sourceEvent.deltaY);
+                  return;
+              }
+              
+              else {
+                  var new_xScale = event.transform.rescaleX(xScale);
+                  var new_yScale = event.transform.rescaleY(yScale);
+                  var new_x2Scale = event.transform.rescaleX(x2Scale);
+
+                  yScaleAux = new_yScale;
+                  xScaleAux = new_xScale;
+                 // yScale.domain(new_yScale.domain());
 
              
-          // update axes
-              // gX.call(xAxis.scale(new_xScale));
-              // gY.call(yAxis.scale(new_yScale));
-
-              // var yAxisZ = d3.axisLeft(new_yScale)
-              // .tickSize(-innerWidth)
-              // .tickPadding(10);
-          
-              // var xAxisZ = d3.axisBottom(new_xScale)
-              // .tickSize(-innerHeight)
-              // .tickPadding(10);
-
-              xAxisG.merge(xAxisGEnter)
-              .call(xAxis.scale(new_xScale))
-              .selectAll('.domain')
-              .remove();
-
-              yAxisG.merge(yAxisGEnter)
-              .call(yAxis.scale(new_yScale))
-              .selectAll('.domain')
-              .remove();
-
-              x2AxisG.merge(x2AxisGEnter)
-              .call(x2Axis.scale(new_x2Scale))
-              .selectAll('.domain')
-              .remove();
-
-              // const line = d3.area()
-              // .x(d => new_xScale(d.data.x))
-              // .y(d => new_yScale(d[0]))
+                //  console.log(event.sourceEvent.y)
+                 
+              // update axes
+                  // gX.call(xAxis.scale(new_xScale));
+                  // gY.call(yAxis.scale(new_yScale));
+      
+                  // var yAxisZ = d3.axisLeft(new_yScale)
+                  // .tickSize(-innerWidth)
+                  // .tickPadding(10);
               
-
+                  // var xAxisZ = d3.axisBottom(new_xScale)
+                  // .tickSize(-innerHeight)
+                  // .tickPadding(10);
+      
+                  xAxisG.merge(xAxisGEnter)
+                  .call(xAxis.scale(new_xScale))
+                  .selectAll('.domain')
+                  .remove();
+      
+                  yAxisG.merge(yAxisGEnter)
+                  .call(yAxis.scale(new_yScale))
+                  .selectAll('.domain')
+                  .remove();
+      
+                  x2AxisG.merge(x2AxisGEnter)
+                  .call(x2Axis.scale(new_x2Scale))
+                  .selectAll('.domain')
+                  .remove();
+      
+                  // const line = d3.area()
+                  // .x(d => new_xScale(d.data.x))
+                  // .y(d => new_yScale(d[0]))
+                  
+      
+                  
+                  d3.selectAll(".line-pathS")
+                 .attr("d", d3.line()
+                  .x(function(d) { return new_xScale(d.x) })
+                  .y(function(d) { return new_yScale(d.y) })
+                  );
+                 
+      
+                  d3.selectAll('.rectP')
+                  .attr("transform", d => `translate(${new_xScale(xValue(d))},${new_yScale(yValue(d))})`);
               
-  			d3.selectAll(".line-pathS")
-             .attr("d", d3.line()
-              .x(function(d) { return new_xScale(d.x) })
-              .y(function(d) { return new_yScale(d.y) })
-              );
+                    d3.selectAll('.circleG')
+                     .attr('cy', d => new_yScale(yValue(d)))
+                      .attr('cx', d => new_xScale(xValue(d)));
+                   //   .attr('r', 3.5 + event.transform.k/6);
+              
+                   gT.merge(gTEnter).select(".cell").call(brush.move, [xScaleR(event.transform.rescaleX(xScaleR).domain()[0]),xScaleR(event.transform.rescaleX(xScaleR).domain()[1])]);
 
 
-              d3.selectAll('.rectP')
-              .attr("transform", d => `translate(${new_xScale(xValue(d))},${new_yScale(yValue(d))})`);
-          
-                d3.selectAll('.circleG')
-                 .attr('cy', d => new_yScale(yValue(d)))
-                  .attr('cx', d => new_xScale(xValue(d)));
-               //   .attr('r', 3.5 + event.transform.k/6);
-          
 
           }
+        
 
-         
-          
+          }
          
               
       }
@@ -370,7 +439,7 @@
           pp = {x:xTemp,y:yTemp};
           xLre.push(pp);
       }
-      console.log(xLre);
+     
 
    
 
@@ -411,6 +480,108 @@
         d3.selectAll('.rectP')
           .on('mouseover', tipMouseover)
           .on('mouseout', tipMouseout);
+
+      
+      const svgB = d3
+      .select('body').selectAll('.svgTime').data([null]);
+      const svgBEnter = svgB.enter().append('svg')
+      .attr('class', 'svgTime')
+      .attr('width', innerWidth+60)
+      .attr('height', 80)
+      .attr('transform', `translate(${400},${-10})`);
+      svgBEnter.merge(svgB);
+      const svgBT = d3.selectAll('.svgTime');
+
+      const gT = svgBT.selectAll('.context').data([null]);
+      const gTEnter = gT.enter().append("g")
+          .attr("class", "context")
+      .attr("transform", "translate(" +110+ "," +  25+ ")");
+
+
+      var brushg =  gT.merge(gTEnter).selectAll('.cell').data([null]);
+
+      var brushGenter = brushg
+          .enter().append("g")
+          .merge(brushg)
+          .attr("class", 'cell')
+              .attr("transform",  "translate(-109,-20)");
+
+              const xScaleR = d3.scaleLinear()
+              .domain(xScale.domain())
+              .range([0,innerWidth]);
+
+
+      var brush = d3.brushX()
+      .extent([[0, 0], [innerWidth, 50]])
+      .on("brush end", brushed);
+
+      
+      brushGenter.call(brush)
+      .call(brush.move, xScale.range());
+
+
+
+      function brushed(event) {
+        
+          if (event.sourceEvent && event.sourceEvent.type === "wheel") return; 
+          if (event.sourceEvent && event.sourceEvent.type === "zoom") return; 
+          if (event.sourceEvent !== undefined) {
+
+              // console.log(event.sourceEvent.x)
+              // console.log(event.sourceEvent.y)
+              var s = event.selection || xScale.range();
+           
+          xScaleAux.domain(s.map( xScaleR.invert,  xScaleR));
+        //  timeRange = xScale.domain()
+          //console.log(timeRange)
+          // var t = 0;
+          // setTimeout(function(){
+          //     t = 1
+          // },5000);
+          // if (t === 1){
+          //     onTimeChange(timeRange)
+          // }
+          // else{
+          //     onTimeChange(timeRange)
+          // }
+          
+    
+          // lines.select(".line-path").attr("d", lineGenerator);
+          // focus.select(".xAxis").call(xAxis);
+
+          xAxisG.merge(xAxisGEnter)
+          .call(xAxis.scale(xScaleAux))
+          .selectAll('.domain')
+          .remove();
+
+          // const lineGeneratorZ = d3.line()
+          // .x(d => xScale(new Date(d.key)))
+          // .y(d => yScale(d.value))
+          // .curve(d3.curveBasis);
+
+      //     d3.selectAll(".line-path")
+      //         .attr("d", d => lineGeneratorZ(d.values));
+
+          //console.log("brush")
+          d3.selectAll(".line-pathS")
+          .attr("d", d3.line()
+              .x(function(d) { return xScaleAux(d.x) })
+              .y(function(d) { return yScaleAux(d.y) })
+              );
+
+
+              d3.selectAll('.rectP')
+              .attr("transform", d => `translate(${xScaleAux(xValue(d))},${yScaleAux(yValue(d))})`);
+          
+              d3.selectAll('.circleG')
+              .attr('cy', d => yScaleAux(yValue(d)))
+              .attr('cx', d => xScaleAux(xValue(d)));
+
+          }
+          
+        
+       }
+
       // if(flag == 1) {
       //     circles.enter().append('circle')
       //     .attr('class', 'circleG')
@@ -435,40 +606,6 @@
           //   .remove()
         
 
-    
-
-          // // Create the u variable
-          // var u = d3.selectAll('.circleG')
-          //   .data(data2)
-        
-          // u
-          //   .transition() // and apply changes to all of them
-          //   .duration(2000)
-          //     .attr("cx",  d => xScale(xValue(d)))
-          //     .attr("cy", d => yScale(yValue(d)))
-          //     .attr('fill', d => colorScale(colorValue(d)))
-          //     .attr('fill-opacity', opacity(dataF))
-          //     .attr("r", 4.5)
-
-          // u
-          // .enter()
-          // .append("circle") // Add a new circle for each new elements
-          // .merge(u) // get the already existing elements as well
-          // .transition() // and apply changes to all of them
-          // .duration(1000)
-          // .attr("cx",  d => xScale(xValue(d)))
-          // .attr("cy", d => yScale(yValue(d)))
-          // .attr('fill', d => colorScale(colorValue(d)))
-          // .attr('fill-opacity', opacity(dataF))
-          // .attr("r", 4.5)
-        
-          // // If less group in the new dataset, I delete the ones not in use anymore
-          // u
-          //   .exit()
-          //   .transition() // and apply changes to all of them
-          //   .duration(2000)
-          //   .style("opacity", 0)
-          //   .remove()
           const lines2 = gZ.merge(gZEnter).selectAll('.line-pathS').data(xLre);
 
           lines2.enter()
@@ -501,7 +638,6 @@
       const { colorScale, circleRadius, spacing, textOffset,label, onLegendChange} = props;
       let select = selection.selectAll('select').data([null]);
     
-      
       select.enter()
       .merge(select)
       .append('text')
@@ -883,28 +1019,7 @@
 
     //  console.log(result)
     
-      svgS.call(scatterPlotS, {
-          title: `Hertzsprung–Russell diagram`,
-          xValue: d => d.st_bv,
-          xLabel: "Colour(B-V)",
-          x2Value: d => d.st_teff,
-          x2Label: "Temperature (K)",
-          xColName: "st_bv",
-          yValue: d => d.st_lum,
-          yLabel: "Luminosity (log(Solar))",
-          yColName: "st_lum",
-          margin: { top:70, right: 80, bottom: 150, left:70},
-          widthS,
-          heightS,
-          //flag,
-         // dateRange: dateRange,
-          colorScale:sss,
-          colorValue: d => d.st_bv,
-          data: dataSt,
-          data2: dataSt2,
-        
-
-     });
+    
 
      d3.selectAll('.legend').remove();
 
@@ -927,6 +1042,29 @@
 
      gLegend.exit().remove();
 
+     svgS.call(scatterPlotS, {
+      title: `Hertzsprung–Russell diagram`,
+      xValue: d => d.st_bv,
+      xLabel: "Colour(B-V)",
+      x2Value: d => d.st_teff,
+      x2Label: "Temperature (K)",
+      xColName: "st_bv",
+      yValue: d => d.st_lum,
+      yLabel: "Luminosity (log(Solar))",
+      yColName: "st_lum",
+      margin: { top:70, right: 80, bottom: 150, left:70},
+      widthS,
+      heightS,
+      //flag,
+     // dateRange: dateRange,
+      colorScale:sss,
+      colorValue: d => d.st_bv,
+      data: dataSt,
+      data2: dataSt2,
+    
+
+  });
+
      d3.selectAll('.treemap').remove();
 
      const gTreeEnter = svgS.append('g')
@@ -947,20 +1085,16 @@
      d3.symbol().size(40);
 
      var plNames = ["Pre-Labeled Stars","Classified Stars"];
-      //const shape = d3.scaleOrdinal().domain(plNames).range([d3.symbolTriangle, d3.symbolTriangle])
-    // const shape = d3.scaleOrdinal(plNames,d3.symbols.map(s => d3.symbol().size(220).type(s)()))
-    const shape = d3.scaleOrdinal(plNames,d3.symbols.map(function(s){
+      const shape = d3.scaleOrdinal().domain(plNames).range(["M8.368283871884005,0A8.368283871884005,8.368283871884005,0,1,1,-8.368283871884005,0A8.368283871884005,8.368283871884005,0,1,1,8.368283871884005,0","M0,-13.013688138352256L11.270184524741271,6.506844069176128L-11.270184524741271,6.506844069176128Z"]);
+    //const shape = d3.scaleOrdinal(plNames,d3.symbols.map(s => d3.symbol().size(220).type(s)()))
+    //const shape = d3.scaleOrdinal(plNames,d3.symbols.map(function(s){
 
-      console.log(s);
-      return d3.symbol().size(220).type(s)()
-    }));
-     d3.scaleOrdinal()
+      //console.log(s)
+    //   return d3.symbol().size(220).type(s)()
+    // }))
+     const colorScaleSol = d3.scaleOrdinal()
      .domain(plNames)
-     .range(['#4adeff',  '#f7543b',
-     '#b3acab','#d2b0ff',
-     '#aaf2a2', '#ff3636',
-     '#fcee90', '#eb83c8',
-     '#edb861'
+     .range(["#edd79a"
      ]);
 
     
@@ -969,22 +1103,22 @@
      //
      d3.selectAll('.legendST').remove();
 
-     svgS.append('g')
+     const gLegendEnterS = svgS.append('g')
      .attr('class', 'legendST');
 
      const gLegendS = svgS.selectAll('.legendST').data([null]);
 
-    //  gLegendEnterS
-    //  .attr('transform', `translate(${ widthS- widthS/4 -90},${heightS/8 + 345 })`)
-    //  .merge(gLegendEnterS)
-    //  .call(colorLegend, {
-    //      colorScale: colorScaleSol,
-    //      shapes: shape,
-    //      spacing: 30,
-    //      textOffset: 20,
-    //      label: plNames,
-    //     // onLegendChange: onLegendChange,
-    //  });
+     gLegendEnterS
+     .attr('transform', `translate(${ widthS +80},${ 206})`)
+     .merge(gLegendEnterS)
+     .call(colorLegend, {
+         colorScale: colorScaleSol,
+         shapes: shape,
+         spacing: 30,
+         textOffset: 20,
+         label: plNames,
+        // onLegendChange: onLegendChange,
+     });
 
      gLegendS.exit().remove();
 

@@ -29,9 +29,10 @@ export const colorLegend = (selection, props) => {
     .attr('y', 0)
     .attr('fill', 'black')
     .attr('font-family', 'Helvetica Neue, Arial')
-    .attr('font-weight', 'bold')
-    .attr('font-size', '10px')
-    .text('Solar System Objects:');
+    //.attr('font-weight', 'bold')
+    .style('font-size', '17px')
+    .text('Markers:')
+    .style("fill", "#afafab");
   
    
     const entries = select.enter()

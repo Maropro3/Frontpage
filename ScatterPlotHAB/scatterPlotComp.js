@@ -232,7 +232,7 @@ export const scatterPlot = (selection, props) => {
         "<br/>"+"<span style='color:" + color3 + ";'>"+"<b>" + habZ + "</b>"+"</span>"
         )
         .style("left", (event.pageX -80) + "px")
-        .style("top", (event.pageY+530 ) + "px")
+        .style("top", (event.pageY-136 ) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
@@ -270,6 +270,18 @@ export const scatterPlot = (selection, props) => {
 
     function zoomed(event) {
         // create new scale ojects based on event
+
+
+        if(event.sourceEvent.x < 432 || event.sourceEvent.x >1330 || event.sourceEvent.y<268 || event.sourceEvent.y>830){
+          
+            window.scrollBy(0, event.sourceEvent.deltaY*3.5);
+            return;
+
+        }
+        else{
+
+            console.log(event.sourceEvent.x)
+            // console.log(event.sourceEvent.y)
             var new_xScale = event.transform.rescaleX(xScale);
             var new_yScale = event.transform.rescaleY(yScale);
         // update axes
@@ -303,6 +315,10 @@ export const scatterPlot = (selection, props) => {
 
 
            d3.selectAll('.textLines').style('visibility', 'hidden')
+
+        }
+       
+        
     }
     
 

@@ -155,6 +155,11 @@ stroke: rgb(160, 155, 155);
 
 }
 
+.legendText{
+  font-size: 1.25em;
+  fill: #afafab;
+}
+
 
 .line-pathS{
 
