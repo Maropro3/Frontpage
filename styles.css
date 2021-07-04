@@ -266,21 +266,54 @@ a.buttonExplore {
     -webkit-appearance: button;
     -moz-appearance: button;
     appearance: button;
+    display:block;
+    width:210px;
+    height:77px;
+   float: left;
     color: rgb(155, 155, 155);
-    background-color: #08007e;
+    /* background-color: #08007e; */
+  position: relative;
+  left: 98px;
+  top: 320px;
+    background-image: url("SVG_sources/Explore_B.svg") ;
+    background-repeat: no-repeat;
+    
     padding: 15px 32px;
     text-decoration: none;
     
 }
+a.buttonExplore:hover {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  display:block;
+  width:210px;
+  height:77px;
+ float: left;
+  color: rgb(155, 155, 155);
+  /* background-color: #08007e; */
+position: relative;
+left: 98px;
+top: 320px;
+  background-image: url("SVG_sources/Explore_A.svg") ;
+  background-repeat: no-repeat;
+  
+  padding: 15px 32px;
+  text-decoration: none;
+  
+}
+
+
 
 .w3-third{
     background-color: rgb(58, 58, 58);
     color: rgb(209, 209, 209);
-    height: 700px;
+    height: 800px;
 }
 
 .w3-card{
   background-color: rgb(17, 17, 17);
+  height: 540px;
 }
 
 .w3-third text{
