@@ -18,6 +18,7 @@
     <nav id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="../index.html">Home</a>
+      <a href="#">Exoplanets Through Time</a>
       <a href="../SPLOM/index.html">Clustering Exoplanets</a>
       <a href="../HRDiagram/index.html">Labeling Stars</a>
       <a href="../ScatterPlotHAB/index.html">Searching for Earths</a>
@@ -35,7 +36,11 @@
       document.getElementById("mySidenav").style.width = "0";
     }</script>
 
-
+<div class= "textIntro">
+  <h2>Explore three decades of exoplanet discoveries</h2></br>
+  <span> Since the first planet outside our solar sistem was discovered in 1992, the hunt for these fascinating astronomical objects has only increased.</br>
+         In these two coordinated and interactive graphs you can delve deeper into this search and see how it has evolved over the years.</br></br></br></br> </span>
+</div>
 <div class = "mainBody">
   <div id = "menus">
     X Axis:
@@ -43,15 +48,12 @@
     &nbsp; &nbsp; &nbsp; Y Axis: 
     <span id = "y_menu"></span>
   </div>
-<div id ="graphLP">
+<span id ="graphLP">
   <svg  id="svgLP" width="920" height="650">
   </svg>
-</div>
-<div id="slider-range"></div>
-
-
-  <svg id = "svgM"></svg>
- </svg>
+  <div id="slider-range"></div>
+</span>
+<span><svg id = "svgM"></svg></span> 
 
 </div>
     

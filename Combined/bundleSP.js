@@ -246,28 +246,28 @@
 
                     onOptionClick('pl_eqt', this.value, slider, range, xOffset, units);
                     break;
-                case 'BV':
-                    if (axisD === "x") {
-                        d3.selectAll('.sliderX g').remove();
-                        d3.selectAll('.sliderX text').remove();
-                        console.log("okX");
-                    }
-                    if (axisD === "y") {
-                        d3.selectAll('.sliderY g').remove();
-                        d3.selectAll('.sliderY text').remove();
-                        console.log("okY");
-                    }
-                    slider
-                    .min(d3.min(dataF, d => d['st_bv']))
-                    .max(d3.max(dataF, d => d['st_bv']))
-                    .ticks(7)
-                    .default([d3.min(dataF, d => d['st_bv']), d3.max(dataF, d => d['st_bv'])]);
-                    range = [d3.min(dataF, d => d['st_bv']), d3.max(dataF, d => d['st_bv'])];
-                    xOffset = -245;
-                    units = " (K)";
+                // case 'BV':
+                //     if (axisD === "x") {
+                //         d3.selectAll('.sliderX g').remove();
+                //         d3.selectAll('.sliderX text').remove();
+                //         console.log("okX");
+                //     }
+                //     if (axisD === "y") {
+                //         d3.selectAll('.sliderY g').remove();
+                //         d3.selectAll('.sliderY text').remove();
+                //         console.log("okY");
+                //     }
+                //     slider
+                //     .min(d3.min(dataF, d => d['st_bv']))
+                //     .max(d3.max(dataF, d => d['st_bv']))
+                //     .ticks(7)
+                //     .default([d3.min(dataF, d => d['st_bv']), d3.max(dataF, d => d['st_bv'])]);
+                //     range = [d3.min(dataF, d => d['st_bv']), d3.max(dataF, d => d['st_bv'])];
+                //     xOffset = -245;
+                //     units = " (K)";
 
-                    onOptionClick('st_bv', this.value, slider, range, xOffset, units);
-                    break;
+                //     onOptionClick('st_bv', this.value, slider, range, xOffset, units);
+                //     break;
                 default:
                     if (axisD === "x") {
                         d3.selectAll('.sliderX g').remove();
@@ -532,6 +532,7 @@
 
 
       //  d3.selectAll('.svgX').remove()
+      console.log(xColName);
 
         const xScale = d3.scaleLinear()
         .domain(d3.extent(dataF, xValue))
@@ -696,8 +697,7 @@
 
             }
             else {
-                console.log(event.sourceEvent.x);
-                console.log(event.sourceEvent.y);
+               
                     var new_xScale = event.transform.rescaleX(xScale);
                     var new_yScale = event.transform.rescaleY(yScale);
                 // update axes
@@ -765,7 +765,7 @@
             .attr('class', 'circleG')
             .attr('cx', innerWidth/2)
             .attr('cy', innerHeight/2)
-            .attr('r', 4.5)
+            .attr('r', 2.2)
             .merge(circles)
             .attr('r', d => d.sizeP)
             .transition().duration(2000)
@@ -782,7 +782,7 @@
             .attr('class', 'circleG')
             .attr('cx', innerWidth/2)
             .attr('cy', innerHeight/2)
-            .attr('r', 3)
+            .attr('r', 2.2)
             .merge(circles)
             .attr('fill', d => colorScale(colorValue(d)))
             .attr('fill-opacity', opacity(dataF))
@@ -847,6 +847,10 @@
 
         circles.exit().remove();
 
+        // d3.select('body')
+        // .style('overflow-y', 'hidden')
+
+       
     };
 
     const colorLegendSP = (selection, props) => {
@@ -1511,13 +1515,50 @@
     .attr('width', width)
     .attr('height', height);
 
+    document.addEventListener('scroll', function(e) {
+        document.body.getBoundingClientRect().y;
+
+        
+
+        // saves the new position for iteration.
+        (document.body.getBoundingClientRect()).top;
+        }
+    );
+
+
+
+    // function doSomething(scrollPos) {
+        
+    //   if(scrollPos>150){
+    //     disableScroll()
+    //   }
+    //   else{
+    //     enableScroll()
+    //   }
+    // }
+
+    // document.addEventListener('scroll', function(e) {
+    //   lastKnownScrollPosition = window.scrollY;
+
+    //   if (!ticking) {
+    //     window.requestAnimationFrame(function() {
+    //       doSomething(lastKnownScrollPosition);
+    //       ticking = false;
+    //     });
+
+    //     ticking = true;
+    //   }
+    // });
+
+
+
     let data;
     let dataLP;
     let xColumn = 'st_mass';
     let xLabelColumn = 'Stellar Mass';
     let yColumn = 'st_teff';
     let yLabelColumn = 'Stellar Temperature';
-    const columns = ['Stellar Mass', 'Stellar Temperature', 'Stellar Radius', 'Stellar Luminosity', 'Planetary Mass', 'Planetary Radius', 'Orbital Period', 'Orbit Semi-Major Axis', 'Planet Density', 'Planet Temperature', 'BV'];
+    const columns = ['Stellar Mass', 'Stellar Temperature', 'Stellar Radius', 'Stellar Luminosity', 'Planetary Mass', 'Planetary Radius', 'Orbital Period', 'Orbit Semi-Major Axis', 'Planet Density', 'Planet Temperature'];
     var methods = [];
     let dateRange = [new Date("1992"), new Date ("2021")]; 
     var xRange = [0, 3];
@@ -1836,7 +1877,7 @@
             if (isNaN(v[xColumn]) || isNaN(v[yColumn])) {
                 return v.sizeP = 0;
             }
-            else {return v.sizeP = 4.5}
+            else {return v.sizeP = 3.5}
             }
         );
        //  console.log(dataBuffer)

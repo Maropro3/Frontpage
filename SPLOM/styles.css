@@ -107,7 +107,7 @@ stroke: rgb(160, 155, 155);
     font-size: 1.8em;
     position: absolute;
     left: 340px;
-    top: 20px;
+   
     margin: 10px;
     font-family: sans-serif;
     color: #bdb5b0
@@ -156,6 +156,7 @@ stroke: rgb(160, 155, 155);
   .sideButton{
     position: sticky;
     top: 0px;
+ 
   }
 
   
@@ -203,4 +204,8 @@ stroke: rgb(160, 155, 155);
     stroke-linejoin: round;
     stroke-linecap: round;
 
+}
+.textIntro{
+    text-align: center;
+    color:#bdb5b0;
 }

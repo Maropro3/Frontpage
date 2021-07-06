@@ -280,7 +280,7 @@ export const scatterPlot = (selection, props) => {
         }
         else{
 
-            console.log(event.sourceEvent.x)
+         
             // console.log(event.sourceEvent.y)
             var new_xScale = event.transform.rescaleX(xScale);
             var new_yScale = event.transform.rescaleY(yScale);
@@ -320,7 +320,121 @@ export const scatterPlot = (selection, props) => {
        
         
     }
+
     
+    d3.selectAll('.circleG')
+    .attr('visibility', 'visible')
+
+    const svgB = d3
+    .select('body').selectAll('.svgTime').data([null]);
+    const svgBEnter = svgB.enter().append('svg')
+    .attr('class', 'svgTime')
+    .attr('width', 80)
+    .attr('height', 320)
+    .attr('transform', `translate(${innerWidth+490},${-innerHeight-94})`)
+    svgBEnter.merge(svgB)
+    const svgBT = d3.selectAll('.svgTime')
+
+    const gT = svgBT.selectAll('.context').data([null]);
+    const gTEnter = gT.enter().append("g")
+        .attr("class", "context")
+    .attr("transform", "translate(" +110+ "," +  25+ ")");
+    
+    var brushg =  gT.merge(gTEnter).selectAll('.cell').data([null]);
+
+    var brushGenter = brushg
+        .enter().append("g")
+        .merge(brushg)
+        .attr("class", 'cell')
+            .attr("transform",  "translate(-109,-20)");
+
+    const yScaleR = d3.scaleLinear()
+    .domain(d3.extent(dataF, d => d[cfill]))
+    .range([280,0])
+
+
+    var brush = d3.brushY()
+    .extent([[0, 0], [38, 280]])
+    .on("brush end", brushed);
+
+    
+    brushGenter.call(brush)
+    .call(brush.move, [0,280]);
+
+
+    function brushed(event) {
+      
+        if (event.sourceEvent && event.sourceEvent.type === "wheel") return; 
+        if (event.sourceEvent && event.sourceEvent.type === "zoom") return; 
+        if (event.sourceEvent !== undefined) {
+
+            // console.log(event.sourceEvent.x)
+            // console.log(event.sourceEvent.y)
+            var s = event.selection || yScaleR.range();
+
+        var  eMax= yScaleR.invert(s[0]);
+        var  eMin = yScaleR.invert(s[1]);
+
+             d3.selectAll('.circleG')
+           .attr('visibility', function(d){
+               if(d[cfill] >= eMin && d[cfill] <= eMax){
+                   return 'visible'
+               }
+               else{
+                   return 'hidden'
+               }
+           })
+         
+        // xScaleAux.domain(s.map( xScaleR.invert,  xScaleR));
+      //  timeRange = xScale.domain()
+        //console.log(timeRange)
+        // var t = 0;
+        // setTimeout(function(){
+        //     t = 1
+        // },5000);
+        // if (t === 1){
+        //     onTimeChange(timeRange)
+        // }
+        // else{
+        //     onTimeChange(timeRange)
+        // }
+        
+  
+        // lines.select(".line-path").attr("d", lineGenerator);
+        // focus.select(".xAxis").call(xAxis);
+
+        // xAxisG.merge(xAxisGEnter)
+        // .call(xAxis.scale(xScaleAux))
+        // .selectAll('.domain')
+        // .remove();
+
+        // const lineGeneratorZ = d3.line()
+        // .x(d => xScale(new Date(d.key)))
+        // .y(d => yScale(d.value))
+        // .curve(d3.curveBasis);
+
+    //     d3.selectAll(".line-path")
+    //         .attr("d", d => lineGeneratorZ(d.values));
+
+        //console.log("brush")
+        // d3.selectAll(".line-pathS")
+        // .attr("d", d3.line()
+        //     .x(function(d) { return xScaleAux(d.x) })
+        //     .y(function(d) { return yScaleAux(d.y) })
+        //     )
+
+
+        //     d3.selectAll('.rectP')
+        //     .attr("transform", d => `translate(${xScaleAux(xValue(d))},${yScaleAux(yValue(d))})`)
+        
+        //     d3.selectAll('.circleG')
+        //     .attr('cy', d => yScaleAux(yValue(d)))
+        //     .attr('cx', d => xScaleAux(xValue(d)))
+
+       }
+        
+      
+     }
 
 
     const pointNum = 36;

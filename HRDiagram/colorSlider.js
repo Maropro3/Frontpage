@@ -71,7 +71,7 @@ export const colorSlider = (selection, props) => {
     const domain = [min,max]
     const axisLabel = fc
     .axisBottom(xScale2)
-    .tickValues([...domain, (domain[1] + domain[0]) / 2])
+    .tickValues([...domain, (domain[1] + domain[0]) *0.15, (domain[1] + domain[0]) *0.85,(domain[1] + domain[0]) / 2])
     .tickSize(15)
     .tickSizeOuter(0);;
   

@@ -70,6 +70,18 @@ export const colorLegend = (selection, props) => {
     d3.select(this).selectAll('circle')
     .attr("stroke", "white")
     .attr('stroke-width', '2');
+
+    var numC = d3.select(this).selectAll('text').text()
+
+    d3.selectAll('.circleSP')
+    .style('fill',function(d){
+      if(d.cluster !== numC){
+        return "grey"
+      }
+      else{
+        return  colorScale(d.cluster)
+      }
+    })
   }
 
   const onMouseout = function(event, d){
@@ -77,6 +89,14 @@ export const colorLegend = (selection, props) => {
     d3.select(this).selectAll('circle')
     .attr("stroke", "none")
     .attr('stroke-width', '2');
+
+    d3.selectAll('.circleSP')
+    .style('fill',function(d){
+      
+        return  colorScale(d.cluster)
+      
+    })
+
     
   }
   const title = select.enter()
@@ -116,7 +136,7 @@ const labels = entries.append('text')
   .attr('font-size', '12px')
   .attr('class', 'legendText')
   .style('user-select', 'none') 
-  .style('fill', '#a8a09e')
+  .style('fill', 'white')
   .text(d => d);
 }
 

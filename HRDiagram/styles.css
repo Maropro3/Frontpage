@@ -267,7 +267,7 @@ stroke: rgb(160, 155, 155);
     height: 200px;
     border: 2px solid #494949;
     padding-right: 2px;
-    top: 450px;
+    top: 150px;
     right: -1280px;
     z-index: 1;
     
@@ -293,3 +293,8 @@ stroke: rgb(160, 155, 155);
   .domain{
     stroke:rgb(119, 119, 119);
   }
+
+  .textIntro{
+    text-align: center;
+    color:#bdb5b0;
+}

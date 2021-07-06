@@ -17,6 +17,79 @@ svg
 .attr('width', width)
 .attr('height', height);
 
+// d3.select('')
+// .on('scroll', console.log("eee"))
+
+let lastKnownScrollPosition = 0;
+var pagY = 0;
+let ticking = false;
+var up = 0;
+
+function doSomething(scrollPos) {
+
+if (scrollPos< -150){
+    up = 1
+
+      window.scrollTo(0,150)
+      up = 0
+}
+
+
+}
+
+document.addEventListener('scroll', function(e) {
+    lastKnownScrollPosition = window.scrollY;
+    pagY = window.screenY
+    var yy = document.body.getBoundingClientRect().y
+
+    
+
+    // saves the new position for iteration.
+    lastKnownScrollPosition = (document.body.getBoundingClientRect()).top;
+
+    if( lastKnownScrollPosition < -150){
+       // window.scrollTo(0,150)
+    }
+    // if(up == 0){
+    //     if (!ticking) {
+    //         window.requestAnimationFrame(function() {
+    //         doSomething(lastKnownScrollPosition,up);
+    //         ticking = false;
+    //         });
+    // }
+    
+
+    ticking = true;
+    }
+);
+
+
+
+// function doSomething(scrollPos) {
+    
+//   if(scrollPos>150){
+//     disableScroll()
+//   }
+//   else{
+//     enableScroll()
+//   }
+// }
+
+// document.addEventListener('scroll', function(e) {
+//   lastKnownScrollPosition = window.scrollY;
+
+//   if (!ticking) {
+//     window.requestAnimationFrame(function() {
+//       doSomething(lastKnownScrollPosition);
+//       ticking = false;
+//     });
+
+//     ticking = true;
+//   }
+// });
+
+
+
 let data;
 let dataLP;
 var dataL = [];
@@ -25,7 +98,7 @@ let xColumn = 'st_mass';
 let xLabelColumn = 'Stellar Mass';
 let yColumn = 'st_teff';
 let yLabelColumn = 'Stellar Temperature';
-const columns = ['Stellar Mass', 'Stellar Temperature', 'Stellar Radius', 'Stellar Luminosity', 'Planetary Mass', 'Planetary Radius', 'Orbital Period', 'Orbit Semi-Major Axis', 'Planet Density', 'Planet Temperature', 'BV'];
+const columns = ['Stellar Mass', 'Stellar Temperature', 'Stellar Radius', 'Stellar Luminosity', 'Planetary Mass', 'Planetary Radius', 'Orbital Period', 'Orbit Semi-Major Axis', 'Planet Density', 'Planet Temperature'];
 var methods = [];
 let dateRange = [new Date("1992"), new Date ("2021")]; 
 let dataFilter = [];
@@ -378,7 +451,7 @@ const render = () => {
         if (isNaN(v[xColumn]) || isNaN(v[yColumn])) {
             return v.sizeP = 0;
         }
-        else{return v.sizeP = 4.5}
+        else{return v.sizeP = 3.5}
         }
     );
    // console.log(dataF)

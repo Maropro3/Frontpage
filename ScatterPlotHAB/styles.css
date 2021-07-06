@@ -1,11 +1,6 @@
 body {
    
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: 0;
-    overflow-x: hidden;
+    
     background-color: rgb(31, 31, 31);
 }
 
@@ -60,7 +55,9 @@ text {
     position: relative;
     margin: 10px;
     font-family: sans-serif;
-    color: #bebebe
+    color: #bebebe;
+    width: 1000px;
+    
     
 }
 
@@ -286,3 +283,7 @@ text {
 
   
 
+  .textIntro{
+    text-align: center;
+    color:#bdb5b0;
+}

@@ -1,12 +1,12 @@
 export const treemap = (selection, props) => {
 
-    const { dataJ} = props;
+    const { dataJ,sss} = props;
 
     const nested1 = d3.nest()
     .key(d => d.st_spectype)
     .entries(dataJ)
    // console.log(nested1)
-    const width = 320
+    const width = 360
     const height = 320
 
     const colorScalePl = d3.scaleOrdinal()
@@ -18,7 +18,13 @@ export const treemap = (selection, props) => {
 
     d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/barPlot.csv').then(data => {
 
-
+    const tStars = [{"Spectral_Type":"B", "total":4 },
+    {"Spectral_Type":"A", "total":19 },
+    {"Spectral_Type":"F", "total":94 },
+    {"Spectral_Type":"G", "total":239 },
+    {"Spectral_Type":"K", "total":380 },
+    {"Spectral_Type":"M", "total":2403 },
+    ]
 
         var subgroups = data.columns.slice(1)
 
@@ -35,7 +41,7 @@ export const treemap = (selection, props) => {
   
     // Add Y axis
      const y = d3.scaleLinear()
-        .domain([0, 1460])
+        .domain([0, 2500])
         .range([ height, 0 ]);
         selection.append("g")
         .call(d3.axisRight(y))
@@ -85,11 +91,19 @@ export const treemap = (selection, props) => {
 
     // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function(event, d) {
-       
+      
         const subgroupName = d3.select(this.parentNode).datum().key;
         const subgroupValue = d.data[subgroupName];
+        const subgroupU = +d.data["Unlabeled"];
+        const subgroupL = +d.data["Labeled"];
+        var subgroupTotal = subgroupU+subgroupL;
+        var tolSpect = d.data.Spectral_Type;
+
+        
+        var color2 = color(d.data.Spectral_Type);
         tooltip
-            .html("Data Type: " + subgroupName + "<br>" + "Instances: " + subgroupValue)
+            .html( "<span style='color:" + color2 + ";'>"+"Spectral Type: "+ d.data.Spectral_Type+"</span>" +"<br>"+"Data Type: " + subgroupName + "<br>" + "Instances: " + subgroupValue+ "</br>"
+            + "% of type in the exoplanet database: "+  Math.round((subgroupTotal/3144*100+ Number.EPSILON)*100)/100 +"%")
             .style("opacity", 1)
             // .style("left", (event.pageX -95) + "px")
             // .style("top", (event.pageY -90) + "px")
@@ -97,11 +111,59 @@ export const treemap = (selection, props) => {
             //     .duration(200) 
             //     .style("fill-opacity", .9) 
             //     .style('display','block'); 
+        if(subgroupName === "Labeled"){
+            d3.selectAll('.circleG')
+            .style('fill',function(d){
+              if(d.st_spectype !==tolSpect ){
+                return "grey"
+              }
+              else{
+                return  sss(d => d.cluster)
+              }
+            })
+            .style('opacity',function(d){
+                if(d.st_spectype !==tolSpect ){
+                  return 0.2
+                }
+                else{
+                  return  1
+                }
+              })
+
+              d3.selectAll('.rectP')
+              .style("fill", "grey")
+              .style('opacity', 0.025)
+        }
+        if(subgroupName === "Unlabeled"){
+            d3.selectAll('.rectP')
+            .style('fill',function(d){
+              if(d.st_spectype !==tolSpect ){
+                return "grey"
+              }
+              else{
+                return  sss(d => d.cluster)
+              }
+            })
+            .style('opacity',function(d){
+                if(d.st_spectype !==tolSpect ){
+                  return 0.02
+                }
+                else{
+                  return  1
+                }
+              })
+
+           
+              d3.selectAll('.circleG')
+              .style("fill", "grey")
+              .style('opacity', 0.2)
+        }
+           
             
       }
       const mousemove = function(event, d) {
-        tooltip.style("left", (event.pageX-62) + "px")
-        .style("top", (event.pageY-50) + "px")
+        tooltip.style("left", (event.pageX-152) + "px")
+        .style("top", (event.pageY-90) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
@@ -110,7 +172,22 @@ export const treemap = (selection, props) => {
       const mouseleave = function(event, d) {
         tooltip
           .style("opacity", 0)
+
+          d3.selectAll('.circleG')
+            .style('fill',function(d){
+           
+                return  sss(d => d.cluster)
+            })
+            .style('opacity',1)
+
+            d3.selectAll('.rectP')
+            .style('fill',function(d){
+           
+                return  sss(d => d.cluster)
+            })
+            .style('opacity',1)
       }
+    
     
     selection.append("g")
     .selectAll("g")
@@ -122,22 +199,86 @@ export const treemap = (selection, props) => {
         // enter a second time = loop subgroup per subgroup to add all rectangles
         .data(d => d)
         .join("rect")
-        .attr("x", d => x(d.data.Spectral_Type))
+        .attr("x", d => x(d.data.Spectral_Type)+2)
         .attr("y", d => y(d[1]))
         .attr("height", d => y(d[0]) - y(d[1]))
-        .attr("width",x.bandwidth())    
+        .attr("width",x.bandwidth()/2.5)    
+        // .attr("fill", function(d){
+          
+        //     if(d[0] === 0){
+        //         return(color(d.data.Spectral_Type))
+        //     }
+        //     else{
+        //         return "grey"
+        //     }
+        // })
         .attr("fill", function(d){
           
             if(d[0] === 0){
-                return(color(d.data.Spectral_Type))
+                return "steelblue"
             }
             else{
-                return "grey"
+                return "#b53333"
             }
         })
+        .attr("stroke",  d => color(d.data.Spectral_Type))
+        .attr('stroke-width', '1')
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
+
+     
+
+
+
+const mouseover2 = function(event, d) {
+       
+ 
+    var color2 = color(d.Spectral_Type);
+    tooltip
+        .html( "<span style='color:" + color2 + ";'>"+"Spectral Type: "+ d.Spectral_Type+"</span>" +"</br>"+
+        "% of total Main Sequence stars: "+  Math.round((d.total/3144*100+ Number.EPSILON)*100)/100 +"%" )
+        .style("opacity", 1)
+        // .style("left", (event.pageX -95) + "px")
+        // .style("top", (event.pageY -90) + "px")
+        // .transition()
+        //     .duration(200) 
+        //     .style("fill-opacity", .9) 
+        //     .style('display','block'); 
+        
+  }
+
+  const mousemove2 = function(event, d) {
+    tooltip.style("left", (event.pageX-132) + "px")
+    .style("top", (event.pageY-50) + "px")
+    .transition()
+        .duration(200) 
+        .style("fill-opacity", .9) 
+        .style('display','block'); 
+  }
+
+        const x2 = d3.scaleBand()
+        .range([ 0, width ])
+        .domain(tStars.map(d => d.Spectral_Type))
+        .padding(0.2);
+
+        const y2 = d3.scaleLinear()
+        .domain([0, 2500])
+        .range([ height, 0]);
+
+        selection.append("g")
+        .selectAll("g")
+        // Enter in the stack data = loop key per key = group per group
+        .data(tStars)
+        .join("rect")
+            .attr("fill", d => color(d.Spectral_Type))
+            .attr("x", d => x2(d.Spectral_Type)+24)
+            .attr("y", d => y2(d.total))
+            .attr("height", d => height - y2(d.total))
+            .attr("width",x.bandwidth()/2.5)    
+            .on("mouseover", mouseover2)
+            .on("mousemove", mousemove2)
+            .on("mouseleave", mouseleave)
 
 
       

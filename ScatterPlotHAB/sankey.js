@@ -201,7 +201,8 @@ svgLinks.append("path")
 .attr("fill", "none")
 .attr("stroke", d => `url(#${getGradientId(d)})`)
 .attr("stroke-width", d => Math.max(1.0, d.width))
-.attr("stroke-opacity", linkOpacity);
+.attr("stroke-opacity", linkOpacity)
+
    
 
 // var labels = svg.append("g")

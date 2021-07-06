@@ -25,7 +25,7 @@ legend{color:inherit;display:table;max-width:100%;padding:0;white-space:normal}t
 [type=search]::-webkit-search-decoration{-webkit-appearance:none}
 ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
 /* End extract */
-html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
+html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}/*html{overflow-x:hidden}*/
 h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}h4{font-size:20px}h5{font-size:18px}h6{font-size:16px}
 .w3-serif{font-family:serif}.w3-sans-serif{font-family:sans-serif}.w3-cursive{font-family:cursive}.w3-monospace{font-family:monospace}
 h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}.w3-wide{letter-spacing:4px}
@@ -262,19 +262,58 @@ body{
     background-color: rgb(63, 63, 63);
 }
 
+#container1 {
+ 
+  background-image: url("SVG_sources/container1.svg") ;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-x: center;
+  background-position-y: center;
+  
+}
+#container2 {
+ 
+  background-image: url("SVG_sources/container2.svg") ;
+  background-repeat: no-repeat;
+  background-size: 57.5%;
+  background-position-x: center;
+  background-position-y: center;
+  
+}
+#container3 {
+ 
+  background-image: url("SVG_sources/container3.svg") ;
+  background-repeat: no-repeat;
+  background-size:  57.5%;
+  background-position-x: center;
+  background-position-y: center;
+  
+}
+#container4 {
+ 
+  background-image: url("SVG_sources/container4.svg") ;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position-x: center;
+  background-position-y: center;
+  
+}
+
 a.buttonExplore {
     -webkit-appearance: button;
     -moz-appearance: button;
     appearance: button;
     display:block;
-    width:210px;
-    height:77px;
+    width:50%;
+    height:10%;
    float: left;
     
     /* background-color: #08007e; */
   position: relative;
-  left: 98px;
-  top: 320px;
+  left:25%;
+  top:64%;
+  /* left: 98px;
+  top: 320px; */
     background-image: url("SVG_sources/Explore_B.svg") ;
     background-repeat: no-repeat;
     
@@ -287,14 +326,14 @@ a.buttonExplore:hover {
   -moz-appearance: button;
   appearance: button;
   display:block;
-  width:210px;
-  height:77px;
+  width:50%;
+    height:10%;
  float: left;
   
   /* background-color: #08007e; */
 position: relative;
-left: 98px;
-top: 320px;
+left:25%;
+  top:64%;
   background-image: url("SVG_sources/Explore_A.svg") ;
   background-repeat: no-repeat;
   

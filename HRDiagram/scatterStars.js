@@ -20,6 +20,7 @@ export const scatterPlotS = (selection, props) => {
         colorValue,
         data,
         data2,
+        xLre
      
 
         
@@ -74,22 +75,31 @@ export const scatterPlotS = (selection, props) => {
   //  d3.selectAll('.svgX').remove()
     
     const xScale = d3.scaleLinear()
-    .domain([-0.25,2.4])
+    .domain([-0.4,2.4])
     .range([0,innerWidth])
-    .nice();
+    .nice()
+  
+    
 
     // const x2Dom = [2000,2900,3110,3320,3570,3870,4250,4670,5000,5200,5870,6820,8050,10100,1350,20000]
-     const x2Dom = [2800,3450,4680,7400,18000]
+     const x2Dom = [2800,3450,4790,6900,50000]
+
      const x2Range = [0,190,405,620,850]
+  
     // const x2Dom = [2800,2900,3090,3320,3450,3580,3890,4230,4680,21000]
     // const x2Range = [0,60,121,182,242,303,364,425,640,850]
    // x2Dom.reverse
 x2Range.reverse()
    
-    const x2Scale = d3.scaleSqrt()
+    // const x2Scale = d3.scaleSqrt()
+    // .domain(x2Dom)
+    // .range(x2Range)
+    // .exponent(1/4)
+
+    const x2Scale = d3.scaleLog()
     .domain(x2Dom)
     .range(x2Range)
-    .exponent(1/4)
+    .base(2)
    
 
 
@@ -111,7 +121,7 @@ x2Range.reverse()
 
     const x2Axis = d3.axisTop(x2Scale)
     .tickSize(-7)
-    .ticks(4)
+    .tickValues([40000,10000,5000,4000,3000])
     .tickPadding(20);
 
     const yAxisG = g.select('.yAxis');
@@ -238,9 +248,18 @@ x2Range.reverse()
         .attr("stroke", "black")
         .attr('fill-opacity', 1 );
 
+        const subC = function(d) {
+            if(d.sub_class === ""){
+                return " "
+            }
+            else{
+                return d.sub_class
+            }
+        }
+
         tooltip.html( "<b>" + d.hostname + "</b>"  + "<br/>" +
-        "<span style='color:" + color + ";'>" + d.st_spectype + +d.sub_class+ " "+ d.lum_class+"</span><br/>" +
-        yLabel + ": " + Math.round(d.st_lum * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d.st_teff * 1000) / 1000 
+        "<span style='color:" + color + ";'>" + d.st_spectype +subC(d) + " "+ d.lum_class+"</span><br/>" +
+        yLabel + ": " + Math.round(d.st_lum * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d.st_bv * 1000) / 1000 
         )
         .style("left", (event.pageX -95) + "px")
         .style("top", (event.pageY -90) + "px")
@@ -283,7 +302,7 @@ x2Range.reverse()
       
     } );
 
-    var yScaleAux;
+    var yScaleAux = yScale;
     var xScaleAux = xScale;
     function zoomed(event) {
         // create new scale ojects based on event
@@ -373,21 +392,7 @@ x2Range.reverse()
             
     }
    
-    var xLre = [];
-    const pointNum = 36;
-    const pointNum2 = 200;
-    const xDomain = 0.398;
-    var pp, xTemp, yTemp;
-    
-    for(let i = -7.6; i<=pointNum2; i++){
-        xTemp = xDomain / pointNum * i;
-        
-       // yTemp = cx2*xTemp**2+xTemp*cx +c+cx3*xTemp**3 +cx4*xTemp**4 //+ cx5*xTemp**5 + cx6*xTemp**6;
-        yTemp =  1.3989  -4.3335 *xTemp +24.1944 *xTemp**2 -75.2543 *xTemp**3 +104.0721 *xTemp**4  -71.7930*xTemp**5 + 24.2841*xTemp**6  -3.2161 *xTemp**7//+0.3812 *xTemp**6
-       // console.log(xTemp)
-        pp = {x:xTemp,y:yTemp}
-        xLre.push(pp)
-    }
+   
    
 
  
@@ -437,7 +442,7 @@ x2Range.reverse()
     .attr('class', 'svgTime')
     .attr('width', innerWidth+60)
     .attr('height', 80)
-    .attr('transform', `translate(${400},${-10})`)
+    .attr('transform', `translate(${400},${-310})`)
     svgBEnter.merge(svgB)
     const svgBT = d3.selectAll('.svgTime')
 
@@ -455,9 +460,9 @@ x2Range.reverse()
         .attr("class", 'cell')
             .attr("transform",  "translate(-109,-20)");
 
-            const xScaleR = d3.scaleLinear()
-            .domain(xScale.domain())
-            .range([0,innerWidth])
+    const xScaleR = d3.scaleLinear()
+    .domain(xScale.domain())
+    .range([0,innerWidth])
 
 
     var brush = d3.brushX()
@@ -557,19 +562,29 @@ x2Range.reverse()
 
         const lines2 = gZ.merge(gZEnter).selectAll('.line-pathS').data(xLre);
 
+        console.log(xLre)
+
+    
         lines2.enter()
-         .append("path")
-         .merge(lines2)
-           .datum(xLre)
-           .attr('class', 'line-pathS')
-           .attr("fill", "none")
-           .attr("stroke", "steelblue")
-           .attr("stroke-width", 1.5)
-           .attr("d", d3.line()
-             .x(function(d) { return xScale(d.x) })
-             .y(function(d) { return yScale(d.y) })
-             )
-             lines2.exit().remove();
+        .append("path")
+        .merge(lines2)
+            .datum(xLre)
+            .attr('class', 'line-pathS')
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.line()
+            .x(function(d) { return xScale(d.x) })
+            .y(function(d) { return yScale(d.y) })
+            )
+            lines2.exit().remove();
+     
+           
+        // catch(error){
+        //     console.error(error);
+        // }
+
+      
  
     d3.selectAll('.circleG')
     .on('mouseover', tipMouseover)

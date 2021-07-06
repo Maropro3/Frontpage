@@ -65,6 +65,7 @@ export const scatterPlot = (selection, props) => {
 
 
   //  d3.selectAll('.svgX').remove()
+  console.log(xColName)
 
     const xScale = d3.scaleLinear()
     .domain(d3.extent(dataF, xValue))
@@ -297,7 +298,7 @@ export const scatterPlot = (selection, props) => {
         .attr('class', 'circleG')
         .attr('cx', innerWidth/2)
         .attr('cy', innerHeight/2)
-        .attr('r', 4.5)
+        .attr('r', 2.2)
         .merge(circles)
         .attr('r', d => d.sizeP)
         .transition().duration(2000)
@@ -314,7 +315,7 @@ export const scatterPlot = (selection, props) => {
         .attr('class', 'circleG')
         .attr('cx', innerWidth/2)
         .attr('cy', innerHeight/2)
-        .attr('r', 3)
+        .attr('r', 2.2)
         .merge(circles)
         .attr('fill', d => colorScale(colorValue(d)))
         .attr('fill-opacity', opacity(dataF))
@@ -379,5 +380,9 @@ export const scatterPlot = (selection, props) => {
 
     circles.exit().remove();
 
+    // d3.select('body')
+    // .style('overflow-y', 'hidden')
+
+   
 };
 

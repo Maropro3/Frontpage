@@ -14,20 +14,27 @@ export const dropDown = (selection, props) => {
     let select = selection.selectAll('select').data([null]);
     let selCluster;
     let units = "";
-    
+    // 'Gaussian Mixture', 'KMeans', 'Aglomerative'
     select = select.enter().append('select')
     .merge(select)
     .attr('id', 'drop')
     .on('change', function() {
         switch(this.value){
-            case 'EM':
+            case 'Aglomerative':
+             
+                selCluster = 2;
+                units = ""
+
+                onOptionClick(selCluster,this.value,);
+                break;
+            case 'Gaussian Mixture':
              
                 selCluster = 1;
                 units = ""
 
                 onOptionClick(selCluster,this.value,);
                 break;
-            case 'KNN':
+            case 'KMeans':
            
                 selCluster = 0;
                 units = ""

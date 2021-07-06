@@ -1,8 +1,22 @@
 body {
-    margin:0px;
-    overflow: hidden;
+
     background-color: rgb(31, 31, 31);
+    overflow-x: hidden;
+    max-height: 100vh;
+    overflow-y: visible;
+    
 }
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .line-path{
 
     fill: none;
@@ -96,7 +110,8 @@ text {
     position: relative;
     margin: 10px;
     font-family: sans-serif;
-    color: #bdb5b0
+    color: #bdb5b0;
+    width: 700px;
     
 }
 
@@ -209,4 +224,9 @@ text {
 
 .mainBody{
     height: 900px;
+}
+
+.textIntro{
+    text-align: center;
+    color:#bdb5b0;
 }

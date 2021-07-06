@@ -11,7 +11,7 @@ import {treemap} from './treemap'
 // menusCSS.style.top = `10px`;
 
 d3.selectAll('#menus')
-.style('top', '1060px')
+.style('top', '560px')
 
 var widthS = 1000,
 heightS = 860,
@@ -24,9 +24,9 @@ var dataJ = [];
 var dropSelect ="Star Colour (B-V) Range"
 var svgS = d3.select("body").append("svg")
   .attr('class', 'svgS')
-  .attr("width", 1460)
+  .attr("width", 1520)
   .attr("height", 1000)
-  .attr("transform", "translate(" + paddingS*2  + "," + paddingS * 1.4+ ")")
+  .attr("transform", "translate(" + paddingS*2  + "," + -160+ ")")
 
 var rr = Float32Array.from({ length: 1000 }, d3.randomNormal(0.55, 0.85));
 
@@ -37,6 +37,24 @@ const mirror = t => interpolator(1 - t); // creates a mirror image of the interp
 var scale2 = scale.interpolator(mirror); // updates the scale’s interpolator
 
 var sss = scale2.domain(rr)
+
+var xLreAux = [];
+const pointNum = 36;
+const pointNum2 = 200;
+const xDomain = 0.398;
+var pp, xTemp, yTemp;
+
+for(let i = -7.6; i<=pointNum2; i++){
+    xTemp = xDomain / pointNum * i;
+    
+   // yTemp = cx2*xTemp**2+xTemp*cx +c+cx3*xTemp**3 +cx4*xTemp**4 //+ cx5*xTemp**5 + cx6*xTemp**6;
+    yTemp =  1.42437  -2.32118*xTemp +9.58316*xTemp**2 -36.71320*xTemp**3  +54.05569*xTemp**4  -37.56820*xTemp**5 + 12.45696 *xTemp**6  -1.59237*xTemp**7//+0.3812 *xTemp**6
+   // console.log(xTemp)
+    pp = {x:xTemp,y:yTemp}
+    xLreAux.push(pp)
+}
+
+var xLre = xLreAux
 
 d3.selectAll('#toggleS')
 .style('right', '1200')
@@ -99,11 +117,32 @@ const renderS = () =>{
 
     dataJ = dataSt.concat(dataSt2)
 
-  //  console.log(result)
-  
-  
+   var nest1= d3.nest()
+    .key(d => d.st_spectype)
+    .entries(dataSt2)
 
-   d3.selectAll('.legend').remove()
+   
+    
+    console.log(dataSt2)
+  
+  
+//   console.log(dataJ)
+
+//   // let csvContent = "data:text/csv;charset=utf-8," 
+//   // + dataSt.map(e => e.join(",")).join("\n");
+//   var lineArray = [];
+//   dataJ.forEach(function (infoArray, index) {
+    
+//    if(infoArray.lum_class === "V")
+//     lineArray.push(infoArray.st_bv)
+  
+// });
+// console.log(lineArray)
+// var csvContent = lineArray.join("\n");
+// console.log(csvContent)
+//   var encodedUri = encodeURI(csvContent);
+//   window.open(encodedUri);
+
 
    const gLegendEnter = svgS.append('g')
    .attr('class', 'legend');
@@ -143,6 +182,7 @@ const renderS = () =>{
     colorValue: d => d.st_bv,
     data: dataSt,
     data2: dataSt2,
+    xLre
   
 
 });
@@ -158,7 +198,8 @@ const renderS = () =>{
    .attr('transform', `translate(${ widthS+60},${heightS -440})`)
    .merge(gTreeEnter)
    .call(treemap, {
-       dataJ
+       dataJ,
+       sss
       // onLegendChange: onLegendChange,
    });
 
@@ -181,7 +222,7 @@ const renderS = () =>{
 
   
    //d3.symbols.map(s => d3.symbol().size(220).type(s)())
-    console.log(shape.range())
+ 
    //
    d3.selectAll('.legendST').remove()
 
@@ -220,7 +261,7 @@ const renderS = () =>{
 
 
 
-d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/AAStars.csv').then(dataS => {
+d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/AAStarsComp.csv').then(dataS => {
 
     dataS.forEach(d => { 
 
@@ -252,6 +293,18 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/AAStars.csv')
      
         d.st_lumN = 10**d.st_lum
       d.st_bv = (0.021*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      if(d.st_teff > 11000 && d.st_teff < 21000 ){
+        d.st_bv = (0.012*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
+      if(d.st_teff > 21000 && d.st_teff < 30000){
+        d.st_bv = (0.010*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
+      if(d.st_teff > 30000){
+        d.st_bv = (0.008*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
+      if(d.st_teff < 2600){
+        d.st_bv = (0.018*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
   
      
     });
@@ -264,7 +317,7 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/AAStars.csv')
 })
 
 
-d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/NNStars.csv').then(dataS2 => {
+d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/NNStarsComp.csv').then(dataS2 => {
 
     dataS2.forEach(d => { 
 
@@ -280,8 +333,8 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/NNStars.csv')
         d.sy_gaiamag = +d.sy_gaiamag
         d.sy_bmag = +d.sy_bmag 
         d.sy_vmag = +d.sy_vmag 
-        d.sub_class  = null
-        d.lum_class = ""
+        d.sub_class  = ""
+        d.lum_class =  d.lum_class
     });
 
     dataS2.forEach(d => { 
@@ -296,6 +349,18 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/NNStars.csv')
      
         d.st_lumN = 10**d.st_lum
       d.st_bv = (0.021*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      if(d.st_teff > 11000 && d.st_teff < 21000 ){
+        d.st_bv = (0.012*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
+      if(d.st_teff > 21000 && d.st_teff < 30000){
+        d.st_bv = (0.008*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
+      if(d.st_teff > 30000){
+        d.st_bv = (0.010*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
+      if(d.st_teff < 2600){
+        d.st_bv = (0.018*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+      }
   
      
     });

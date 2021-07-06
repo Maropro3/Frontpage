@@ -74,6 +74,7 @@
           colorValue,
           data,
           data2,
+          xLre
        
 
           
@@ -128,22 +129,31 @@
     //  d3.selectAll('.svgX').remove()
       
       const xScale = d3.scaleLinear()
-      .domain([-0.25,2.4])
+      .domain([-0.4,2.4])
       .range([0,innerWidth])
       .nice();
+    
+      
 
       // const x2Dom = [2000,2900,3110,3320,3570,3870,4250,4670,5000,5200,5870,6820,8050,10100,1350,20000]
-       const x2Dom = [2800,3450,4680,7400,18000];
+       const x2Dom = [2800,3450,4790,6900,50000];
+
        const x2Range = [0,190,405,620,850];
+    
       // const x2Dom = [2800,2900,3090,3320,3450,3580,3890,4230,4680,21000]
       // const x2Range = [0,60,121,182,242,303,364,425,640,850]
      // x2Dom.reverse
   x2Range.reverse();
      
-      const x2Scale = d3.scaleSqrt()
+      // const x2Scale = d3.scaleSqrt()
+      // .domain(x2Dom)
+      // .range(x2Range)
+      // .exponent(1/4)
+
+      const x2Scale = d3.scaleLog()
       .domain(x2Dom)
       .range(x2Range)
-      .exponent(1/4);
+      .base(2);
      
 
 
@@ -165,7 +175,7 @@
 
       const x2Axis = d3.axisTop(x2Scale)
       .tickSize(-7)
-      .ticks(4)
+      .tickValues([40000,10000,5000,4000,3000])
       .tickPadding(20);
 
       const yAxisG = g.select('.yAxis');
@@ -292,9 +302,18 @@
           .attr("stroke", "black")
           .attr('fill-opacity', 1 );
 
+          const subC = function(d) {
+              if(d.sub_class === ""){
+                  return " "
+              }
+              else {
+                  return d.sub_class
+              }
+          };
+
           tooltip.html( "<b>" + d.hostname + "</b>"  + "<br/>" +
-          "<span style='color:" + color + ";'>" + d.st_spectype + +d.sub_class+ " "+ d.lum_class+"</span><br/>" +
-          yLabel + ": " + Math.round(d.st_lum * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d.st_teff * 1000) / 1000 
+          "<span style='color:" + color + ";'>" + d.st_spectype +subC(d) + " "+ d.lum_class+"</span><br/>" +
+          yLabel + ": " + Math.round(d.st_lum * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d.st_bv * 1000) / 1000 
           )
           .style("left", (event.pageX -95) + "px")
           .style("top", (event.pageY -90) + "px")
@@ -334,7 +353,7 @@
         
       } );
 
-      var yScaleAux;
+      var yScaleAux = yScale;
       var xScaleAux = xScale;
       function zoomed(event) {
           // create new scale ojects based on event
@@ -347,7 +366,7 @@
           if (event.sourceEvent && event.sourceEvent.type !=="brush") { 
 
               if(event.sourceEvent.x < 350 || event.sourceEvent.x >1260 || event.sourceEvent.y<90 || event.sourceEvent.y>730 ){
-                  console.log( window.scrollBy(0, event.sourceEvent.deltaY));
+          
                   window.scrollBy(0, event.sourceEvent.deltaY);
                   return;
               }
@@ -424,21 +443,7 @@
               
       }
      
-      var xLre = [];
-      const pointNum = 36;
-      const pointNum2 = 200;
-      const xDomain = 0.398;
-      var pp, xTemp, yTemp;
-      
-      for(let i = -7.6; i<=pointNum2; i++){
-          xTemp = xDomain / pointNum * i;
-          
-         // yTemp = cx2*xTemp**2+xTemp*cx +c+cx3*xTemp**3 +cx4*xTemp**4 //+ cx5*xTemp**5 + cx6*xTemp**6;
-          yTemp =  1.3989  -4.3335 *xTemp +24.1944 *xTemp**2 -75.2543 *xTemp**3 +104.0721 *xTemp**4  -71.7930*xTemp**5 + 24.2841*xTemp**6  -3.2161 *xTemp**7;//+0.3812 *xTemp**6
-         // console.log(xTemp)
-          pp = {x:xTemp,y:yTemp};
-          xLre.push(pp);
-      }
+     
      
 
    
@@ -488,7 +493,7 @@
       .attr('class', 'svgTime')
       .attr('width', innerWidth+60)
       .attr('height', 80)
-      .attr('transform', `translate(${400},${-10})`);
+      .attr('transform', `translate(${400},${-310})`);
       svgBEnter.merge(svgB);
       const svgBT = d3.selectAll('.svgTime');
 
@@ -506,9 +511,9 @@
           .attr("class", 'cell')
               .attr("transform",  "translate(-109,-20)");
 
-              const xScaleR = d3.scaleLinear()
-              .domain(xScale.domain())
-              .range([0,innerWidth]);
+      const xScaleR = d3.scaleLinear()
+      .domain(xScale.domain())
+      .range([0,innerWidth]);
 
 
       var brush = d3.brushX()
@@ -608,19 +613,29 @@
 
           const lines2 = gZ.merge(gZEnter).selectAll('.line-pathS').data(xLre);
 
+          console.log(xLre);
+
+      
           lines2.enter()
-           .append("path")
-           .merge(lines2)
-             .datum(xLre)
-             .attr('class', 'line-pathS')
-             .attr("fill", "none")
-             .attr("stroke", "steelblue")
-             .attr("stroke-width", 1.5)
-             .attr("d", d3.line()
-               .x(function(d) { return xScale(d.x) })
-               .y(function(d) { return yScale(d.y) })
-               );
-               lines2.exit().remove();
+          .append("path")
+          .merge(lines2)
+              .datum(xLre)
+              .attr('class', 'line-pathS')
+              .attr("fill", "none")
+              .attr("stroke", "steelblue")
+              .attr("stroke-width", 1.5)
+              .attr("d", d3.line()
+              .x(function(d) { return xScale(d.x) })
+              .y(function(d) { return yScale(d.y) })
+              );
+              lines2.exit().remove();
+       
+             
+          // catch(error){
+          //     console.error(error);
+          // }
+
+        
    
       d3.selectAll('.circleG')
       .on('mouseover', tipMouseover)
@@ -701,7 +716,7 @@
       const domain = [min,max];
       const axisLabel = fc
       .axisBottom(xScale2)
-      .tickValues([...domain, (domain[1] + domain[0]) / 2])
+      .tickValues([...domain, (domain[1] + domain[0]) *0.15, (domain[1] + domain[0]) *0.85,(domain[1] + domain[0]) / 2])
       .tickSize(15)
       .tickSizeOuter(0);  
     
@@ -721,13 +736,13 @@
 
   const treemap = (selection, props) => {
 
-      const { dataJ} = props;
+      const { dataJ,sss} = props;
 
       d3.nest()
       .key(d => d.st_spectype)
       .entries(dataJ);
      // console.log(nested1)
-      const width = 320;
+      const width = 360;
       const height = 320;
 
       d3.scaleOrdinal()
@@ -738,7 +753,13 @@
 
       d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/barPlot.csv').then(data => {
 
-
+      const tStars = [{"Spectral_Type":"B", "total":4 },
+      {"Spectral_Type":"A", "total":19 },
+      {"Spectral_Type":"F", "total":94 },
+      {"Spectral_Type":"G", "total":239 },
+      {"Spectral_Type":"K", "total":380 },
+      {"Spectral_Type":"M", "total":2403 },
+      ];
 
           var subgroups = data.columns.slice(1);
 
@@ -755,7 +776,7 @@
     
       // Add Y axis
        const y = d3.scaleLinear()
-          .domain([0, 1460])
+          .domain([0, 2500])
           .range([ height, 0 ]);
           selection.append("g")
           .call(d3.axisRight(y))
@@ -805,11 +826,19 @@
 
       // Three function that change the tooltip when user hover / move / leave a cell
       const mouseover = function(event, d) {
-         
+        
           const subgroupName = d3.select(this.parentNode).datum().key;
           const subgroupValue = d.data[subgroupName];
+          const subgroupU = +d.data["Unlabeled"];
+          const subgroupL = +d.data["Labeled"];
+          var subgroupTotal = subgroupU+subgroupL;
+          var tolSpect = d.data.Spectral_Type;
+
+          
+          var color2 = color(d.data.Spectral_Type);
           tooltip
-              .html("Data Type: " + subgroupName + "<br>" + "Instances: " + subgroupValue)
+              .html( "<span style='color:" + color2 + ";'>"+"Spectral Type: "+ d.data.Spectral_Type+"</span>" +"<br>"+"Data Type: " + subgroupName + "<br>" + "Instances: " + subgroupValue+ "</br>"
+              + "% of type in the exoplanet database: "+  Math.round((subgroupTotal/3144*100+ Number.EPSILON)*100)/100 +"%")
               .style("opacity", 1);
               // .style("left", (event.pageX -95) + "px")
               // .style("top", (event.pageY -90) + "px")
@@ -817,11 +846,59 @@
               //     .duration(200) 
               //     .style("fill-opacity", .9) 
               //     .style('display','block'); 
+          if(subgroupName === "Labeled"){
+              d3.selectAll('.circleG')
+              .style('fill',function(d){
+                if(d.st_spectype !==tolSpect ){
+                  return "grey"
+                }
+                else {
+                  return  sss(d => d.cluster)
+                }
+              })
+              .style('opacity',function(d){
+                  if(d.st_spectype !==tolSpect ){
+                    return 0.2
+                  }
+                  else {
+                    return  1
+                  }
+                });
+
+                d3.selectAll('.rectP')
+                .style("fill", "grey")
+                .style('opacity', 0.025);
+          }
+          if(subgroupName === "Unlabeled"){
+              d3.selectAll('.rectP')
+              .style('fill',function(d){
+                if(d.st_spectype !==tolSpect ){
+                  return "grey"
+                }
+                else {
+                  return  sss(d => d.cluster)
+                }
+              })
+              .style('opacity',function(d){
+                  if(d.st_spectype !==tolSpect ){
+                    return 0.02
+                  }
+                  else {
+                    return  1
+                  }
+                });
+
+             
+                d3.selectAll('.circleG')
+                .style("fill", "grey")
+                .style('opacity', 0.2);
+          }
+             
               
         };
         const mousemove = function(event, d) {
-          tooltip.style("left", (event.pageX-62) + "px")
-          .style("top", (event.pageY-50) + "px")
+          tooltip.style("left", (event.pageX-152) + "px")
+          .style("top", (event.pageY-90) + "px")
           .transition()
               .duration(200) 
               .style("fill-opacity", .9) 
@@ -830,7 +907,22 @@
         const mouseleave = function(event, d) {
           tooltip
             .style("opacity", 0);
+
+            d3.selectAll('.circleG')
+              .style('fill',function(d){
+             
+                  return  sss(d => d.cluster)
+              })
+              .style('opacity',1);
+
+              d3.selectAll('.rectP')
+              .style('fill',function(d){
+             
+                  return  sss(d => d.cluster)
+              })
+              .style('opacity',1);
         };
+      
       
       selection.append("g")
       .selectAll("g")
@@ -842,22 +934,86 @@
           // enter a second time = loop subgroup per subgroup to add all rectangles
           .data(d => d)
           .join("rect")
-          .attr("x", d => x(d.data.Spectral_Type))
+          .attr("x", d => x(d.data.Spectral_Type)+2)
           .attr("y", d => y(d[1]))
           .attr("height", d => y(d[0]) - y(d[1]))
-          .attr("width",x.bandwidth())    
+          .attr("width",x.bandwidth()/2.5)    
+          // .attr("fill", function(d){
+            
+          //     if(d[0] === 0){
+          //         return(color(d.data.Spectral_Type))
+          //     }
+          //     else{
+          //         return "grey"
+          //     }
+          // })
           .attr("fill", function(d){
             
               if(d[0] === 0){
-                  return(color(d.data.Spectral_Type))
+                  return "steelblue"
               }
               else {
-                  return "grey"
+                  return "#b53333"
               }
           })
+          .attr("stroke",  d => color(d.data.Spectral_Type))
+          .attr('stroke-width', '1')
           .on("mouseover", mouseover)
           .on("mousemove", mousemove)
           .on("mouseleave", mouseleave);
+
+       
+
+
+
+  const mouseover2 = function(event, d) {
+         
+   
+      var color2 = color(d.Spectral_Type);
+      tooltip
+          .html( "<span style='color:" + color2 + ";'>"+"Spectral Type: "+ d.Spectral_Type+"</span>" +"</br>"+
+          "% of total Main Sequence stars: "+  Math.round((d.total/3144*100+ Number.EPSILON)*100)/100 +"%" )
+          .style("opacity", 1);
+          // .style("left", (event.pageX -95) + "px")
+          // .style("top", (event.pageY -90) + "px")
+          // .transition()
+          //     .duration(200) 
+          //     .style("fill-opacity", .9) 
+          //     .style('display','block'); 
+          
+    };
+
+    const mousemove2 = function(event, d) {
+      tooltip.style("left", (event.pageX-132) + "px")
+      .style("top", (event.pageY-50) + "px")
+      .transition()
+          .duration(200) 
+          .style("fill-opacity", .9) 
+          .style('display','block'); 
+    };
+
+          const x2 = d3.scaleBand()
+          .range([ 0, width ])
+          .domain(tStars.map(d => d.Spectral_Type))
+          .padding(0.2);
+
+          const y2 = d3.scaleLinear()
+          .domain([0, 2500])
+          .range([ height, 0]);
+
+          selection.append("g")
+          .selectAll("g")
+          // Enter in the stack data = loop key per key = group per group
+          .data(tStars)
+          .join("rect")
+              .attr("fill", d => color(d.Spectral_Type))
+              .attr("x", d => x2(d.Spectral_Type)+24)
+              .attr("y", d => y2(d.total))
+              .attr("height", d => height - y2(d.total))
+              .attr("width",x.bandwidth()/2.5)    
+              .on("mouseover", mouseover2)
+              .on("mousemove", mousemove2)
+              .on("mouseleave", mouseleave);
 
 
         
@@ -930,7 +1086,7 @@
   // menusCSS.style.top = `10px`;
 
   d3.selectAll('#menus')
-  .style('top', '1060px');
+  .style('top', '560px');
 
   var widthS = 1000,
   heightS = 860,
@@ -942,9 +1098,9 @@
   var dropSelect ="Star Colour (B-V) Range";
   var svgS = d3.select("body").append("svg")
     .attr('class', 'svgS')
-    .attr("width", 1460)
+    .attr("width", 1520)
     .attr("height", 1000)
-    .attr("transform", "translate(" + paddingS*2  + "," + paddingS * 1.4+ ")");
+    .attr("transform", "translate(" + paddingS*2  + "," + -160+ ")");
 
   var rr = Float32Array.from({ length: 1000 }, d3.randomNormal(0.55, 0.85));
 
@@ -955,6 +1111,24 @@
   var scale2 = scale.interpolator(mirror); // updates the scale’s interpolator
 
   var sss = scale2.domain(rr);
+
+  var xLreAux = [];
+  const pointNum = 36;
+  const pointNum2 = 200;
+  const xDomain = 0.398;
+  var pp, xTemp, yTemp;
+
+  for(let i = -7.6; i<=pointNum2; i++){
+      xTemp = xDomain / pointNum * i;
+      
+     // yTemp = cx2*xTemp**2+xTemp*cx +c+cx3*xTemp**3 +cx4*xTemp**4 //+ cx5*xTemp**5 + cx6*xTemp**6;
+      yTemp =  1.42437  -2.32118*xTemp +9.58316*xTemp**2 -36.71320*xTemp**3  +54.05569*xTemp**4  -37.56820*xTemp**5 + 12.45696 *xTemp**6  -1.59237*xTemp**7;//+0.3812 *xTemp**6
+     // console.log(xTemp)
+      pp = {x:xTemp,y:yTemp};
+      xLreAux.push(pp);
+  }
+
+  var xLre = xLreAux;
 
   d3.selectAll('#toggleS')
   .style('right', '1200')
@@ -1017,11 +1191,32 @@
 
       dataJ = dataSt.concat(dataSt2);
 
-    //  console.log(result)
-    
-    
+     d3.nest()
+      .key(d => d.st_spectype)
+      .entries(dataSt2);
 
-     d3.selectAll('.legend').remove();
+     
+      
+      console.log(dataSt2);
+    
+    
+  //   console.log(dataJ)
+
+  //   // let csvContent = "data:text/csv;charset=utf-8," 
+  //   // + dataSt.map(e => e.join(",")).join("\n");
+  //   var lineArray = [];
+  //   dataJ.forEach(function (infoArray, index) {
+      
+  //    if(infoArray.lum_class === "V")
+  //     lineArray.push(infoArray.st_bv)
+    
+  // });
+  // console.log(lineArray)
+  // var csvContent = lineArray.join("\n");
+  // console.log(csvContent)
+  //   var encodedUri = encodeURI(csvContent);
+  //   window.open(encodedUri);
+
 
      const gLegendEnter = svgS.append('g')
      .attr('class', 'legend');
@@ -1061,6 +1256,7 @@
       colorValue: d => d.st_bv,
       data: dataSt,
       data2: dataSt2,
+      xLre
     
 
   });
@@ -1076,7 +1272,8 @@
      .attr('transform', `translate(${ widthS+60},${heightS -440})`)
      .merge(gTreeEnter)
      .call(treemap, {
-         dataJ
+         dataJ,
+         sss
         // onLegendChange: onLegendChange,
      });
 
@@ -1099,7 +1296,7 @@
 
     
      //d3.symbols.map(s => d3.symbol().size(220).type(s)())
-      console.log(shape.range());
+   
      //
      d3.selectAll('.legendST').remove();
 
@@ -1138,7 +1335,7 @@
 
 
 
-  d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/AAStars.csv').then(dataS => {
+  d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/AAStarsComp.csv').then(dataS => {
 
       dataS.forEach(d => { 
 
@@ -1170,6 +1367,18 @@
        
           d.st_lumN = 10**d.st_lum;
         d.st_bv = (0.021*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        if(d.st_teff > 11000 && d.st_teff < 21000 ){
+          d.st_bv = (0.012*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
+        if(d.st_teff > 21000 && d.st_teff < 30000){
+          d.st_bv = (0.010*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
+        if(d.st_teff > 30000){
+          d.st_bv = (0.008*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
+        if(d.st_teff < 2600){
+          d.st_bv = (0.018*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
     
        
       });
@@ -1182,7 +1391,7 @@
   });
 
 
-  d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/NNStars.csv').then(dataS2 => {
+  d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/NNStarsComp.csv').then(dataS2 => {
 
       dataS2.forEach(d => { 
 
@@ -1198,8 +1407,8 @@
           d.sy_gaiamag = +d.sy_gaiamag;
           d.sy_bmag = +d.sy_bmag; 
           d.sy_vmag = +d.sy_vmag; 
-          d.sub_class  = null;
-          d.lum_class = "";
+          d.sub_class  = "";
+          d.lum_class =  d.lum_class;
       });
 
       dataS2.forEach(d => { 
@@ -1214,6 +1423,18 @@
        
           d.st_lumN = 10**d.st_lum;
         d.st_bv = (0.021*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        if(d.st_teff > 11000 && d.st_teff < 21000 ){
+          d.st_bv = (0.012*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
+        if(d.st_teff > 21000 && d.st_teff < 30000){
+          d.st_bv = (0.008*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
+        if(d.st_teff > 30000){
+          d.st_bv = (0.010*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
+        if(d.st_teff < 2600){
+          d.st_bv = (0.018*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
+        }
     
        
       });
