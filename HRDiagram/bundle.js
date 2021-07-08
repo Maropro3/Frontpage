@@ -129,9 +129,11 @@
     //  d3.selectAll('.svgX').remove()
       
       const xScale = d3.scaleLinear()
-      .domain([-0.4,2.4])
+      .domain([-0.4,2.5])
       .range([0,innerWidth])
       .nice();
+    
+      
 
       // const x2Dom = [2000,2900,3110,3320,3570,3870,4250,4670,5000,5200,5870,6820,8050,10100,1350,20000]
        const x2Dom = [2800,3450,4790,6900,50000];
@@ -153,9 +155,7 @@
       .range(x2Range)
       .base(2);
      
-      // var x2Scale = d3.scaleBand()
-      // .domain(["Long name", "Another One", "Here", "And this is", "The end"])         // This is what is written on the Axis: from 0 to 100
-      // .range(x2Range);     
+
 
       // [innerWidth,innerWidth*13/14,innerWidth*12/14,innerWidth*11/14,innerWidth*10/14,innerWidth*9/14,innerWidth*8/14,
       //     innerWidth*7/14,innerWidth*6/14,innerWidth*5/14,innerWidth*4/14,innerWidth*3/14,innerWidth*2/14,innerWidth*1/14,0]
@@ -175,8 +175,7 @@
 
       const x2Axis = d3.axisTop(x2Scale)
       .tickSize(-7)
-      // .tickValues([40000,10000,5000,4000,3000])
-      .ticks(5)
+      .tickValues([40000,10000,5000,4000,3000])
       .tickPadding(20);
 
       const yAxisG = g.select('.yAxis');
@@ -297,6 +296,8 @@
          // hideT.style.display = "block";
           
           var color = colorScale(colorValue(d));
+          var xM = d3.pointer(event, gZEnter.node())[0];
+          var  yM = d3.pointer(event, gZEnter.node())[1];
 
           d3.select(this)
           .attr('stroke-width', '2')
@@ -316,8 +317,8 @@
           "<span style='color:" + color + ";'>" + d.st_spectype +subC(d) + " "+ d.lum_class+"</span><br/>" +
           yLabel + ": " + Math.round(d.st_lum * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d.st_bv * 1000) / 1000 
           )
-          .style("left", (event.pageX -95) + "px")
-          .style("top", (event.pageY -90) + "px")
+          .style("left", (xM +310) + "px")
+          .style("top", (yM +340) + "px")
           .transition()
               .duration(200) 
               .style("fill-opacity", .9) 
@@ -354,8 +355,6 @@
         
       } );
 
-      
-
       var yScaleAux = yScale;
       var xScaleAux = xScale;
       function zoomed(event) {
@@ -373,7 +372,6 @@
                   window.scrollBy(0, event.sourceEvent.deltaY);
                   return;
               }
-             
               
               else {
                   var new_xScale = event.transform.rescaleX(xScale);
@@ -655,20 +653,15 @@
       .on('mouseout', tipMouseout);
 
       d3.selectAll('.circleG').exit().remove();
-
-   
       
       d3.selectAll('.svgS').call(d3.zoom()
       .filter((event) => { 
           console.log(event);
-       if(event.clientX <window.innerWidth*0.80 && event.clientX >window.innerWidth*0.225 ){
-           if(event.clientY <window.innerWidth*0.90 && event.clientY >window.innerHeight*0.10 )
+       if(event.clientX <window.innerWidth*0.75 && event.clientX >window.innerWidth*0.225 ){
+          
           return !event.path[0].classList.contains('container') 
        }
-         })
-      .extent([[0, 0], [innerWidth, innerHeight]])
-      .scaleExtent([1, 50])
-      .translateExtent([[0, 0], [innerWidth, innerHeight]]).on("zoom",zoomed));
+         }).extent([[0, 0], [innerWidth, innerHeight]]).scaleExtent([1, 50]).translateExtent([[0, 0], [innerWidth, innerHeight]]).on("zoom",zoomed));
 
       circles.exit().remove();
 
@@ -761,7 +754,7 @@
 
   const treemap = (selection, props) => {
 
-      const { dataJ,sss} = props;
+      const { dataJ,sss, gZEnter} = props;
 
       d3.nest()
       .key(d => d.st_spectype)
@@ -932,8 +925,10 @@
               
         };
         const mousemove = function(event, d) {
-          tooltip.style("left", (event.pageX-152) + "px")
-          .style("top", (event.pageY-90) + "px")
+          var xM = d3.pointer(event, gZEnter.node())[0];
+          var  yM = d3.pointer(event, gZEnter.node())[1];
+          tooltip.style("left", (xM+1110) + "px")
+          .style("top", (yM+650) + "px")
           .transition()
               .duration(200) 
               .style("fill-opacity", .9) 
@@ -1056,8 +1051,10 @@
     };
 
     const mousemove2 = function(event, d) {
-      tooltip.style("left", (event.pageX-132) + "px")
-      .style("top", (event.pageY-50) + "px")
+      var xM = d3.pointer(event, gZEnter.node())[0];
+          var  yM = d3.pointer(event, gZEnter.node())[1];
+          tooltip.style("left", (xM+1126) + "px")
+          .style("top", (yM+700) + "px")
       .transition()
           .duration(200) 
           .style("fill-opacity", .9) 
@@ -1345,7 +1342,8 @@
      .merge(gTreeEnter)
      .call(treemap, {
          dataJ,
-         sss
+         sss,
+         gZEnter: gTreeEnter
         // onLegendChange: onLegendChange,
      });
 

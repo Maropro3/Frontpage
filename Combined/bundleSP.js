@@ -728,8 +728,12 @@
        var tipMouseover = function(event,d) {
 
           // hideT.style.display = "block";
+         
            
            var color = colorScale(colorValue(d));
+
+           var xM = d3.pointer(event, gZEnter.node())[0];
+          var  yM = d3.pointer(event, gZEnter.node())[1];
 
            d3.select(this)
            .attr('stroke-width', '2')
@@ -740,8 +744,9 @@
            "<span style='color:" + color + ";'>" + d.discoverymethod + "</span><br/>" +
            yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
            )
-           .style("left", (event.pageX -90.5) + "px")
-           .style("top", (event.pageY -90) + "px")
+           .style("left", (xM+945 ) + "px")
+           .style("top", (yM +274) + "px")
+           //.style("transform", "translate(" + event.pageX + ", " +event.pageY  + ")")
            .transition()
                .duration(200) 
                .style("fill-opacity", .9) 
@@ -1150,6 +1155,7 @@
            const x2M = d3.pointer(event, tipBox.node())[0]+1;
            d3.pointer(event, tipBox.node())[1];
 
+
           
            const dataR = dataPure;
            
@@ -1166,14 +1172,14 @@
            dataRR.sort((a,b) => (a.value < b.value) ? 1:(b.value < a.value) ? -1:0);
 
            tooltipLine.attr('stroke', '#f5f0e1')
-               .attr('x1', xM)
-               .attr('x2', x2M)
+               .attr('x1', xM )
+               .attr('x2', x2M )
                .attr('y1', 0)
                .attr('y2', innerHeight);
            
            tooltip.html( "<b>" + month + "-" + yearP.getFullYear() +"<p>")
                .style('display', 'block')
-               .style("left", (event.pageX +20) + "px")
+               .style("left", (xM +200 ) + "px")
                .style("top", (event.pageY -45) + "px")
                .selectAll()
                .data(dataRR).enter()

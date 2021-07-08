@@ -3,6 +3,8 @@ body {
    
     background-color: rgb(31, 31, 31);
     overflow-x: hidden;
+    width: 2000px;
+   
 }
 
 text {
@@ -296,16 +298,17 @@ stroke: rgb(160, 155, 155);
   }
 
   .textIntro{
-    position: relative;
-    width: 1920px;
-  
     text-align: center;
-    
     color:#bdb5b0;
 }
 
-g.x2Axis{
-  max-width: 750px;
+.textIntro{
+  position: relative;
+  width: 1920px;
+
+  text-align: center;
+  
+  color:#bdb5b0;
 }
 
 
@@ -377,3 +380,4 @@ g.x2Axis{
     height: 300px
   }
 }
+

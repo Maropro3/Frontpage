@@ -199,7 +199,8 @@ const renderS = () =>{
    .merge(gTreeEnter)
    .call(treemap, {
        dataJ,
-       sss
+       sss,
+       gZEnter: gTreeEnter
       // onLegendChange: onLegendChange,
    });
 

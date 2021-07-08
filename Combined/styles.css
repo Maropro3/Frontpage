@@ -238,14 +238,19 @@ text {
 
 
 @media only screen and (max-width:1728px) {
+  
+ 
     body {
      
       transform: scale(0.9);
       -moz-transform: scale(0.9);
       -webkit-transform: scale(0.9);
       transform-origin: 0 0;
-      height: 550px
+      height: 550px;
+      width: 1728px;
     }
+   
+   
   }
   
   @media only screen and (max-width:1536px) {

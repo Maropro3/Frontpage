@@ -1,6 +1,6 @@
 export const treemap = (selection, props) => {
 
-    const { dataJ,sss} = props;
+    const { dataJ,sss, gZEnter} = props;
 
     const nested1 = d3.nest()
     .key(d => d.st_spectype)
@@ -172,8 +172,10 @@ export const treemap = (selection, props) => {
             
       }
       const mousemove = function(event, d) {
-        tooltip.style("left", (event.pageX-152) + "px")
-        .style("top", (event.pageY-90) + "px")
+        var xM = d3.pointer(event, gZEnter.node())[0]
+        var  yM = d3.pointer(event, gZEnter.node())[1]
+        tooltip.style("left", (xM+1110) + "px")
+        .style("top", (yM+650) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
@@ -296,8 +298,10 @@ const mouseover2 = function(event, d) {
   }
 
   const mousemove2 = function(event, d) {
-    tooltip.style("left", (event.pageX-132) + "px")
-    .style("top", (event.pageY-50) + "px")
+    var xM = d3.pointer(event, gZEnter.node())[0]
+        var  yM = d3.pointer(event, gZEnter.node())[1]
+        tooltip.style("left", (xM+1126) + "px")
+        .style("top", (yM+700) + "px")
     .transition()
         .duration(200) 
         .style("fill-opacity", .9) 

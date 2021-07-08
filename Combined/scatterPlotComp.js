@@ -178,8 +178,32 @@ export const scatterPlot = (selection, props) => {
     var tipMouseover = function(event,d) {
 
        // hideT.style.display = "block";
+      
         
         var color = colorScale(colorValue(d));
+        var offsetX = 0; 
+        var offsetY = 0; 
+
+        var xM = d3.pointer(event, gZEnter.node())[0]
+       var  yM = d3.pointer(event, gZEnter.node())[1]
+        // const xM = d3.pointer(event, tipBox.node())[0];
+
+       if(window.innerWidth<1728 && window.innerWidth>1534 ){
+        offsetX = 125
+        offsetY = 50
+       }
+       else if(window.innerWidth<1534 && window.innerWidth>1344){
+        offsetX = 125*2
+        offsetY = 50*2
+       }
+       else if(window.innerWidth<1344 && window.innerWidth>1152){
+        offsetX = 125*3
+        offsetY = 50*3.5
+       }
+       else if(window.innerWidth<1152 && window.innerWidth>900){
+        offsetX = 125*4
+        offsetY = 50*4.5
+       }
 
         d3.select(this)
         .attr('stroke-width', '2')
@@ -190,8 +214,9 @@ export const scatterPlot = (selection, props) => {
         "<span style='color:" + color + ";'>" + d.discoverymethod + "</span><br/>" +
         yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
         )
-        .style("left", (event.pageX -90.5) + "px")
-        .style("top", (event.pageY -90) + "px")
+        .style("left", (xM+945 ) + "px")
+        .style("top", (yM +274) + "px")
+        //.style("transform", "translate(" + event.pageX + ", " +event.pageY  + ")")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 

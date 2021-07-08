@@ -286,8 +286,27 @@ export const colorLegend = (selection, props) => {
   }
 
   const mousemove = function(event, d) {
-    tooltip.style("left", (event.pageX-242) + "px")
-    .style("top", (event.pageY-160) + "px")
+    var offsetX = 0; 
+    var offsetY = 0; 
+
+   if(window.innerWidth<1728 && window.innerWidth>1534 ){
+    offsetX = 55
+    offsetY = 50
+   }
+   else if(window.innerWidth<1534 && window.innerWidth>1344){
+    offsetX = 55*2
+    offsetY = 50*2
+   }
+   else if(window.innerWidth<1344 && window.innerWidth>1152){
+    offsetX = 55*3
+    offsetY = 50*3
+   }
+   else if(window.innerWidth<1152 && window.innerWidth>900){
+    offsetX = 55*4
+    offsetY = 50*4
+   }
+    tooltip.style("left", (event.pageX-242+offsetX) + "px")
+    .style("top", (event.pageY+offsetY) + "px")
     .transition()
         .duration(200) 
         .style("fill-opacity", .9) 

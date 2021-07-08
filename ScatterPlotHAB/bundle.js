@@ -335,6 +335,9 @@
            
            var color = colorScale(colorValue(d));
            var color2 = colorScaleSol(d.pl_name);
+
+           var xM = d3.pointer(event, gZEnter.node())[0];
+           var  yM = d3.pointer(event, gZEnter.node())[1];
            
 
            d3.select(this)
@@ -368,8 +371,8 @@
            yLabel + ": " + Math.round(d[yColName] * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d[xColName] * 1000) / 1000 +
            "<br/>"+"<span style='color:" + color3 + ";'>"+"<b>" + habZ + "</b>"+"</span>"
            )
-           .style("left", (event.pageX -80) + "px")
-           .style("top", (event.pageY-136 ) + "px")
+           .style("left", (xM +340) + "px")
+           .style("top", (yM+1280 ) + "px")
            .transition()
                .duration(200) 
                .style("fill-opacity", .9) 

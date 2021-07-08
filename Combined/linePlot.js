@@ -227,6 +227,7 @@ export const linePlot = (selection,props) => {
         const x2M = d3.pointer(event, tipBox.node())[0]+1;
         const yM = d3.pointer(event, tipBox.node())[1];
 
+
        
         const dataR = dataPure;
         
@@ -243,14 +244,14 @@ export const linePlot = (selection,props) => {
         dataRR.sort((a,b) => (a.value < b.value) ? 1:(b.value < a.value) ? -1:0)
 
         tooltipLine.attr('stroke', '#f5f0e1')
-            .attr('x1', xM)
-            .attr('x2', x2M)
+            .attr('x1', xM )
+            .attr('x2', x2M )
             .attr('y1', 0)
             .attr('y2', innerHeight);
         
         tooltip.html( "<b>" + month + "-" + yearP.getFullYear() +"<p>")
             .style('display', 'block')
-            .style("left", (event.pageX +20) + "px")
+            .style("left", (xM +200 ) + "px")
             .style("top", (event.pageY -45) + "px")
             .selectAll()
             .data(dataRR).enter()
