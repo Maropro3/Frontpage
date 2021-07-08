@@ -75,11 +75,9 @@ export const scatterPlotS = (selection, props) => {
   //  d3.selectAll('.svgX').remove()
     
     const xScale = d3.scaleLinear()
-    .domain([-0.4,2.5])
+    .domain([-0.4,2.4])
     .range([0,innerWidth])
     .nice()
-  
-    
 
     // const x2Dom = [2000,2900,3110,3320,3570,3870,4250,4670,5000,5200,5870,6820,8050,10100,1350,20000]
      const x2Dom = [2800,3450,4790,6900,50000]
@@ -101,7 +99,9 @@ export const scatterPlotS = (selection, props) => {
     .range(x2Range)
     .base(2)
    
-
+    // var x2Scale = d3.scaleBand()
+    // .domain(["Long name", "Another One", "Here", "And this is", "The end"])         // This is what is written on the Axis: from 0 to 100
+    // .range(x2Range);     
 
     // [innerWidth,innerWidth*13/14,innerWidth*12/14,innerWidth*11/14,innerWidth*10/14,innerWidth*9/14,innerWidth*8/14,
     //     innerWidth*7/14,innerWidth*6/14,innerWidth*5/14,innerWidth*4/14,innerWidth*3/14,innerWidth*2/14,innerWidth*1/14,0]
@@ -121,7 +121,8 @@ export const scatterPlotS = (selection, props) => {
 
     const x2Axis = d3.axisTop(x2Scale)
     .tickSize(-7)
-    .tickValues([40000,10000,5000,4000,3000])
+    // .tickValues([40000,10000,5000,4000,3000])
+    .ticks(5)
     .tickPadding(20);
 
     const yAxisG = g.select('.yAxis');
@@ -302,6 +303,8 @@ export const scatterPlotS = (selection, props) => {
       
     } );
 
+    
+
     var yScaleAux = yScale;
     var xScaleAux = xScale;
     function zoomed(event) {
@@ -319,6 +322,7 @@ export const scatterPlotS = (selection, props) => {
                 window.scrollBy(0, event.sourceEvent.deltaY);
                 return;
             }
+           
             
             else{
                 var new_xScale = event.transform.rescaleX(xScale);
@@ -600,8 +604,20 @@ export const scatterPlotS = (selection, props) => {
     .on('mouseout', tipMouseout);
 
     d3.selectAll('.circleG').exit().remove();
+
+ 
     
-    d3.selectAll('.svgS').call(d3.zoom().extent([[0, 0], [innerWidth, innerHeight]]).scaleExtent([1, 50]).translateExtent([[0, 0], [innerWidth, innerHeight]]).on("zoom",zoomed));
+    d3.selectAll('.svgS').call(d3.zoom()
+    .filter((event) => { 
+        console.log(event)
+     if(event.clientX <window.innerWidth*0.80 && event.clientX >window.innerWidth*0.225 ){
+         if(event.clientY <window.innerWidth*0.90 && event.clientY >window.innerHeight*0.10 )
+        return !event.path[0].classList.contains('container') 
+     }
+       })
+    .extent([[0, 0], [innerWidth, innerHeight]])
+    .scaleExtent([1, 50])
+    .translateExtent([[0, 0], [innerWidth, innerHeight]]).on("zoom",zoomed));
 
     circles.exit().remove();
 

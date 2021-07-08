@@ -422,7 +422,7 @@
 
     svg = d3.select("body").append("svg")
     .attr('class', 'svgSPLOM')
-    .attr("width", size * 5 + padding)
+    .attr("width", size * 5 + padding+20)
     .attr("height", size * 5 + padding +100)
     .attr("transform", "translate(" + offset + "," + padding * 2 + ")");
     

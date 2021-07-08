@@ -303,46 +303,116 @@ body{
 }
 
 a.buttonExplore {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    display:block;
-    width:50%;
-    height:10%;
-   float: left;
-    
-    /* background-color: #08007e; */
-  position: relative;
-  left:25%;
-  top:64%;
-  /* left: 98px;
-  top: 320px; */
-    background-image: url("SVG_sources/Explore_B.svg") ;
-    background-repeat: no-repeat;
-    
-    padding: 15px 32px;
-    text-decoration: none;
-    
-}
-a.buttonExplore:hover {
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
   display:block;
   width:50%;
-    height:10%;
+  height:10%;
  float: left;
   
   /* background-color: #08007e; */
 position: relative;
 left:25%;
-  top:64%;
-  background-image: url("SVG_sources/Explore_A.svg") ;
+top:64%;
+/* left: 98px;
+top: 320px; */
+  background-image: url("SVG_sources/Explore_B.svg") ;
   background-repeat: no-repeat;
   
   padding: 15px 32px;
   text-decoration: none;
   
+}
+a.buttonExplore:hover {
+-webkit-appearance: button;
+-moz-appearance: button;
+appearance: button;
+display:block;
+width:50%;
+  height:10%;
+float: left;
+
+/* background-color: #08007e; */
+position: relative;
+left:25%;
+top:64%;
+background-image: url("SVG_sources/Explore_A.svg") ;
+background-repeat: no-repeat;
+
+padding: 15px 32px;
+text-decoration: none;
+
+}
+
+@media only screen and (max-width:1728px) {
+  a#buttonExplore1{
+
+  left:25%;
+  top:60%;
+    
+  }
+  a#buttonExplore1:hover {
+ 
+    left:25%;
+    top:60%;
+  }
+  a#buttonExplore3{
+
+    left:25%;
+    top:60%;
+      
+    }
+    a#buttonExplore3:hover {
+   
+      left:25%;
+      top:60%;
+    }
+}
+
+@media only screen and (max-width:1342px) {
+  a#buttonExplore4{
+
+    left:25%;
+    top:60%;
+      
+    }
+    a#buttonExplore4:hover {
+   
+      left:25%;
+      top:60%;
+    }
+
+}
+
+@media only screen and (max-width:1300px) {
+  a#buttonExplore1{
+
+    left:25%;
+    top:54%;
+      
+    }
+    a#buttonExplore1:hover {
+   
+      left:25%;
+      top:54%;
+    }
+
+}
+
+@media only screen and (max-width:1133px) {
+  a#buttonExplore2{
+
+    left:25%;
+    top:54%;
+      
+    }
+    a#buttonExplore2:hover {
+   
+      left:25%;
+      top:54%;
+    }
+
 }
 
 

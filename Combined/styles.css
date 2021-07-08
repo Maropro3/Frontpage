@@ -7,6 +7,7 @@ body {
     
 }
 
+
 body::-webkit-scrollbar {
     display: none;
 }
@@ -227,6 +228,80 @@ text {
 }
 
 .textIntro{
+    position: relative;
+    width: 1920px;
+  
     text-align: center;
+    
     color:#bdb5b0;
 }
+
+
+@media only screen and (max-width:1728px) {
+    body {
+     
+      transform: scale(0.9);
+      -moz-transform: scale(0.9);
+      -webkit-transform: scale(0.9);
+      transform-origin: 0 0;
+      height: 550px
+    }
+  }
+  
+  @media only screen and (max-width:1536px) {
+   body {
+  
+    transform: scale(0.8);
+    -moz-transform:  scale(0.8);
+    -webkit-transform:  scale(0.8);
+    transform-origin: 0 0;
+    height: 500px
+    }
+  }
+  
+  @media only screen and (max-width:1344px) {
+    body {
+  
+      transform: scale(0.7);
+      -moz-transform:  scale(0.7);
+      -webkit-transform:  scale(0.7);
+      transform-origin: 0 0;
+      height: 450px
+    }
+  }
+  
+  @media only screen and (max-width:1152px) {
+    body {
+  
+  
+      transform: scale(0.6);
+      -moz-transform: scale(0.6);
+      -webkit-transform: scale(0.6);
+      transform-origin: 0 0;
+      height: 400px
+    }
+  }
+  
+  @media only screen and (max-width:960px) {
+    body {
+  
+      transform: scale(0.5);
+      -moz-transform: scale(0.5);
+      -webkit-transform:scale(0.5);
+      transform-origin: 0 0;
+     
+      height: 350px
+    }
+  }
+  
+  @media only screen and (max-width:768px) {
+    body {
+   
+  
+      transform: scale(0.4);
+      -moz-transform: scale(0.4);
+      -webkit-transform: scale(0.4);
+      transform-origin: 0 0;
+      height: 300px
+    }
+  }

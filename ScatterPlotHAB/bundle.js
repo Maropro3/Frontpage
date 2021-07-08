@@ -788,7 +788,13 @@
 
        d3.selectAll('.circleG').exit().remove();
        
-       d3.selectAll('#svgM').call(d3.zoom().extent([[0, 0], [innerWidth, innerHeight]]).scaleExtent([1, 10]).translateExtent([[0, 0], [innerWidth, innerHeight]])
+       d3.selectAll('#svgM').call(d3.zoom().filter((event) => { 
+           console.log(event);
+        if(event.clientX <window.innerWidth*0.75 && event.clientX >window.innerWidth*0.225 ){
+           
+           return !event.path[0].classList.contains('container') 
+        }
+          }).extent([[0, 0], [innerWidth, innerHeight]]).scaleExtent([1, 10]).translateExtent([[0, 0], [innerWidth, innerHeight]])
        .on("zoom", zoomed));
 
        circles.exit().remove();
