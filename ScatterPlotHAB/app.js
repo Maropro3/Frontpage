@@ -403,6 +403,8 @@ const colorScalePl = d3.scaleOrdinal()
        textOffset: 20,
        label: plTypes,
        onLegendChange: onLegendPLChange,
+       current: cfill,
+       colorScaleR: colorScale
    });
 
    gLegendPl.exit().remove();

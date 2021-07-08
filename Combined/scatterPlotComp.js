@@ -39,7 +39,7 @@ export const scatterPlot = (selection, props) => {
     const svgZM = selection.selectAll('.svgG').data([null]);
     const svgZMEnter = svgZM.enter().append('svg')
     .attr('class', 'svgG')
-    .attr('x',90)
+    .attr('x',120)
     .attr('y', 60)
     .attr("width", innerWidth)
     .attr("height", innerHeight)
@@ -61,11 +61,11 @@ export const scatterPlot = (selection, props) => {
     .attr('class', 'containerZ');
 
     gEnter.merge(g)
-    .attr('transform', `translate(${90},${60})`);
+    .attr('transform', `translate(${120},${60})`);
 
 
   //  d3.selectAll('.svgX').remove()
-  console.log(xColName)
+
 
     const xScale = d3.scaleLinear()
     .domain(d3.extent(dataF, xValue))
@@ -100,7 +100,7 @@ export const scatterPlot = (selection, props) => {
     .attr('transform', `rotate(270)`)
     .attr('fill', 'black')
     .attr('text-anchor', 'middle')
-    .attr('y', -70)
+    .attr('y', -60)
     .merge(yAxisG.select('.axis-label'))
     .attr('x', -innerHeight/2)
     .text(yLabel + yUnits);
@@ -190,7 +190,7 @@ export const scatterPlot = (selection, props) => {
         "<span style='color:" + color + ";'>" + d.discoverymethod + "</span><br/>" +
         yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
         )
-        .style("left", (event.pageX -95) + "px")
+        .style("left", (event.pageX -90.5) + "px")
         .style("top", (event.pageY -90) + "px")
         .transition()
             .duration(200) 
@@ -223,7 +223,7 @@ export const scatterPlot = (selection, props) => {
     function zoomed(event) {
         // create new scale ojects based on event
 
-        if(event.sourceEvent.x < 991 || event.sourceEvent.x >1640 || event.sourceEvent.y<180 || event.sourceEvent.y>640){
+        if(event.sourceEvent.x < 950 || event.sourceEvent.x >1780 || event.sourceEvent.y<220 || event.sourceEvent.y>740){
           
             window.scrollBy(0, event.sourceEvent.deltaY);
             return;
@@ -368,7 +368,7 @@ export const scatterPlot = (selection, props) => {
         //   .duration(2000)
         //   .style("opacity", 0)
         //   .remove()
-      console.log(dataF)
+
  
     d3.selectAll('.circleG')
     .on('mouseover', tipMouseover)

@@ -7,7 +7,7 @@ import {linePlot} from './linePlot'
 import {colorLegend} from './colorLegend'
   
 const svg = d3.select('#svgM')
- .attr('transform', `translate(${250},${0})`);;
+ .attr('transform', `translate(${290},${0})`);;
 const svgLP = d3.select('#svgLP');
 
 const width = 1200;
@@ -121,7 +121,7 @@ var dateRangeE = dateRange
 var methodsF = []
 //console.log(innerWidth)
 
-var sliderWidth = 1920/4.5 -150;
+var sliderWidth = 1920/4.5 -130;
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
@@ -133,14 +133,14 @@ function sleep(milliseconds) {
   }
 
 let menusCSS = document.querySelector("#menus");
-menusCSS.style.left = `${(width- width/4 +700)/6+650}px`;
+menusCSS.style.left = `${(width- width/4 +1260)/6+650}px`;
 menusCSS.style.top = `10px`;
 
 // let menus1CSS = document.querySelector("#graph");
 // menus1CSS.style.left = `${(width- width/4 +700)/6}px`;
 
  d3.selectAll('#svgM')
-.attr("transform", "translate(" +  900+ ", " +-780  + ")")
+.attr("transform", "translate(" +  920+ ", " +-780  + ")")
 
 const onLegendChange = (methodsF) => {
     methods = methodsF;
@@ -316,7 +316,7 @@ var gRangeXdef = d3
 //.attr('height', innerWidth/20)
 .append('g')
 .attr('class', 'sliderX')
-.attr('transform', `translate(${90},${height-150})`);
+.attr('transform', `translate(${90+40},${height-150})`);
 
 gRangeXdef.call(sliderRangeXdef);
 
@@ -358,7 +358,7 @@ var gRangeYdef = d3
 //.attr('height', innerWidth/20)
 .append('g')
 .attr('class', 'sliderY')
-.attr('transform', `translate(${190+sliderWidth},${height-150})`);
+.attr('transform', `translate(${190+sliderWidth+40},${height-150})`);
 
 gRangeYdef.call(sliderRangeYdef);
 
@@ -558,7 +558,7 @@ const render = () => {
         yValue: d => d[yColumn],
         yLabel: yLabelColumn,
         yColName: yColumn,
-        margin: { top:70, right: 180, bottom: 250, left:370},
+        margin: { top:70, right: 120, bottom: 250, left:370},
         width,
         height,
         xUnits,
@@ -571,24 +571,24 @@ const render = () => {
         data2: dataBuffer
    });
 
-   const gLegendEnter = svg.append('g')
-   .attr('class', 'legend');
+//    const gLegendEnter = svg.append('g')
+//    .attr('class', 'legend');
 
-   const gLegend = svg.selectAll('.legend').data([null]);
+//    const gLegend = svg.selectAll('.legend').data([null]);
 
-   gLegendEnter
-   .attr('transform', `translate(${ width- width/4 -140},${height/8 - 20})`)
-   .merge(gLegendEnter)
-   .call(colorLegendSP, {
-       colorScale,
-       circleRadius: 8,
-       spacing: 26,
-       textOffset: 20,
-       onLegendChange: onLegendChange,
-       methodsF
-   });
+//    gLegendEnter
+//    .attr('transform', `translate(${ width- width/4 -140},${height/8 - 20})`)
+//    .merge(gLegendEnter)
+//    .call(colorLegendSP, {
+//        colorScale,
+//        circleRadius: 8,
+//        spacing: 26,
+//        textOffset: 20,
+//        onLegendChange: onLegendChange,
+//        methodsF
+//    });
 
-   gLegend.exit().remove();
+//    gLegend.exit().remove();
 
    dataBuffer = dataF;
 
@@ -684,7 +684,7 @@ const renderLP = () => {
         //yValue: d => d[yColumn],
         yLabel: 'Total number of exoplanets discovered',
         //yColName: yColumn,
-        margin: { top:70, right: 10, bottom: 100, left:200},
+        margin: { top:70, right: 0, bottom: 100, left:200},
         width: widthLP,
         height: heightLP,
         //xUnits,
@@ -706,7 +706,7 @@ const renderLP = () => {
    const gLegendLP = svgLP.selectAll('.legendLP').data([null]);
 
    gLegendEnterLP
-   .attr('transform', `translate(${160},${100 })`)
+   .attr('transform', `translate(${200},${100 })`)
    .merge(gLegendEnterLP)
    .call(colorLegend, {
        colorScale,

@@ -1,5 +1,5 @@
 export const planetLegend = (selection, props) => {
-    const { colorScale, circleRadius, spacing, textOffset, onLegendChange} = props;
+    const { colorScale, circleRadius, spacing, textOffset, onLegendChange, current,colorScaleR} = props;
   
     var contClick = 0;
     var methodsF = [];
@@ -60,6 +60,8 @@ export const planetLegend = (selection, props) => {
      
     };
 
+    console.log(current)
+
     const onMouseover = function(event, d){
   
       d3.select(this).selectAll('circle')
@@ -68,6 +70,24 @@ export const planetLegend = (selection, props) => {
 
       // d3.select(this).selectAll('circle')
       // .attr("fill", "red")
+      var numC = d3.select(this).selectAll('text').text()
+      d3.selectAll('.circleG')
+      .style('fill',function(d){
+        if(d.pl_type !== numC){
+          return "grey"
+        }
+        else{
+          return  colorScaleR(d => d[current])
+        }
+      })
+      .style("opacity" ,function(d){
+        if(d.pl_type !== numC){
+          return 0.4
+        }
+        else{
+          return  1
+        }
+      })
     }
   
     const onMouseout = function(event, d){
@@ -75,6 +95,14 @@ export const planetLegend = (selection, props) => {
       d3.select(this).selectAll('circle')
       //.attr("stroke", "none")
       .attr('stroke-width', '2');
+
+      d3.selectAll('.circleG')
+      .style('fill',function(d){
+        
+          return colorScaleR(d => d[current])
+        
+      })
+      .style("opacity", 1)
       
     }
     const title = select.enter()

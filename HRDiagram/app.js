@@ -41,10 +41,10 @@ var sss = scale2.domain(rr)
 var xLreAux = [];
 const pointNum = 36;
 const pointNum2 = 200;
-const xDomain = 0.398;
+const xDomain = 0.42;
 var pp, xTemp, yTemp;
 
-for(let i = -7.6; i<=pointNum2; i++){
+for(let i = -12; i<=pointNum2; i++){
     xTemp = xDomain / pointNum * i;
     
    // yTemp = cx2*xTemp**2+xTemp*cx +c+cx3*xTemp**3 +cx4*xTemp**4 //+ cx5*xTemp**5 + cx6*xTemp**6;

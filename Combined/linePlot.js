@@ -32,12 +32,12 @@ export const linePlot = (selection,props) => {
     const svgZM = selection.selectAll('.svgGLP').data([null]);
     const svgZMEnter = svgZM.enter().append('svg')
     .attr('class', 'svgGLP')
-    .attr('x',150)
+    .attr('x',190)
     .attr('y', 60)
     .attr("width", innerWidth)
     .attr("height", innerHeight)
     .append("rect")
-    .attr('x',150)
+    .attr('x',190)
     .attr('y', 60)
     .attr("width", innerWidth)
     .attr("height", innerHeight)
@@ -67,7 +67,7 @@ export const linePlot = (selection,props) => {
     .attr('class', 'container');
 
     gEnter.merge(g)
-    .attr('transform', `translate(${150},${60})`);
+    .attr('transform', `translate(${190},${60})`);
 
     // var xValue = d => d[xColumn];
 
@@ -306,7 +306,7 @@ export const linePlot = (selection,props) => {
     const gT = svgBT.selectAll('.context').data([null]);
    const gTEnter = gT.enter().append("g")
     .attr("class", "context")
-   .attr("transform", "translate(" +10+ "," +  20+ ")");
+   .attr("transform", "translate(" +50+ "," +  20+ ")");
  
 
     //gTEnter.merge(g)

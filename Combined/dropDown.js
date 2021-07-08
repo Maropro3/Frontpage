@@ -25,12 +25,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+             
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+              
                 }
                 slider
                 .min(d3.min(dataF, d => d['st_mass']))
@@ -47,12 +47,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+               
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+                
                 }
                 slider
                 .min(d3.min(dataF, d => d['st_teff']))
@@ -69,12 +69,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+              
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+            
                 }
                 slider
                 .min(d3.min(dataF, d => d['st_rad']))
@@ -91,12 +91,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+   
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+ 
                 }
                 slider
                 .min(d3.min(dataF, d => d['st_lum']))
@@ -113,12 +113,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+         
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+          
                 }
                 slider
                 .min(d3.min(dataF, d => d['pl_bmasse']))
@@ -135,12 +135,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+            
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+    
                 }
                 slider
                 .min(d3.min(dataF, d => d['pl_rade']))
@@ -157,12 +157,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+                 
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+                 
                 }
                 slider
                 .min(d3.min(dataF, d => d['pl_orbper']))
@@ -179,12 +179,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+             
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+            
                 }
                 slider
                 .min(d3.min(dataF, d => d['pl_orbsmax']))
@@ -201,12 +201,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+                
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+              
                 }
                 slider
                 .min(d3.min(dataF, d => d['pl_dens']))
@@ -223,12 +223,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+               
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+             
                 }
                 slider
                 .min(d3.min(dataF, d => d['pl_eqt']))
@@ -267,12 +267,12 @@ export const dropDown = (selection, props) => {
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
                     d3.selectAll('.sliderX text').remove();
-                    console.log("okX");
+                 
                 }
                 if (axisD === "y") {
                     d3.selectAll('.sliderY g').remove();
                     d3.selectAll('.sliderY text').remove();
-                    console.log("okY");
+                   
                 }
                 slider
                 .min(d3.min(dataF, d => d['st_mass']))

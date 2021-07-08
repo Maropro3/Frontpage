@@ -41,9 +41,9 @@ svgL = d3.select("body").append("svg")
   
 
 var dataF = [];
-var dataF0;
-var dataF1;
-var dataF2;
+var dataF0 = [];
+var dataF1 = [];
+var dataF2 = [];
 var methods0 = [];
 var methods1 = [];
 var methods2 = [];
@@ -68,6 +68,11 @@ const onLegendChange = (methodsF) => {
   methodsFF = methodsF;
   
   d3.selectAll('.container').remove()
+  d3.selectAll('.cluster0').remove();
+  d3.selectAll('.cluster1').remove();
+  d3.selectAll('.cluster2').remove();
+  d3.selectAll('.cluster3').remove();
+  d3.selectAll('.cluster4').remove();
  // flag = 1;
  console.log(methodsF)
   render();
@@ -83,6 +88,16 @@ const onXColumnClick = (select, name) => {
 //  d3.selectAll('.svgL').remove()
 d3.selectAll('.legend').remove()
 d3.selectAll('.circleSP').remove()
+
+
+    d3.selectAll('.cluster0').remove();
+    d3.selectAll('.cluster1').remove();
+    d3.selectAll('.cluster2').remove();
+    d3.selectAll('.cluster3').remove();
+    d3.selectAll('.cluster4').remove();
+
+   
+
  // dataSelector()
  methodsFF = ['0','1', '2', '3', '4', '5', '6', '7', '8'];
  console.log("column")
@@ -95,6 +110,7 @@ d3.select('#menus')
     selectedOption: dropSelect,
    
     }
+
 ); 
 
 //clusterKNNBIG.csv
@@ -167,10 +183,13 @@ d3.select('#menus')
         var domainByTrait = {},
         traits = d3.keys(dataF[0]).filter(v => columns.includes(v)),
         n = traits.length;
-
+        if(selectedData == 0){
+            render()
+          }
+           
       
     
-        render();
+    
     });
 
     // clusterEM.csv
@@ -244,7 +263,10 @@ d3.select('#menus')
         traits = d3.keys(dataF[0]).filter(v => columns.includes(v)),
         n = traits.length;
       
-       
+        if(selectedData == 1){
+            render()
+          }
+           
 
     });
 
@@ -318,10 +340,17 @@ d3.select('#menus')
         traits = d3.keys(dataF[0]).filter(v => columns.includes(v)),
         n = traits.length;
 
-      
-    
-        render();
+      if(selectedData == 2){
+        render()
+      }
+       
+        
     });
+
+var dataTest = [];
+    d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_doubleHist.csv", function(data) {
+    dataTest  = data
+})
 
 
 const render = () => {
@@ -392,6 +421,8 @@ const render = () => {
       spacing: 40,
       textOffset: 3.5,
       onLegendChange: onLegendChange,
+      nClusters: methodsAux,
+      selectedData
   });
 
   gLegend.exit().remove();
@@ -477,8 +508,11 @@ var pp = cross(traits, traits);
 
 
 function plot(p) {
+ 
     
     var cell = d3.select(this);
+
+  
 
     x.domain(domainByTrait[p.x]);
     y.domain(domainByTrait[p.y]);
@@ -493,6 +527,145 @@ function plot(p) {
         .attr("height", size - padding);
 
     const circles =  cell.merge(cell).selectAll('circle').data(dataFF);
+
+    if(p.i === p.j){
+        // console.log(dataFF .filter( function(d){return d.cluster === "0"} ))
+
+        const y2 = d3.scaleLinear()
+        .range([padding / 2, size - padding / 2])
+        .domain([10,0]);
+
+        var kde = kernelDensityEstimator(kernelEpanechnikov(0.1), x.ticks(100))
+        var density1 =  kde( dataFF
+            .filter( function(d){return d.cluster === "0"} )
+            .map(function(d){  return d[p.x]; }) )
+
+            // ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]
+        var density2 =  kde( dataFF
+            .filter( function(d){return d.cluster === "1"} )
+            .map(function(d){  return d[p.x]; }) )
+
+        var density3 =  kde( dataFF
+            .filter( function(d){return d.cluster === "2"} )
+            .map(function(d){  return d[p.x]; }) )
+
+        var density4 =  kde( dataFF
+                .filter( function(d){return d.cluster === "3"} )
+                .map(function(d){  return d[p.x]; }) )
+
+        var density5 =  kde( dataFF
+            .filter( function(d){return d.cluster === "4"} )
+            .map(function(d){  return d[p.x]; }) )
+
+       if(methodsFF.includes("0")){
+            cell.append("path")
+            .attr("class", "cluster0")
+            .datum(density1)
+            .attr("fill", "#1b9e77")
+            .attr("opacity", ".6")
+            .attr("stroke", "#000")
+            .attr("stroke-width", 1)
+            .attr("stroke-linejoin", "round")
+            .attr("d",  d3.area()
+                .curve(d3.curveBasis)
+                .x(function(d) { return x(d[0]); })
+                .y1(function(d) { return y2(d[1]); })
+                .y0(y2(0))
+            )
+            .on('mouseover', onMouseover)
+            .on('mouseout', onMouseout);
+       }
+           
+       
+       if(methodsFF.includes("1")){
+            cell.append("path")
+            .attr("class", "cluster1")
+            .datum(density2)
+            .attr("fill", "#d95f02")
+            .attr("opacity", ".6")
+            .attr("stroke", "#000")
+            .attr("stroke-width", 1)
+            .attr("stroke-linejoin", "round")
+            .attr("d",  d3.area()
+                .curve(d3.curveBasis)
+                .x(function(d) { return x(d[0]); })
+                .y1(function(d) { return y2(d[1]); })
+                .y0(y2(0))
+            )
+            .on('mouseover', onMouseover)
+            .on('mouseout', onMouseout);
+
+       }
+        
+       if(methodsFF.includes("2")){
+
+        cell.append("path")
+        .attr("class", "cluster2")
+        .datum(density3)
+        .attr("fill", "#7570b3")
+        .attr("opacity", ".6")
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .attr("stroke-linejoin", "round")
+        .attr("d",  d3.area()
+            .curve(d3.curveBasis)
+            .x(function(d) { return x(d[0]); })
+            .y1(function(d) { return y2(d[1]); })
+            .y0(y2(0))
+        )
+        .on('mouseover', onMouseover)
+        .on('mouseout', onMouseout);
+
+       }
+
+       if(methodsFF.includes("3")){
+
+        cell.append("path")
+        .attr("class", "cluster3")
+        .datum(density4)
+        .attr("fill", "#e7298a")
+        .attr("opacity", ".6")
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .attr("stroke-linejoin", "round")
+        .attr("d",  d3.area()
+            .curve(d3.curveBasis)
+            .x(function(d) { return x(d[0]); })
+            .y1(function(d) { return y2(d[1]); })
+            .y0(y2(0))
+        )
+        .on('mouseover', onMouseover)
+        .on('mouseout', onMouseout);
+
+       }
+
+       if(methodsFF.includes("4")){
+
+        cell.append("path")
+        .attr("class", "cluster4")
+        .datum(density5)
+        .attr("fill", "#66a61e")
+        .attr("opacity", ".6")
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .attr("stroke-linejoin", "round")
+        .attr("d",  d3.area()
+            .curve(d3.curveBasis)
+            .x(function(d) { return x(d[0]); })
+            .y1(function(d) { return y2(d[1]); })
+            .y0(y2(0))
+        )
+        .on('mouseover', onMouseover)
+        .on('mouseout', onMouseout);
+
+       }
+
+
+      
+          
+
+        return;
+    }
 
    circles
       .enter().append("circle")
@@ -545,7 +718,24 @@ var brushCell;
 var nn = 0;
   // Clear the previously-active brush, if any.
   function brushstart(p) {
+
+//     d3.selectAll('.cluster0')
+//     .style("opacity", "0.1")
+//    .style("fill", "grey")
+//     d3.selectAll('.cluster1')
+//     .style("opacity", "0.1")
+//      .style("fill", "grey")
+//     d3.selectAll('.cluster2')
+//     .style("opacity", "0.1")
+//     .style("fill", "grey")
+//     d3.selectAll('.cluster3')
+//     .style("opacity", "0.1")
+//     .style("fill", "grey")
+//     d3.selectAll('.cluster4')
+//     .style("opacity", "0.1")
+//      .style("fill", "grey")
     if (brushCell !== this) {
+        console.log(p)
       d3.select(brushCell).call(brush.move, null);
       brushCell = this;
       //console.log(d3.select(brushCell).attr("class"))
@@ -664,9 +854,29 @@ var nn = 0;
 
   // If the brush is empty, select all circles.
   function brushend() {
+    // d3.selectAll('.cluster0')
+    // .style("opacity", "0.6")
+    // .style("fill", "#1b9e77")
+    // d3.selectAll('.cluster1')
+    // .style("opacity", "0.6")
+    // .style("fill", "#d95f02")
+    // d3.selectAll('.cluster2')
+    // .style("opacity", "0.6")
+    // .style("fill", "#7570b3")
+    // d3.selectAll('.cluster3')
+    // .style("opacity", "0.6")
+    // .style("fill", "#e7298a")
+    // d3.selectAll('.cluster4')
+    // .style("opacity", "0.6")
+    // .style("fill", "#66a61e")
     var e = d3.brushSelection(this);
     if (e === null) cell.selectAll(".hidden").classed("hidden", false);
   }
+  d3.selectAll('.cell00').select('.overlay').remove()
+  d3.selectAll('.cell11').select('.overlay').remove()
+  d3.selectAll('.cell22').select('.overlay').remove()
+  d3.selectAll('.cell33').select('.overlay').remove()
+  d3.selectAll('.cell44').select('.overlay').remove()
 
 }
 
@@ -675,3 +885,130 @@ function cross(a, b) {
   for (i = -1; ++i < n;) for (j = -1; ++j < m;) c.push({x: b[i], i: i, y: a[j], j: j});
   return c;
 }
+
+function kernelDensityEstimator(kernel, X) {
+    return function(V) {
+      return X.map(function(x) {
+        return [x, d3.mean(V, function(v) { return kernel(x - v); })];
+      });
+    };
+  }
+  function kernelEpanechnikov(k) {
+    return function(v) {
+      return Math.abs(v /= k) <= 1 ? 0.75* (1 - v * v) / k : 0;
+    };
+  }
+  
+  
+
+  const onMouseover = function(event, d){
+
+    var numC = d3.select(this).attr("class")
+    var n = numC.toString();
+    var colL;
+    var circleCol;
+  // ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]
+
+    switch(numC){
+        case "cluster0":
+            circleCol = "0";
+            colL = "#1b9e77"
+            break;
+         case "cluster1":
+            circleCol = "1";
+            colL = "#d95f02"
+            break;
+        case "cluster2":
+            circleCol = "2";
+            colL = "#7570b3"
+            break;
+        case "cluster3":
+            circleCol = "3";
+            colL = "#e7298a"
+            break;
+        case "cluster4":
+            circleCol = "4";
+            colL = "#66a61e"
+            break;
+    }
+
+    console.log(circleCol)
+
+    d3.selectAll('.circleSP')
+    .style('fill',function(d){
+      if(d.cluster !== circleCol){
+        return "grey"
+      }
+      else{
+        return  colorScale(d.cluster)
+      }
+    })
+
+    d3.selectAll('.cluster0')
+    .style("opacity", "0.1")
+    .style("fill", "grey")
+    d3.selectAll('.cluster1')
+    .style("opacity", "0.1")
+    .style("fill", "grey")
+    d3.selectAll('.cluster2')
+    .style("opacity", "0.1")
+    .style("fill", "grey")
+    d3.selectAll('.cluster3')
+    .style("opacity", "0.1")
+    .style("fill", "grey")
+    d3.selectAll('.cluster4')
+    .style("opacity", "0.1")
+    .style("fill", "grey")
+
+    d3.selectAll('.'+numC)
+    .style("opacity", "1")
+    .style("fill", colL)
+
+    
+  }
+
+  const onMouseout = function(event, d){
+
+    var colL
+
+    d3.select(this).selectAll('circle')
+    .attr("stroke", "none")
+    .attr('stroke-width', '2');
+
+    d3.selectAll('.circleSP')
+    .style('fill',function(d){
+        colL =  colorScale(d.cluster)
+        // d3.selectAll('.mypath')
+        // .style("opacity", "0.6")
+        // .style("fill", colL)
+        return  colorScale(d.cluster)
+      
+    })
+
+      // ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]
+
+    d3.selectAll('.cluster0')
+    .style("opacity", "0.6")
+    .style("fill", "#1b9e77")
+    d3.selectAll('.cluster1')
+    .style("opacity", "0.6")
+    .style("fill", "#d95f02")
+    d3.selectAll('.cluster2')
+    .style("opacity", "0.6")
+    .style("fill", "#7570b3")
+    d3.selectAll('.cluster3')
+    .style("opacity", "0.6")
+    .style("fill", "#e7298a")
+    d3.selectAll('.cluster4')
+    .style("opacity", "0.6")
+    .style("fill", "#66a61e")
+
+   
+
+    // d3.select(this)
+    // .style("opacity", "1")
+    // .style("fill", colL)
+
+    
+  }
+

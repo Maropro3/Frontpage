@@ -129,7 +129,7 @@
     //  d3.selectAll('.svgX').remove()
       
       const xScale = d3.scaleLinear()
-      .domain([-0.4,2.4])
+      .domain([-0.4,2.5])
       .range([0,innerWidth])
       .nice();
     
@@ -161,7 +161,7 @@
       //     innerWidth*7/14,innerWidth*6/14,innerWidth*5/14,innerWidth*4/14,innerWidth*3/14,innerWidth*2/14,innerWidth*1/14,0]
 
       const yScale = d3.scaleLinear()
-      .domain(d3.extent(dataF, yValue))
+      .domain([-5,3.5])
       .range([ innerHeight, 0])
       .nice();
       
@@ -613,7 +613,14 @@
 
           const lines2 = gZ.merge(gZEnter).selectAll('.line-pathS').data(xLre);
 
-          console.log(xLre);
+      //     console.log(xLre)
+
+    try{
+      const lineGenerator2 = d3.line()
+      .x(d => xScale(d.x))
+      .y(d => yScale(d.y))
+      .curve(d3.curveBasis);
+      // console.log(xLre)
 
       
           lines2.enter()
@@ -624,13 +631,15 @@
               .attr("fill", "none")
               .attr("stroke", "steelblue")
               .attr("stroke-width", 1.5)
-              .attr("d", d3.line()
-              .x(function(d) { return xScale(d.x) })
-              .y(function(d) { return yScale(d.y) })
+              .attr("d", d => lineGenerator2(d)
               );
               lines2.exit().remove();
        
-             
+    }
+    
+             catch{
+                 
+             }
           // catch(error){
           //     console.error(error);
           // }
@@ -812,11 +821,21 @@
       .attr('class', 'title-text')
       .attr('fill', 'black')
       .attr('align', 'center')
-      .attr('y',-10)
+      .attr('y',-20)
       .attr('x',width/2)
-      .text("Stellar Type Distribution (Labeled and Unlabeled)")
-      .style('font-size', '14px')
-      .style('fill', '#948e8d');
+      .text("Stellar Type Distribution in the Exoplanet Archive (Labeled and Unlabeled)")
+      .style('font-size', '11.2px')
+      .style('fill', '#919191');
+
+      selection.append('text')
+      .attr('class', 'title-text')
+      .attr('fill', 'black')
+      .attr('align', 'center')
+      .attr('y',-4)
+      .attr('x',width/2)
+      .text(" and the percentage of sprectral types of main sequence stars")
+      .style('font-size', '11.2px')
+      .style('fill', '#919191');
 
       d3.selectAll('.tooltip2').remove();
      
@@ -967,7 +986,44 @@
 
 
   const mouseover2 = function(event, d) {
-         
+
+    var tolSpect = d.Spectral_Type;
+    d3.selectAll('.circleG')
+              .style('fill',function(d){
+                if(d.st_spectype !==tolSpect ){
+                  return "grey"
+                }
+                else {
+                  return  sss(d => d.cluster)
+                }
+              })
+              .style('opacity',function(d){
+                  if(d.st_spectype !==tolSpect ){
+                    return 0.2
+                  }
+                  else {
+                    return  1
+                  }
+                });
+   
+      d3.selectAll('.rectP')
+      .style('fill',function(d){
+        if(d.st_spectype !==tolSpect ){
+          return "grey"
+        }
+        else {
+          return  sss(d => d.cluster)
+        }
+      })
+      .style('opacity',function(d){
+          if(d.st_spectype !==tolSpect ){
+            return 0.02
+          }
+          else {
+            return  1
+          }
+        });
+
    
       var color2 = color(d.Spectral_Type);
       tooltip
@@ -1115,10 +1171,10 @@
   var xLreAux = [];
   const pointNum = 36;
   const pointNum2 = 200;
-  const xDomain = 0.398;
+  const xDomain = 0.42;
   var pp, xTemp, yTemp;
 
-  for(let i = -7.6; i<=pointNum2; i++){
+  for(let i = -12; i<=pointNum2; i++){
       xTemp = xDomain / pointNum * i;
       
      // yTemp = cx2*xTemp**2+xTemp*cx +c+cx3*xTemp**3 +cx4*xTemp**4 //+ cx5*xTemp**5 + cx6*xTemp**6;

@@ -7,6 +7,7 @@ export const colorLegend = (selection, props) => {
   let select = selection.selectAll('select').data([null]);
   
   const onCLick = function(event, d){
+   
     if(contClick == 0) {
       d3.selectAll('.gLegendLP')
       .attr('opacity', 0.2);
@@ -46,8 +47,9 @@ export const colorLegend = (selection, props) => {
       onLegendChange(methodsF);
      }
     else {
-      if ( d3.select(this).attr('opacity') == 1) { 
 
+      if ( d3.select(this).attr('opacity') == 1) { 
+       
         d3.select(this)   
         .attr('opacity', 0.2);
         sel = d3.select(this).selectAll('text').text()
@@ -61,6 +63,12 @@ export const colorLegend = (selection, props) => {
         methodsF = methodsF.filter (
            v => v !== d3.select(this).selectAll('text').text()
         );
+        if(methodsF.length === 0){
+          d3.selectAll('.gLegendLP')
+          .attr('opacity', 1);
+          contClick = 0
+        }
+
         onLegendChange(methodsF);
         }
       else {
@@ -76,10 +84,11 @@ export const colorLegend = (selection, props) => {
       })
       methodsF.push(d3.select(this).selectAll('text').text());
       onLegendChange(methodsF);
+    
+   
       }
     }
-    
- 
+   
   };
   
   const onDBCLick = function(event, d){
@@ -101,6 +110,65 @@ export const colorLegend = (selection, props) => {
     d3.select(this).selectAll('rect')
     .attr("stroke", "white")
     .attr('stroke-width', '2');
+
+    var colorLn = d3.select(this).selectAll('rect').attr('fill')
+
+   var linesP = d3.selectAll('.line-path')
+
+   var numC = d3.select(this).selectAll('text').text()
+
+   if ( true) {
+    d3.selectAll('.circleG')
+    .style('fill',function(d){
+      if(d.discoverymethod !== numC){
+        return "grey"
+      }
+      else{
+        return  colorScale(d.discoverymethod)
+      }
+    })
+    .style("opacity",function(d){
+     if(d.discoverymethod !== numC){
+       return 0.3
+     }
+     else{
+       return  1
+     }
+   })
+ 
+   d3.selectAll('.line-path')
+    .style('stroke',function(d){
+      if(d.key !== numC){
+        return "grey"
+      }
+      else{
+        return  colorScale(d.key)
+      }
+    })
+    .style("opacity",function(d){
+     if(d.key !== numC){
+       return 0.3
+     }
+     else{
+       return  1
+     }
+   })
+   }
+
+  
+  //   var cc;
+  //   var gg = d3.selectAll('.line-path')._groups[0][0]
+  //   console.log(d3.selectAll('.line-path'))
+  //  for(var i = 0; i< linesP.length; i++){
+  //   cc = linesP[i]
+    
+  //    if(cc.attr("stroke") == colorLn){
+  //      linesP[i].style("opacity", 1)
+  //    }
+  //  }
+
+    // d3.selectAll('.line-path')
+    // .style("stroke", "red")
   }
 
   const onMouseout = function(event, d){
@@ -108,6 +176,21 @@ export const colorLegend = (selection, props) => {
     d3.select(this).selectAll('rect')
     .attr("stroke", "none")
     .attr('stroke-width', '2');
+
+    d3.selectAll('.circleG')
+    .style('fill',function(d){
+      
+        return  colorScale(d.discoverymethod)
+      
+    })
+    .style("opacity", 0.7)
+
+    
+  d3.selectAll('.line-path')
+  .style('stroke',function(d){
+      return  colorScale(d.key)
+  })
+  .style("opacity",0.9)
     
   }
 

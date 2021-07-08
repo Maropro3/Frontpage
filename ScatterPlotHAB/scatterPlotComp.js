@@ -274,7 +274,7 @@ export const scatterPlot = (selection, props) => {
 
         if(event.sourceEvent.x < 432 || event.sourceEvent.x >1330 || event.sourceEvent.y<268 || event.sourceEvent.y>830){
           
-            window.scrollBy(0, event.sourceEvent.deltaY*3.5);
+            window.scrollBy(0, event.sourceEvent.deltaY*2.5);
             return;
 
         }

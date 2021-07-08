@@ -75,7 +75,7 @@ export const scatterPlotS = (selection, props) => {
   //  d3.selectAll('.svgX').remove()
     
     const xScale = d3.scaleLinear()
-    .domain([-0.4,2.4])
+    .domain([-0.4,2.5])
     .range([0,innerWidth])
     .nice()
   
@@ -89,7 +89,7 @@ export const scatterPlotS = (selection, props) => {
     // const x2Dom = [2800,2900,3090,3320,3450,3580,3890,4230,4680,21000]
     // const x2Range = [0,60,121,182,242,303,364,425,640,850]
    // x2Dom.reverse
-x2Range.reverse()
+    x2Range.reverse()
    
     // const x2Scale = d3.scaleSqrt()
     // .domain(x2Dom)
@@ -107,7 +107,7 @@ x2Range.reverse()
     //     innerWidth*7/14,innerWidth*6/14,innerWidth*5/14,innerWidth*4/14,innerWidth*3/14,innerWidth*2/14,innerWidth*1/14,0]
 
     const yScale = d3.scaleLinear()
-    .domain(d3.extent(dataF, yValue))
+    .domain([-5,3.5])
     .range([ innerHeight, 0])
     .nice();
     
@@ -562,7 +562,14 @@ x2Range.reverse()
 
         const lines2 = gZ.merge(gZEnter).selectAll('.line-pathS').data(xLre);
 
-        console.log(xLre)
+    //     console.log(xLre)
+
+  try{
+    const lineGenerator2 = d3.line()
+    .x(d => xScale(d.x))
+    .y(d => yScale(d.y))
+    .curve(d3.curveBasis);
+    // console.log(xLre)
 
     
         lines2.enter()
@@ -573,13 +580,15 @@ x2Range.reverse()
             .attr("fill", "none")
             .attr("stroke", "steelblue")
             .attr("stroke-width", 1.5)
-            .attr("d", d3.line()
-            .x(function(d) { return xScale(d.x) })
-            .y(function(d) { return yScale(d.y) })
+            .attr("d", d => lineGenerator2(d)
             )
             lines2.exit().remove();
      
-           
+  }
+  
+           catch{
+               
+           }
         // catch(error){
         //     console.error(error);
         // }

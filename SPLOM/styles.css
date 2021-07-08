@@ -187,12 +187,13 @@ stroke: rgb(160, 155, 155);
     background-color: rgb(54, 54, 54);
     font-family: sans-serif;
     color: blanchedalmond;
-    font-size: 1.2em;
+    font-size: 1.1em;
     border: 1px;
     border-style: groove;
     text-align: center;
     font-size: 1em;
-    padding: 1px;
+    padding: 2px;
+    width: 240px;
 
 }
 .line-pathS{

@@ -77,11 +77,21 @@ export const treemap = (selection, props) => {
     .attr('class', 'title-text')
     .attr('fill', 'black')
     .attr('align', 'center')
-    .attr('y',-10)
+    .attr('y',-20)
     .attr('x',width/2)
-    .text("Stellar Type Distribution (Labeled and Unlabeled)")
-    .style('font-size', '14px')
-    .style('fill', '#948e8d');
+    .text("Stellar Type Distribution in the Exoplanet Archive (Labeled and Unlabeled)")
+    .style('font-size', '11.2px')
+    .style('fill', '#919191');
+
+    selection.append('text')
+    .attr('class', 'title-text')
+    .attr('fill', 'black')
+    .attr('align', 'center')
+    .attr('y',-4)
+    .attr('x',width/2)
+    .text(" and the percentage of sprectral types of main sequence stars")
+    .style('font-size', '11.2px')
+    .style('fill', '#919191');
 
     d3.selectAll('.tooltip2').remove();
    
@@ -232,7 +242,44 @@ export const treemap = (selection, props) => {
 
 
 const mouseover2 = function(event, d) {
-       
+
+  var tolSpect = d.Spectral_Type;
+  d3.selectAll('.circleG')
+            .style('fill',function(d){
+              if(d.st_spectype !==tolSpect ){
+                return "grey"
+              }
+              else{
+                return  sss(d => d.cluster)
+              }
+            })
+            .style('opacity',function(d){
+                if(d.st_spectype !==tolSpect ){
+                  return 0.2
+                }
+                else{
+                  return  1
+                }
+              })
+ 
+    d3.selectAll('.rectP')
+    .style('fill',function(d){
+      if(d.st_spectype !==tolSpect ){
+        return "grey"
+      }
+      else{
+        return  sss(d => d.cluster)
+      }
+    })
+    .style('opacity',function(d){
+        if(d.st_spectype !==tolSpect ){
+          return 0.02
+        }
+        else{
+          return  1
+        }
+      })
+
  
     var color2 = color(d.Spectral_Type);
     tooltip
