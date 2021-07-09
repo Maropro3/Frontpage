@@ -95,7 +95,7 @@ export const treemap = (selection, props) => {
 
     d3.selectAll('.tooltip2').remove();
    
-    var tooltip = d3.select("body").append("div")
+    var tooltip = d3.select(".transZ").append("div")
     .attr("class", "tooltip2")
     .style("fill-opacity", 0);
 
@@ -174,8 +174,13 @@ export const treemap = (selection, props) => {
       const mousemove = function(event, d) {
         var xM = d3.pointer(event, gZEnter.node())[0]
         var  yM = d3.pointer(event, gZEnter.node())[1]
+        var offTY = 0;
+
+        if(window.innerWidth<1900){
+            offTY = -66
+        }
         tooltip.style("left", (xM+1110) + "px")
-        .style("top", (yM+650) + "px")
+        .style("top", (yM+650+offTY) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
@@ -300,8 +305,14 @@ const mouseover2 = function(event, d) {
   const mousemove2 = function(event, d) {
     var xM = d3.pointer(event, gZEnter.node())[0]
         var  yM = d3.pointer(event, gZEnter.node())[1]
+      
+        var offTY = 0;
+
+        if(window.innerWidth<1900){
+            offTY = -66
+        }
         tooltip.style("left", (xM+1126) + "px")
-        .style("top", (yM+700) + "px")
+        .style("top", (yM+700+offTY) + "px")
     .transition()
         .duration(200) 
         .style("fill-opacity", .9) 

@@ -27,13 +27,13 @@ var yAxis = d3.axisLeft()
 var svgL;
 var svg;
 
-svgL = d3.select("body").append("svg")
+svgL = d3.select(".transZ").append("svg")
   .attr('class', 'svgL')
   .attr("width", 1200)
   .attr("height", 80)
   .attr("transform", "translate(" + padding*2  + "," + padding * 2.2+ ")")
 
-  svg = d3.select("body").append("svg")
+  svg = d3.select(".transZ").append("svg")
   .attr('class', 'svgSPLOM')
   .attr("width", size * 5 + padding+20)
   .attr("height", size * 5 + padding +100)

@@ -10,7 +10,7 @@
     var methodsF = [];
     let select = selection.selectAll('select').data([null]);
     
-    var tooltip = d3.select("body").append("div")
+    var tooltip = d3.select(".transZ").append("div")
     .attr("class", "tooltip")
     .style("fill-opacity", 0)
     .style('visibility', 'hidden');
@@ -288,28 +288,20 @@
       
     };
 
+      var gZEnter = d3.select(".legend");
     const mousemove = function(event, d) {
-      var offsetX = 0; 
-      var offsetY = 0; 
+      var xM = d3.pointer(event, gZEnter.node())[0];
+      var  yM = d3.pointer(event, gZEnter.node())[1];
+      
+      var offTY = 0;
 
-     if(window.innerWidth<1728 && window.innerWidth>1534 ){
-      offsetX = 55;
-      offsetY = 50;
-     }
-     else if(window.innerWidth<1534 && window.innerWidth>1344){
-      offsetX = 55*2;
-      offsetY = 50*2;
-     }
-     else if(window.innerWidth<1344 && window.innerWidth>1152){
-      offsetX = 55*3;
-      offsetY = 50*3;
-     }
-     else if(window.innerWidth<1152 && window.innerWidth>900){
-      offsetX = 55*4;
-      offsetY = 50*4;
-     }
-      tooltip.style("left", (event.pageX-242+offsetX) + "px")
-      .style("top", (event.pageY+offsetY) + "px")
+      if(window.innerWidth<1900){
+          offTY = -60;
+      }
+
+     
+      tooltip.style("left", (xM+160) + "px")
+      .style("top", (yM+410+offTY) + "px")
       .transition()
           .duration(200) 
           .style("fill-opacity", .9) 
@@ -433,13 +425,13 @@
   var svgL;
   var svg;
 
-  svgL = d3.select("body").append("svg")
+  svgL = d3.select(".transZ").append("svg")
     .attr('class', 'svgL')
     .attr("width", 1200)
     .attr("height", 80)
     .attr("transform", "translate(" + padding*2  + "," + padding * 2.2+ ")");
 
-    svg = d3.select("body").append("svg")
+    svg = d3.select(".transZ").append("svg")
     .attr('class', 'svgSPLOM')
     .attr("width", size * 5 + padding+20)
     .attr("height", size * 5 + padding +100)

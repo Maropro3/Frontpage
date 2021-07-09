@@ -311,10 +311,21 @@ stroke: rgb(160, 155, 155);
   color:#bdb5b0;
 }
 
+@media only screen and (max-width:1824px) {
+ .transZ {
+    transition: 0.5s ease-out;
+    transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    transform-origin: 0 0;
+    height: 600px
+  }
+}
+
 
 @media only screen and (max-width:1728px) {
-  body {
-   
+  .transZ{
+    transition: 0.5s ease-out;
     transform: scale(0.9);
     -moz-transform: scale(0.9);
     -webkit-transform: scale(0.9);
@@ -323,8 +334,19 @@ stroke: rgb(160, 155, 155);
   }
 }
 
+@media only screen and (max-width:1632px) {
+  .transZ {
+    transition: 0.5s ease-out;
+    transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    -webkit-transform: scale(0.85);
+    transform-origin: 0 0;
+    height: 550px
+  }
+}
+
 @media only screen and (max-width:1536px) {
- body {
+  .transZ {
 
   transform: scale(0.8);
   -moz-transform:  scale(0.8);
@@ -334,8 +356,19 @@ stroke: rgb(160, 155, 155);
   }
 }
 
+@media only screen and (max-width:1440px) {
+  .transZ{
+   
+    transform: scale(0.75);
+    -moz-transform: scale(0.75);
+    -webkit-transform: scale(0.75);
+    transform-origin: 0 0;
+    height: 500px
+  }
+}
+
 @media only screen and (max-width:1344px) {
-  body {
+  .transZ{
 
     transform: scale(0.7);
     -moz-transform:  scale(0.7);
@@ -345,8 +378,19 @@ stroke: rgb(160, 155, 155);
   }
 }
 
+@media only screen and (max-width:1248px) {
+  .transZ {
+   
+    transform: scale(0.65);
+    -moz-transform: scale(0.65);
+    -webkit-transform: scale(0.65);
+    transform-origin: 0 0;
+    height: 450px
+  }
+}
+
 @media only screen and (max-width:1152px) {
-  body {
+  .transZ{
 
 
     transform: scale(0.6);
@@ -357,8 +401,19 @@ stroke: rgb(160, 155, 155);
   }
 }
 
+@media only screen and (max-width:1056px) {
+  .transZ {
+   
+    transform: scale(0.55);
+    -moz-transform: scale(0.55);
+    -webkit-transform: scale(0.55);
+    transform-origin: 0 0;
+    height: 350px
+  }
+}
+
 @media only screen and (max-width:960px) {
-  body {
+  .transZ {
 
     transform: scale(0.5);
     -moz-transform: scale(0.5);
@@ -369,8 +424,19 @@ stroke: rgb(160, 155, 155);
   }
 }
 
+@media only screen and (max-width:864px) {
+  .transZ {
+   
+    transform: scale(0.45);
+    -moz-transform: scale(0.45);
+    -webkit-transform: scale(0.45);
+    transform-origin: 0 0;
+    height: 300px
+  }
+}
+
 @media only screen and (max-width:768px) {
-  body {
+  .transZ{
  
 
     transform: scale(0.4);

@@ -185,7 +185,7 @@ text {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    z-index: 4; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #111; /* Black*/
@@ -203,6 +203,9 @@ text {
     color: #818181;
     display: block;
     transition: 0.3s;
+  }
+  .sideButton{
+    z-index: 2;
   }
   
   /* When you mouse over the navigation links, change their color */
@@ -235,7 +238,21 @@ text {
     
     color:#bdb5b0;
 }
-
+@media only screen and (max-width:1824px) {
+  
+ 
+  body {
+    transition: 0.5s ease-out;
+    transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    transform-origin: 0 0;
+    height: 550px;
+    width: 1728px;
+  }
+ 
+ 
+}
 
 @media only screen and (max-width:1728px) {
   
@@ -252,6 +269,22 @@ text {
    
    
   }
+
+  @media only screen and (max-width:1632px) {
+  
+ 
+    body {
+     
+      transform: scale(0.85);
+      -moz-transform: scale(0.85);
+      -webkit-transform: scale(0.85);
+      transform-origin: 0 0;
+      height: 550px;
+ 
+    }
+   
+   
+  }
   
   @media only screen and (max-width:1536px) {
    body {
@@ -263,6 +296,21 @@ text {
     height: 500px
     }
   }
+  @media only screen and (max-width:1440px) {
+  
+ 
+    body {
+     
+      transform: scale(0.75);
+      -moz-transform: scale(0.75);
+      -webkit-transform: scale(0.75);
+      transform-origin: 0 0;
+      height: 550px;
+    
+    }
+   
+   
+  }
   
   @media only screen and (max-width:1344px) {
     body {
@@ -273,6 +321,21 @@ text {
       transform-origin: 0 0;
       height: 450px
     }
+  }
+  @media only screen and (max-width:1248px) {
+  
+ 
+    body {
+     
+      transform: scale(0.65);
+      -moz-transform: scale(0.65);
+      -webkit-transform: scale(0.65);
+      transform-origin: 0 0;
+      height: 550px;
+     
+    }
+   
+   
   }
   
   @media only screen and (max-width:1152px) {
@@ -286,6 +349,24 @@ text {
       height: 400px
     }
   }
+
+  
+  @media only screen and (max-width:1056px) {
+  
+ 
+    body {
+     
+      transform: scale(0.55);
+      -moz-transform: scale(0.55);
+      -webkit-transform: scale(0.55);
+      transform-origin: 0 0;
+      height: 550px;
+ 
+    }
+   
+   
+  }
+  
   
   @media only screen and (max-width:960px) {
     body {
@@ -298,6 +379,23 @@ text {
       height: 350px
     }
   }
+  
+  @media only screen and (max-width:864px) {
+  
+ 
+    body {
+     
+      transform: scale(0.45);
+      -moz-transform: scale(0.45);
+      -webkit-transform: scale(0.45);
+      transform-origin: 0 0;
+      height: 550px;
+ 
+    }
+   
+   
+  }
+  
   
   @media only screen and (max-width:768px) {
     body {

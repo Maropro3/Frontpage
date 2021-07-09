@@ -22,7 +22,7 @@ var dataSt = [];
 var dataSt2 = [];
 var dataJ = [];
 var dropSelect ="Star Colour (B-V) Range"
-var svgS = d3.select("body").append("svg")
+var svgS = d3.select(".transZ").append("svg")
   .attr('class', 'svgS')
   .attr("width", 1520)
   .attr("height", 1000)

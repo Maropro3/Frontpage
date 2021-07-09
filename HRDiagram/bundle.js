@@ -129,7 +129,7 @@
     //  d3.selectAll('.svgX').remove()
       
       const xScale = d3.scaleLinear()
-      .domain([-0.4,2.5])
+      .domain([-0.4,2.4])
       .range([0,innerWidth])
       .nice();
     
@@ -286,7 +286,7 @@
 
     d3.selectAll('.tooltip').remove();
      
-      var tooltip = d3.select("body").append("div")
+      var tooltip = d3.select(".transZ").append("div")
       .attr("class", "tooltip")
       .style("fill-opacity", 0);
 
@@ -298,6 +298,12 @@
           var color = colorScale(colorValue(d));
           var xM = d3.pointer(event, gZEnter.node())[0];
           var  yM = d3.pointer(event, gZEnter.node())[1];
+
+          var offTY = 0;
+
+          if(window.innerWidth<1900){
+              offTY = -74;
+          }
 
           d3.select(this)
           .attr('stroke-width', '2')
@@ -318,7 +324,7 @@
           yLabel + ": " + Math.round(d.st_lum * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d.st_bv * 1000) / 1000 
           )
           .style("left", (xM +310) + "px")
-          .style("top", (yM +340) + "px")
+          .style("top", (yM +340+offTY) + "px")
           .transition()
               .duration(200) 
               .style("fill-opacity", .9) 
@@ -467,7 +473,7 @@
           .attr('r', 3.5)
           .transition().duration(2000)
           .attr('fill', d => colorScale(colorValue(d)))
-          .attr('fill-opacity', opacity(dataF))
+          .attr('fill-opacity', 0.8)
           .attr('cy', d => yScale(yValue(d)))
           .attr('cx', d => xScale(xValue(d)));
    
@@ -478,6 +484,7 @@
           symbols.enter()
          .append('path')
          .attr('class', 'rectP')
+         .attr("transform", d => `translate(${innerWidth/2},${innerHeight/2})`)
          .merge(symbols)
          .transition().duration(2000)
          .attr("transform", d => `translate(${xScale(xValue(d))},${yScale(yValue(d))})`)
@@ -490,7 +497,7 @@
 
       
       const svgB = d3
-      .select('body').selectAll('.svgTime').data([null]);
+      .select('.transZ').selectAll('.svgTime').data([null]);
       const svgBEnter = svgB.enter().append('svg')
       .attr('class', 'svgTime')
       .attr('width', innerWidth+60)
@@ -656,7 +663,7 @@
       
       d3.selectAll('.svgS').call(d3.zoom()
       .filter((event) => { 
-          console.log(event);
+         
        if(event.clientX <window.innerWidth*0.75 && event.clientX >window.innerWidth*0.225 ){
           
           return !event.path[0].classList.contains('container') 
@@ -848,7 +855,7 @@
 
       d3.selectAll('.tooltip2').remove();
      
-      var tooltip = d3.select("body").append("div")
+      var tooltip = d3.select(".transZ").append("div")
       .attr("class", "tooltip2")
       .style("fill-opacity", 0);
 
@@ -927,8 +934,13 @@
         const mousemove = function(event, d) {
           var xM = d3.pointer(event, gZEnter.node())[0];
           var  yM = d3.pointer(event, gZEnter.node())[1];
+          var offTY = 0;
+
+          if(window.innerWidth<1900){
+              offTY = -66;
+          }
           tooltip.style("left", (xM+1110) + "px")
-          .style("top", (yM+650) + "px")
+          .style("top", (yM+650+offTY) + "px")
           .transition()
               .duration(200) 
               .style("fill-opacity", .9) 
@@ -1053,8 +1065,14 @@
     const mousemove2 = function(event, d) {
       var xM = d3.pointer(event, gZEnter.node())[0];
           var  yM = d3.pointer(event, gZEnter.node())[1];
+        
+          var offTY = 0;
+
+          if(window.innerWidth<1900){
+              offTY = -66;
+          }
           tooltip.style("left", (xM+1126) + "px")
-          .style("top", (yM+700) + "px")
+          .style("top", (yM+700+offTY) + "px")
       .transition()
           .duration(200) 
           .style("fill-opacity", .9) 
@@ -1165,7 +1183,7 @@
   var dataSt2 = [];
   var dataJ = [];
   var dropSelect ="Star Colour (B-V) Range";
-  var svgS = d3.select("body").append("svg")
+  var svgS = d3.select(".transZ").append("svg")
     .attr('class', 'svgS')
     .attr("width", 1520)
     .attr("height", 1000)

@@ -319,7 +319,7 @@
 
      d3.selectAll('.tooltip').remove();
       
-       var tooltip = d3.select("body").append("div")
+       var tooltip = d3.select(".transZ").append("div")
        .attr("class", "tooltip")
        .style("fill-opacity", 0);
 
@@ -338,6 +338,12 @@
 
            var xM = d3.pointer(event, gZEnter.node())[0];
            var  yM = d3.pointer(event, gZEnter.node())[1];
+
+           var offTY = 0;
+
+           if(window.innerWidth<1900){
+               offTY = -56;
+           }
            
 
            d3.select(this)
@@ -372,7 +378,7 @@
            "<br/>"+"<span style='color:" + color3 + ";'>"+"<b>" + habZ + "</b>"+"</span>"
            )
            .style("left", (xM +340) + "px")
-           .style("top", (yM+1280 ) + "px")
+           .style("top", (yM+1280 +offTY) + "px")
            .transition()
                .duration(200) 
                .style("fill-opacity", .9) 
@@ -466,7 +472,7 @@
        .attr('visibility', 'visible');
 
        const svgB = d3
-       .select('body').selectAll('.svgTime').data([null]);
+       .select('.transZ').selectAll('.svgTime').data([null]);
        const svgBEnter = svgB.enter().append('svg')
        .attr('class', 'svgTime')
        .attr('width', 80)
