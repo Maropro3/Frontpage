@@ -732,8 +732,8 @@
            
            var color = colorScale(colorValue(d));
 
-           var xM = d3.pointer(event, gZEnter.node())[0];
-          var  yM = d3.pointer(event, gZEnter.node())[1];
+           var xM = d3.pointer(event, selection.node())[0];
+          var  yM = d3.pointer(event, selection.node())[1];
 
            d3.select(this)
            .attr('stroke-width', '2')
@@ -744,8 +744,8 @@
            "<span style='color:" + color + ";'>" + d.discoverymethod + "</span><br/>" +
            yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
            )
-           .style("left", (xM+945 ) + "px")
-           .style("top", (yM +274) + "px")
+           .style("left", (xM +830) + "px")
+           .style("top", (yM +210) + "px")
            //.style("transform", "translate(" + event.pageX + ", " +event.pageY  + ")")
            .transition()
                .duration(200) 

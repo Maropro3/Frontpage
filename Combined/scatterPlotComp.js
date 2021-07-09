@@ -184,8 +184,8 @@ export const scatterPlot = (selection, props) => {
         var offsetX = 0; 
         var offsetY = 0; 
 
-        var xM = d3.pointer(event, gZEnter.node())[0]
-       var  yM = d3.pointer(event, gZEnter.node())[1]
+        var xM = d3.pointer(event, selection.node())[0]
+       var  yM = d3.pointer(event, selection.node())[1]
         // const xM = d3.pointer(event, tipBox.node())[0];
 
        if(window.innerWidth<1728 && window.innerWidth>1534 ){
@@ -204,6 +204,12 @@ export const scatterPlot = (selection, props) => {
         offsetX = 125*4
         offsetY = 50*4.5
        }
+       var offFX = 0;
+       var offFY = 0;
+       if(flag == 1){
+        offFX = -800
+        offFY = -300
+       }
 
         d3.select(this)
         .attr('stroke-width', '2')
@@ -214,8 +220,8 @@ export const scatterPlot = (selection, props) => {
         "<span style='color:" + color + ";'>" + d.discoverymethod + "</span><br/>" +
         yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
         )
-        .style("left", (xM+945 ) + "px")
-        .style("top", (yM +274) + "px")
+        .style("left", (xM +830) + "px")
+        .style("top", (yM +210) + "px")
         //.style("transform", "translate(" + event.pageX + ", " +event.pageY  + ")")
         .transition()
             .duration(200) 
