@@ -96,6 +96,64 @@ const data = {
    let initialNodePosition = {};
    const path = d3.sankeyLinkHorizontal();
 
+   var svgTT = d3.selectAll('#sankey').append('svg')
+   .attr('class', 'svgTT')
+   .attr('width', width+20)
+   .attr('height', 30)
+   .attr('transform', `translate(${ 300},${0})`)
+
+   const textLG = svgTT.select('.textLS');
+   const textLGEnter = svgTT.append('g')
+   .attr('class', 'textLS')
+
+   textLGEnter
+   .append('text')
+   .attr('class', 'textLinesLS')
+   .attr('fill', 'black')
+   .attr('align', 'center')
+   .attr('y', 24)
+   .style('font-size', '12px')
+   .style('fill', '#bababa')
+   .merge(textLG.select('.textLines'))
+   .attr('x', 250)
+   .text("Planet Size Classification");
+
+   textLGEnter
+   .append('text')
+   .attr('class', 'textLinesLS')
+   .attr('fill', 'black')
+   .attr('align', 'center')
+   .attr('y', 24)
+   .style('font-size', '12px')
+   .style('fill', '#bababa')
+   .merge(textLG.select('.textLines'))
+   .attr('x', 550)
+   .text("Temperature Classification");
+
+   textLGEnter
+   .append('text')
+   .attr('class', 'textLinesLS')
+   .attr('fill', 'black')
+   .attr('align', 'center')
+   .attr('y', 24)
+   .style('font-size', '12px')
+   .style('fill', '#bababa')
+   .merge(textLG.select('.textLines'))
+   .attr('x', 890)
+   .text("Habitable Zone");
+
+   textLGEnter
+   .append('text')
+   .attr('class', 'textLinesLS')
+   .attr('fill', 'black')
+   .attr('align', 'center')
+   .attr('y', 24)
+   .style('font-size', '12px')
+   .style('fill', '#bababa')
+   .merge(textLG.select('.textLines'))
+   .attr('x', 1210)
+   .text("ESI Value");
+
    function getGradientId(d) {
        tt = d.source
      
@@ -138,8 +196,7 @@ function getNodePosition(node) {
     const color = d3.scaleOrdinal()
     .range(["#b8b2b4",'#44ebe2','#48eb36',
     '#787375','#c91616','#d16c1f','#34d11f','#1fb6d1','#d1e5ff',
-    '#4e51ed', '#edcd4e','#eb635b',"#f25252","#52f262","#5252f2","#a5f252","#f2ad52","#a6761d","#666666"]);
-
+    '#4e51ed', '#edcd4e','#d100ae',"#f25252","#52f262","#5252f2","#a5f252","#f2ad52","#a6761d","#666666"]);
 
    var svg = d3.selectAll('#sankey').append('svg')
    .attr('class', 'svgSank')
@@ -250,7 +307,7 @@ var nodes = svg.append("g").selectAll(".node")
     const graphSize = [width, height ];
     const nodeStrokeWidth = 2;
    
-
+  
    
 
     function moveNode(node, position, text) {

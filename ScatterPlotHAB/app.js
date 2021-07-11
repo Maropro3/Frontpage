@@ -7,14 +7,12 @@ import {planetLegend} from './planetLegend'
 const svg = d3.select('#svgM')
  .attr('transform', `translate(${250},${0})`);;
 
-
 const width = 1600;
 const height = 800;
 
 svg
 .attr('width', width)
 .attr('height', height);
-
 
 let data;
 let xColumn = 'ESI_in';
@@ -60,7 +58,6 @@ menusCSS.style.left = `${(width- width/4 +1100)/6}px`;
 menusCSS.style.top = `10px`;
 
 let switchCSS = document.querySelector(".switchH");
-//menusCSS.style.left = `${(width- width/4 +800)/6}px`;
 switchCSS.style.top = `10px`;
 
 d3.select("#habButton")
@@ -119,33 +116,6 @@ const onXColumnClick = (x, y, xlabel, ylabel, sel,fill,units) => {
     render();
 };
 
-
-// const colorScale = d3.scaleOrdinal()
-//   .domain(methods)
-//   .range(['#f27777',  '#77d3f2',
-//   '#d577f2','#777ff2',
-//   '#f2d977', '#77f2bb',
-//   '#c1eb73', '#eb83c8',
-//   '#edb861'
-//  ]);
-
-
-
-
-//   ["Pulsar Timing", "Radial Velocity", 
-//   "Transit", "Microlensing", 
-//   "Imaging", "Eclipse Timing Variations", 
-//   "Transit Timing Variations", "Orbital Brightness Modulation", 
-//   "Disk Kinematics"]
-
-// ['#e3c91e', '#FF0000', 
-//   '#60a9e4','#00FF00',
-//   '#8000FF', '#FF00BF',
-//   '#FF8000', '#0000FF',
-//   '#005704']
-
-
-
 const render = () => {
 
     const dataSol = [
@@ -188,12 +158,6 @@ const render = () => {
     if(dataM.length == 0) {
         dataM = dataM2;
     }
-   
-    // const dataF1 = dataM.filter( v =>
-    //         !Number.isNaN(v[yColumn]));
-    
-    // const dataF2 = dataF1.filter( v =>
-    //         !Number.isNaN(v[xColumn]));
     
     const dataFX = dataM.filter(function (v) {
             if (v.disc_pubdate < dateRange[1] && v.disc_pubdate > dateRange[0]) {
@@ -201,30 +165,8 @@ const render = () => {
             }
     });
 
-   
-   // console.log(flag)
-  
-    // const dataF = dataFX.filter(function (v) {
-    //     if ((isNaN(v[xColumn]) || isNaN(v[yColumn])) && flag ==0) {
-    //       v.sizeP = 0;
-    //        return v
-    //     }
-    //     else {
-    //         if (v[xColumn] < xRange[1] && v[xColumn] > xRange[0]) {
-    //             if (v[yColumn] < yRange[1] && v[yColumn] > yRange[0]) {
-    //                 v.sizeP = 0;
-    //                 return v
-    //             }
-    //         }
-            
-    //         if (flag == 0) {return v}
-    
-    //      }
-    // });
-   // console.log(dataFX)
    var dataF = dataFX
   
-  // console.log(dataF)
     const dataF11 = dataF.filter(function (v) {
         if (isNaN(v[xColumn]) || isNaN(v[yColumn])) {
             return v.sizeP = 0;
@@ -233,10 +175,7 @@ const render = () => {
         }
     );
  
-    
-
     var dataPush= [];
-    
      
     if (cfill === 'cdhs_t') {
         
@@ -247,9 +186,7 @@ const render = () => {
      
     }
     
-
     var fillLabel;
-   // var colorScale;
    
         if (cfill === 'ESI_t') {
             if(flagChangeL == 1){
@@ -277,8 +214,6 @@ const render = () => {
             fillLabel = "Total CDHS"
         }
     
-
-   
     d3.select('#h_menu')
     .call(dropDown, {
         options: columns,
@@ -289,7 +224,6 @@ const render = () => {
         }
     ); 
 
-  
    svg.call(scatterPlot, {
         title: `${yLabelColumn}/${xLabelColumn} distribution`,
         xValue: d => d[xColumn],
