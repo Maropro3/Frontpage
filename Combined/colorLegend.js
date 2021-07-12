@@ -93,25 +93,22 @@ export const colorLegend = (selection, props) => {
   
   const onDBCLick = function(event, d){
     
-   
       d3.selectAll('.gLegendLP')
       .attr('opacity', 1)
       d3.selectAll('.gLegend')
       .attr('opacity', 1)
       methodsF = [];
       onLegendChange(methodsF);
-    
-   
    
   };
 
-  const onMouseover = function(event, d){
+const onMouseover = function(event, d){
 
     d3.select(this).selectAll('rect')
     .attr("stroke", "white")
     .attr('stroke-width', '2');
 
-    var colorLn = d3.select(this).selectAll('rect').attr('fill')
+  var colorLn = d3.select(this).selectAll('rect').attr('fill')
 
    var linesP = d3.selectAll('.line-path')
 
@@ -154,24 +151,9 @@ export const colorLegend = (selection, props) => {
      }
    })
    }
-
-  
-  //   var cc;
-  //   var gg = d3.selectAll('.line-path')._groups[0][0]
-  //   console.log(d3.selectAll('.line-path'))
-  //  for(var i = 0; i< linesP.length; i++){
-  //   cc = linesP[i]
-    
-  //    if(cc.attr("stroke") == colorLn){
-  //      linesP[i].style("opacity", 1)
-  //    }
-  //  }
-
-    // d3.selectAll('.line-path')
-    // .style("stroke", "red")
   }
 
-  const onMouseout = function(event, d){
+const onMouseout = function(event, d){
 
     d3.select(this).selectAll('rect')
     .attr("stroke", "none")
@@ -191,7 +173,6 @@ export const colorLegend = (selection, props) => {
       return  colorScale(d.key)
   })
   .style("opacity",0.9)
-    
   }
 
   const background = select.enter()
@@ -213,7 +194,6 @@ export const colorLegend = (selection, props) => {
   .attr('font-size', '8px')
   .text('Discovery Method:');
 
- 
   const entries = select.enter()
   .merge(select).selectAll('g')
   .data(colorScale.domain())
@@ -230,8 +210,6 @@ const symbols = entries.append('rect')
   .attr('width', circleRadius) 
   .attr('height', circleRadius)
   .attr('fill',colorScale);
-
-
 
 const labels = entries.append('text')
   .attr('x', textOffset +5) 

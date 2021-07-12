@@ -1,13 +1,10 @@
 import {dropDown} from './dropDown'
 import {scatterPlot} from './scatterPlotComp'
-import {colorLegendSP} from './colorLegendSP'
-//import {sliderRangeDate} from './app'
-import {sliderR} from './sliderRange'
 import {linePlot} from './linePlot'
 import {colorLegend} from './colorLegend'
   
 const svg = d3.select('#svgM')
- .attr('transform', `translate(${290},${0})`);;
+.attr('transform', `translate(${290},${0})`);;
 const svgLP = d3.select('#svgLP');
 
 const width = 1200;
@@ -17,9 +14,6 @@ svg
 .attr('width', width)
 .attr('height', height);
 
-// d3.select('')
-// .on('scroll', console.log("eee"))
-
 let lastKnownScrollPosition = 0;
 var pagY = 0;
 let ticking = false;
@@ -27,14 +21,12 @@ var up = 0;
 
 function doSomething(scrollPos) {
 
-if (scrollPos< -150){
+    if (scrollPos< -150){
     up = 1
 
-      window.scrollTo(0,150)
-      up = 0
-}
-
-
+        window.scrollTo(0,150)
+        up = 0
+    }
 }
 
 document.addEventListener('scroll', function(e) {
@@ -42,53 +34,13 @@ document.addEventListener('scroll', function(e) {
     pagY = window.screenY
     var yy = document.body.getBoundingClientRect().y
 
-    
-
-    // saves the new position for iteration.
     lastKnownScrollPosition = (document.body.getBoundingClientRect()).top;
 
     if( lastKnownScrollPosition < -150){
-       // window.scrollTo(0,150)
     }
-    // if(up == 0){
-    //     if (!ticking) {
-    //         window.requestAnimationFrame(function() {
-    //         doSomething(lastKnownScrollPosition,up);
-    //         ticking = false;
-    //         });
-    // }
-    
-
     ticking = true;
     }
 );
-
-
-
-// function doSomething(scrollPos) {
-    
-//   if(scrollPos>150){
-//     disableScroll()
-//   }
-//   else{
-//     enableScroll()
-//   }
-// }
-
-// document.addEventListener('scroll', function(e) {
-//   lastKnownScrollPosition = window.scrollY;
-
-//   if (!ticking) {
-//     window.requestAnimationFrame(function() {
-//       doSomething(lastKnownScrollPosition);
-//       ticking = false;
-//     });
-
-//     ticking = true;
-//   }
-// });
-
-
 
 let data;
 let dataLP;
@@ -119,7 +71,6 @@ var flagCol = 0;
 var dataBuffer = [];
 var dateRangeE = dateRange
 var methodsF = []
-//console.log(innerWidth)
 
 var sliderWidth = 1920/4.5 -130;
 
@@ -135,9 +86,6 @@ function sleep(milliseconds) {
 let menusCSS = document.querySelector("#menus");
 menusCSS.style.left = `${(width- width/4 +1260)/6+650}px`;
 menusCSS.style.top = `10px`;
-
-// let menus1CSS = document.querySelector("#graph");
-// menus1CSS.style.left = `${(width- width/4 +700)/6}px`;
 
  d3.selectAll('#svgM')
 .attr("transform", "translate(" +  920+ ", " +-780  + ")")
@@ -161,10 +109,7 @@ const onTimeChange = (timeRange) => {
     if (t === 1){
         render();
     }
-    
-  
 }
-
 
 const onSliderChange = (sliderT) => {
     sliderTime = sliderT;
@@ -189,12 +134,6 @@ const onXColumnClick = (column, label, slider, range, xOffset, units) => {
     sliderRangeX.width(sliderWidth)
     .fill('#2196f3')
     .on('onchange', val => {
-    //     sliderRangeX
-    //     .min(d3.min(dataF, d => d[xColumn]))
-    //     .max(d3.max(dataF, d => d[xColumn]))
-    //     .ticks(0)
-    //    ;
-       // sleep(100);
         xRange = sliderRangeX.value();
         flag = 1;
         render();
@@ -202,18 +141,7 @@ const onXColumnClick = (column, label, slider, range, xOffset, units) => {
     gRangeX = d3
     .select('.sliderX')
     .append('g')
-    //.attr('transform', `translate(${-xOff},10)`);
-
-    // var gRangeXdef = d3
-    // .select('div#slider-range')
-    // .append('svg')
-    // .attr('width', 900)
-    // .attr('height', 100)
-    // .attr('transform', 'translate(30,10)')
-    // .attr('class', 'svgX')
-    // .append('g')
-    // .attr('transform', 'translate(180,10)');
-
+ 
     gRangeX.call(sliderRangeX)
     .append('text')
     .attr('width', '10px')
@@ -237,21 +165,13 @@ const onYColumnClick = (column, label, slider, range, xOffset, units) => {
     .width(sliderWidth)
     .fill('#2196f3')
     .on('onchange', val => {
-    //     sliderRangeX
-    //     .min(d3.min(dataF, d => d[xColumn]))
-    //     .max(d3.max(dataF, d => d[xColumn]))
-    //     .ticks(0)
-    //    ;
-       // sleep(100);
         yRange = sliderRangeY.value();
         flag = 1;
         render();
     });
     gRangeY = d3
     .select('.sliderY')
-    //.attr('transform', 'translate(700,-100)')
     .append('g')
-  //  .attr('transform', `translate(${-yOff},20)`)
 
     gRangeY.call(sliderRangeY)
     .append('text')
@@ -285,10 +205,6 @@ const colorScaleLP =  d3.scaleOrdinal()
   '#edb861'
  ]);
 
-
-//  //END SLIDER 1
-
-//SLIDER 2
 var sliderRangeXdef = d3
 .sliderBottom()
 .min(0)
@@ -299,12 +215,6 @@ var sliderRangeXdef = d3
 .default([0, 2.8])
 .fill('#2196f3')
 .on('onchange', val => {
-    //     sliderRangeX
-    //     .min(d3.min(dataF, d => d[xColumn]))
-    //     .max(d3.max(dataF, d => d[xColumn]))
-    //     .ticks(0)
-    //    ;
-       // sleep(100);
     xRange = sliderRangeXdef.value();
     flag = 1;
     render();
@@ -312,8 +222,6 @@ var sliderRangeXdef = d3
 
 var gRangeXdef = d3
 .select('#svgM')
-//.attr('width', innerWidth)
-//.attr('height', innerWidth/20)
 .append('g')
 .attr('class', 'sliderX')
 .attr('transform', `translate(${90+40},${height-150})`);
@@ -328,9 +236,6 @@ gRangeXdef
 .attr('transform', `translate(0,-18)`)
 .text(xLabelColumn + ":");
 
-//END SLIDER 2
-
-//SLIDER 3
 var sliderRangeYdef = d3
 .sliderBottom()
 .min(400)
@@ -341,12 +246,6 @@ var sliderRangeYdef = d3
 .default([400, 11000])
 .fill('#2196f3')
 .on('onchange', val => {
-    //     sliderRangeX
-    //     .min(d3.min(dataF, d => d[xColumn]))
-    //     .max(d3.max(dataF, d => d[xColumn]))
-    //     .ticks(0)
-    //    ;
-       // sleep(100);
     yRange = sliderRangeYdef.value();
     flag = 1;
     render();
@@ -354,8 +253,6 @@ var sliderRangeYdef = d3
 
 var gRangeYdef = d3
 .select('#svgM')
-//.attr('width', innerWidth)
-//.attr('height', innerWidth/20)
 .append('g')
 .attr('class', 'sliderY')
 .attr('transform', `translate(${190+sliderWidth+40},${height-150})`);
@@ -369,63 +266,23 @@ gRangeYdef
 .attr('height', '10px')
 .attr('transform', `translate(0,-18)`)
 .text(yLabelColumn + ":");
-//END SLIDER 3
-
-// var gRange = d3
-// .select('div#slider-range')
-// .append('svg')
-// .attr('class', 'svgTime')
-// .attr('width', width)
-// .attr('height', 100)
-// .attr('transform', `translate(${width/4-90},8)`)
-// .append('g')
-// .attr('transform', `translate(${width/4},8)`);
-// d3.select('#slider-range')
-// .call(sliderR, {
-//     width,
-//     onSliderTime: onSliderChange
-   
-//     }
-// ); 
 
 const render = () => {
 
-    // var mainscreenURL = "676.jpg";
-    // svg.select(".mainScreen").transition().attr("height",0).remove();
-
-    // svg.append("image")
-    // .on('load', function() {
-    //     alert('loaded');
-    // })
-    // .attr("xlink:href", mainscreenURL)
-     
-
-    // dataFilter.push({type: xColumn,name: NaN},
-    //     {type: yColumn,name: NaN});
-    //console.log(methods)
     var dataM = data.filter(
         
         v => methods.includes(v.discoverymethod)
     );
 
- 
-
     if(dataM.length == 0) {
         dataM = data;
     }
 
-    // const dataF1 = dataM.filter( v =>
-    //         !Number.isNaN(v[yColumn]));
-    
-    // const dataF2 = dataF1.filter( v =>
-    //         !Number.isNaN(v[xColumn]));
-    
     const dataFX = dataM.filter(function (v) {
             if (v.disc_pubdate < dateRange[1] && v.disc_pubdate > dateRange[0]) {
                 return v
             }
     });
-    //console.log(flag)
  
     const dataF = dataFX.filter(function (v) {
         if ((isNaN(v[xColumn]) || isNaN(v[yColumn])) && flag ==0) {
@@ -444,9 +301,7 @@ const render = () => {
     
          }
     });
-   // console.log(dataFX)
     
-
     const dataF11 = dataF.filter(function (v) {
         if (isNaN(v[xColumn]) || isNaN(v[yColumn])) {
             return v.sizeP = 0;
@@ -454,78 +309,8 @@ const render = () => {
         else{return v.sizeP = 3.5}
         }
     );
-   // console.log(dataF)
 
-   // console.log(dataF)
-
-    // function compare( a, b ) {
-    //     if ( a.discoverymethod < b.discoverymethod ){
-    //        return methods.indexOf(a) - methods.indexOf(b);
-    //     }
-    //     if ( a.discoverymethod > b.discoverymethod ){
-    //       return methods.indexOf(a) - methods.indexOf(b);
-    //     }
-    //     return 0;
-    //   }
-
-    // function compareX( a, b ) {
-    //     if ( a[xColumn] < b[xColumn] ){
-    //     return -1;
-    //     }
-    //     if ( a[xColumn] > b[xColumn] ){
-    //     return 1;
-    //     }
-    //     return 0;
-    // }
-
-    // function compareY( a, b ) {
-    //     if ( a[yColumn] < b[yColumn] ){
-    //     return -1;
-    //     }
-    //     if ( a[yColumn] > b[yColumn] ){
-    //     return 1;
-    //     }
-    //     return 0;
-    // }
-
-    // if(flagCol == 0) {
-    //     dataF.sort( compareX );
-    // }
-    // if(flagCol == 1) {
-    //     dataF.sort( compareY );
-    // }
-      
-  //  dataF.sort( compare );
-    
-  
     var dataPush= [];
-   //  console.log(dataBuffer)
-    // console.log(dataF[1].pl_name)
-    // console.log(dataBuffer[1].pl_name)
-    // console.log(dataF[1].pl_name === dataBuffer[1].pl_name)
-
-    // if(dataBuffer.length !== 0) {
-    //     if (true) {
-     
-    //         for(var i = 0, len = dataF.length; i < len; i++){
-    //             if (dataBuffer.some(e => e.pl_name === dataF[i].pl_name)) {
-                       
-    //             }
-    //             else { 
-    //                 console.log("spl");
-    //                 dataF.splice(i,1);
-    //                // i = i-1;
-    //             }
-    
-              
-    //         }
-    //     }
-    //   //  console.log(dataPush)
-
-    //     console.log(dataF)
-    // }
-    
-  
 
     d3.select('#x_menu')
     .call(dropDown, {
@@ -549,7 +334,6 @@ const render = () => {
         }
     ); 
     
-  
    svg.call(scatterPlot, {
         title: `${yLabelColumn}/${xLabelColumn} distribution`,
         xValue: d => d[xColumn],
@@ -571,30 +355,9 @@ const render = () => {
         data2: dataBuffer
    });
 
-//    const gLegendEnter = svg.append('g')
-//    .attr('class', 'legend');
-
-//    const gLegend = svg.selectAll('.legend').data([null]);
-
-//    gLegendEnter
-//    .attr('transform', `translate(${ width- width/4 -140},${height/8 - 20})`)
-//    .merge(gLegendEnter)
-//    .call(colorLegendSP, {
-//        colorScale,
-//        circleRadius: 8,
-//        spacing: 26,
-//        textOffset: 20,
-//        onLegendChange: onLegendChange,
-//        methodsF
-//    });
-
-//    gLegend.exit().remove();
-
    dataBuffer = dataF;
 
    flag = 0;
-
-   
 
 };
 
@@ -616,12 +379,9 @@ const renderLP = () => {
         );
     }
    
- 
- 
     data.sort(function(a,b){
         return a.disc_pubdate - b.disc_pubdate;
     })
-    //console.log(data);
 
     for(var i = 0, len = data.length; i < len-4; i++){
 
@@ -636,7 +396,6 @@ const renderLP = () => {
         return a.disc_pubdate - b.disc_pubdate;
     })
 
-    //console.log(data)
     var nest = d3.nest()
     .key(function(d) { return d.discoverymethod; })
     .key(function(d) { return d.disc_pubdate; })
@@ -644,7 +403,7 @@ const renderLP = () => {
     .entries(data);
 
     const dataTest = nest;
-   // console.log(dataTest)
+
     for(var i = 0, len = nest.length; i < nest.length; i++){
         var tt = nest[i].values;
         var acum = 0;
@@ -654,13 +413,12 @@ const renderLP = () => {
             tt[c].value = acum;
         }
     }
-
    
     for(var i = 0, len = nest.length; i < len; i++){
         acum += nest[i].value;
         nest[i].value = acum;
     }
-    //console.log(nest)
+  
     const dataRR = nest.filter(function (v) {
             var tt = v.values;
              var aa = tt.filter( function(d) {
@@ -674,31 +432,21 @@ const renderLP = () => {
     });
 
     dataL = nest;
-   // console.log(nest)
 
     svgLP.call(linePlot, {
         title: 'Exoplanets Discoveries',
-       // xValue: d => d[xColumn],
         xLabel: 'Year',
-        //xColName: xColumn,
-        //yValue: d => d[yColumn],
         yLabel: 'Total number of exoplanets discovered',
-        //yColName: yColumn,
         margin: { top:70, right: 0, bottom: 100, left:200},
         width: widthLP,
         height: heightLP,
-        //xUnits,
-        //yUnits,
         dateRange: dateRange,
         colorScale,
-       // colorValue: d => d.discoverymethod,
         data: dataRR,
         dataP: dataRR,
         onTimeChange: onTimeChange
         
    });
-
-   
 
    const gLegendEnterLP = svgLP.append('g')
    .attr('class', 'legendLP');
@@ -720,7 +468,7 @@ const renderLP = () => {
    gLegendLP.exit().remove();
     
 }
-//ExoplanetsConfirmed.csv
+
 d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsConfirmed.csv').then(loadedData => {
    
     loadedData.forEach(clearFunction);
@@ -749,13 +497,11 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCon
 
         d.st_bv = (0.021*(Math.sqrt(729*d.st_teff**2+52900000000)-58*d.st_teff+230000))/d.st_teff;
     });
-   // console.log(loadedData);
 
     var nest = d3.nest()
     .key(function(d) { return d.discoverymethod; })
     .entries(loadedData);
     
-
     var test = []
     var a = 0;
     for(var i = 0, len=nest.length; i<len; i++){
@@ -764,13 +510,9 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCon
             test[a] = nest[i].key;
            a = a+1;
         }
-        
     }
 
-   // console.log(nest)
-
     methods = test;
-
 
     for(var i = 0, len = loadedData.length; i < len-4; i++){
 
@@ -781,40 +523,17 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCon
         }
     }
  
-
     loadedData.sort(function(a,b){
         return a.disc_pubdate - b.disc_pubdate;
     })
 
-
-    // dataFilter.push({type: xColumn,name: NaN},
-    //     {type: yColumn,name: NaN});
-    
-    // const dataF1 = loadedData.filter( v =>
-    //         !Number.isNaN(v[yColumn]));
-    
-    // const dataF2 = dataF1.filter( v =>
-    //         !Number.isNaN(v[xColumn]));
-    
-    // const dataF = loadedData.filter(function (v) {
-    //         if (v.disc_pubdate < dateRange[1] && v.disc_pubdate > dateRange[0]) {
-    //             return v
-    //         }
-    // });
-    //console.log(dataF);
-  //  console.log(loadedData);
-
     data = loadedData;
 
-  render();
+    render();
   
 });
 
 d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsComp.csv').then(loadedDataLP => {
-//     let dataC = data.filter(d => d.disc_pubdate !== "" );
-//    // let dataC2 = data.filter(d => d.pl_bmasse !== "" );
-//     let dataC3 = dataC.filter(d => d.pl_rade !== "" );
-//     let dataF = dataC3.filter(d => d.st_teff !== "" );
 
     loadedDataLP.forEach(d => { 
 
@@ -826,16 +545,9 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCom
         d.disc_pubdate = new Date(d.disc_pubdate);
 
     });
-    // var loadedData2LP = loadedDataLP.filter(
-        
-    //     v => methods.includes(v.discoverymethod)
-    // );
-
 
     dataLP = loadedDataLP;
  
-   
-   
    renderLP();
 });
 

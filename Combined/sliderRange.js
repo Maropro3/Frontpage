@@ -17,10 +17,6 @@ export const sliderR = (selection, props)  =>{
     .ticks(10)
     .default([new Date("1992"), new Date()])
     .fill('#2196f3');
-    // .on('onchange', val => {
-    //     dateRange = sliderRangeDate.value();
-    //     render();
-    // });
     onSliderTime(sliderT);
     
     var gRange = d3

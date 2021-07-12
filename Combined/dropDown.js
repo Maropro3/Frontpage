@@ -241,28 +241,7 @@ export const dropDown = (selection, props) => {
 
                 onOptionClick('pl_eqt', this.value, slider, range, xOffset, units);
                 break;
-            // case 'BV':
-            //     if (axisD === "x") {
-            //         d3.selectAll('.sliderX g').remove();
-            //         d3.selectAll('.sliderX text').remove();
-            //         console.log("okX");
-            //     }
-            //     if (axisD === "y") {
-            //         d3.selectAll('.sliderY g').remove();
-            //         d3.selectAll('.sliderY text').remove();
-            //         console.log("okY");
-            //     }
-            //     slider
-            //     .min(d3.min(dataF, d => d['st_bv']))
-            //     .max(d3.max(dataF, d => d['st_bv']))
-            //     .ticks(7)
-            //     .default([d3.min(dataF, d => d['st_bv']), d3.max(dataF, d => d['st_bv'])]);
-            //     range = [d3.min(dataF, d => d['st_bv']), d3.max(dataF, d => d['st_bv'])];
-            //     xOffset = -245;
-            //     units = " (K)";
-
-            //     onOptionClick('st_bv', this.value, slider, range, xOffset, units);
-            //     break;
+        
             default:
                 if (axisD === "x") {
                     d3.selectAll('.sliderX g').remove();
