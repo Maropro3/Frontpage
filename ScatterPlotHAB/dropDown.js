@@ -8,7 +8,6 @@ export const dropDown = (selection, props) => {
         
     } = props;
 
-   
     let dataF = data;
     let range = [];
     let select = selection.selectAll('select').data([null]);
@@ -22,23 +21,20 @@ export const dropDown = (selection, props) => {
         switch(this.value){
             case 'ESI':
              
-              
                 units = ""
 
                 onOptionClick('ESI_in','ESI_ext', 'Interior ESI', 'Exterior ESI',this.value,'ESI_t', units);
                 break;
+                
             case 'CDHS':
            
-              
                 units = ""
 
                 onOptionClick('cdhs_in','cdhs_sur', 'Interior CDHS', 'Surface CDHS',this.value,'cdhs_t',units);
                 break;
 
-          
             default:
              
-              
                 units = ""
 
                 onOptionClick('hzdI','hzdO', 'Interior ESI', 'Exterior ESI',this.value,'ESI_t', units);
@@ -51,4 +47,5 @@ export const dropDown = (selection, props) => {
     .attr('value', d => d)
     .property('selected', d => d === selectedOption)
     .text(d => d);
+
 };

@@ -195,12 +195,13 @@ export const scatterPlot = (selection, props) => {
        .domain([ "Outside Habitable Zone","Inside Habitable Zone"])
        .range(['#ff7770',' #6ff28a'
        ]);
-        
+       var svgSL = d3.selectAll('#svgM') 
+
         var color = colorScale(colorValue(d));
         var color2 = colorScaleSol(d.pl_name);
 
-        var xM = d3.pointer(event, gZEnter.node())[0]
-        var  yM = d3.pointer(event, gZEnter.node())[1]
+        var xM = d3.pointer(event, svgSL.node())[0]
+        var  yM = d3.pointer(event, svgSL.node())[1]
 
         var offTY = 0;
 
@@ -240,8 +241,8 @@ export const scatterPlot = (selection, props) => {
         yLabel + ": " + Math.round(d[yColName] * 1000) / 1000 + "<br/>" + xLabel + ": " + + Math.round(d[xColName] * 1000) / 1000 +
         "<br/>"+"<span style='color:" + color3 + ";'>"+"<b>" + habZ + "</b>"+"</span>"
         )
-        .style("left", (xM +340) + "px")
-        .style("top", (yM+1280 +offTY) + "px")
+        .style("left", (xM +170) + "px")
+        .style("top", (yM+1130 ) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
