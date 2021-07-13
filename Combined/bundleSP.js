@@ -441,9 +441,15 @@
        var tipMouseover = function(event,d) {
 
            var color = colorScale(colorValue(d));
+           var offsetY = 0; 
 
            var xM = d3.pointer(event, selection.node())[0];
           var  yM = d3.pointer(event, selection.node())[1];
+
+          if(window.innerWidth<1828 ){
+           
+           offsetY = -66;
+          }
 
            d3.select(this)
            .attr('stroke-width', '2')
@@ -455,7 +461,7 @@
            yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
            )
            .style("left", (xM +830) + "px")
-           .style("top", (yM +210) + "px")
+           .style("top", (yM +210+offsetY) + "px")
            .transition()
                .duration(200) 
                .style("fill-opacity", .9) 

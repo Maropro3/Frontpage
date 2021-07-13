@@ -167,21 +167,9 @@ export const scatterPlot = (selection, props) => {
         var xM = d3.pointer(event, selection.node())[0]
        var  yM = d3.pointer(event, selection.node())[1]
 
-       if(window.innerWidth<1728 && window.innerWidth>1534 ){
-        offsetX = 125
-        offsetY = 50
-       }
-       else if(window.innerWidth<1534 && window.innerWidth>1344){
-        offsetX = 125*2
-        offsetY = 50*2
-       }
-       else if(window.innerWidth<1344 && window.innerWidth>1152){
-        offsetX = 125*3
-        offsetY = 50*3.5
-       }
-       else if(window.innerWidth<1152 && window.innerWidth>900){
-        offsetX = 125*4
-        offsetY = 50*4.5
+       if(window.innerWidth<1828 ){
+        
+        offsetY = -66
        }
        var offFX = 0;
        var offFY = 0;
@@ -200,7 +188,7 @@ export const scatterPlot = (selection, props) => {
         yLabel + ": " + d[yColName] + "<br/>" + xLabel + ": " + + d[xColName] 
         )
         .style("left", (xM +830) + "px")
-        .style("top", (yM +210) + "px")
+        .style("top", (yM +210+offsetY) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
