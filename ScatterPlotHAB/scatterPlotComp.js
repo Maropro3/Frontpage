@@ -206,7 +206,7 @@ export const scatterPlot = (selection, props) => {
         var offTY = 0;
 
         if(window.innerWidth<1900){
-            offTY = -56
+            offTY = -66
         }
         
 
@@ -242,7 +242,7 @@ export const scatterPlot = (selection, props) => {
         "<br/>"+"<span style='color:" + color3 + ";'>"+"<b>" + habZ + "</b>"+"</span>"
         )
         .style("left", (xM +170) + "px")
-        .style("top", (yM+1130 ) + "px")
+        .style("top", (yM+1210 +offTY) + "px")
         .transition()
             .duration(200) 
             .style("fill-opacity", .9) 
