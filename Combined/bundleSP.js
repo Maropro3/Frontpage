@@ -584,7 +584,7 @@
        const innerWidth = width - margin.left - margin.right;
        const innerHeight = height - margin.top - margin.bottom;
        const dataPure = dataP;
-       var timeRange = [new Date("1992"), new Date("2022")];
+       var timeRange = [new Date("1989"), new Date("2022")];
 
        const svgZM = selection.selectAll('.svgGLP').data([null]);
        const svgZMEnter = svgZM.enter().append('svg')
@@ -1178,7 +1178,7 @@
    let yLabelColumn = 'Stellar Temperature';
    const columns = ['Stellar Mass', 'Stellar Temperature', 'Stellar Radius', 'Stellar Luminosity', 'Planetary Mass', 'Planetary Radius', 'Orbital Period', 'Orbit Semi-Major Axis', 'Planet Density', 'Planet Temperature'];
    var methods = [];
-   let dateRange = [new Date("1992"), new Date ("2021")]; 
+   let dateRange = [new Date("1989"), new Date ("2021")]; 
    var xRange = [0, 3];
    var yRange = [2000, 11000];
    var gRangeX;

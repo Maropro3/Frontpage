@@ -26,7 +26,7 @@ export const linePlot = (selection,props) => {
     const innerHeight = height - margin.top - margin.bottom;
     const dataF = data;
     const dataPure = dataP;
-    var timeRange = [new Date("1992"), new Date("2022")]
+    var timeRange = [new Date("1989"), new Date("2022")]
 
     const svgZM = selection.selectAll('.svgGLP').data([null]);
     const svgZMEnter = svgZM.enter().append('svg')
