@@ -303,8 +303,12 @@ text {
     -moz-transform: scale(0.95);
     -webkit-transform: scale(0.95);
     transform-origin: 0 0;
+    
  
     
+  }
+  body{
+    height: 1400px;
   }
 
 }
