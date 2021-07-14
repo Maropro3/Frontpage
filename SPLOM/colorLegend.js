@@ -136,15 +136,16 @@ export const colorLegend = (selection, props) => {
       switch(numC){
         case "0":
           tooltip
-          .html( "This cluster contains the planets with the highest temperatures and mass, as well as a high radius and average density." +"</br>"+"</br>"+
-          "These planets also orbit close to their star and could be classified as dense gas giants or bigger Super-Eaths")
+          .html( "Cluster 0 is concetrated in the middle ranges across all attributes, specially in mass and radius" +"<br>"+"</br>"+
+          "This could signify that this planets are either small Neptune-like gas planets or Super-Earths")
           .style("opacity", 1)
           break;
        case "1":
         tooltip
-        .html( "Cluster 1 is strange as it contains the least amount of planets and its members are very spread in terms of their attributes." +"</br>"+"</br>"+
-        "Its most relevant characteristics are its high radius and orbit")
+        .html( "Cluster 1 is composed of the densest planets with the lowest mass, radius, and orbits; evenly spread in terms of temperature." +"</br>"+ "</br>"+
+        "Most likely these planets are terrestial planets like Earth or Venus")
         .style("opacity", 1)
+    
           break;
       case "2":
         tooltip
@@ -153,16 +154,12 @@ export const colorLegend = (selection, props) => {
       .style("opacity", 1)
           break;
       case "3":
+
         tooltip
-        .html( "Cluster 3 has a very wide distribution across all atributes, usually concentrating in the middle ranges, specially in mass and radius" +"<br>"+"</br>"+
-        "This could signify that this planets are either small Neptune-like gas planets or Super-Earths")
+        .html( "This cluster contains the planets with the highest temperatures and mass, as well as a high radius and average density." +"</br>"+"</br>"+
+        "These planets also orbit close to their star and could be classified as dense gas giants or bigger Super-Eaths")
         .style("opacity", 1)
-          break;
-      case "4":
-        tooltip
-        .html( "Cluster 4 is composed of the densest planets with the lowest mass, radius, and orbits; evenly spread in terms of temperature." +"</br>"+ "</br>"+
-        "Most likely these planets are terrestial planets like Earth or Venus")
-        .style("opacity", 1)
+       
           break;
       }
      }
@@ -247,8 +244,6 @@ export const colorLegend = (selection, props) => {
         break;
     }
    }
- 
-
   }
 
   const onMouseout = function(event, d){
@@ -296,7 +291,6 @@ export const colorLegend = (selection, props) => {
         offTY = -60
     }
 
-   
     tooltip.style("left", (xM+160) + "px")
     .style("top", (yM+410+offTY) + "px")
     .transition()

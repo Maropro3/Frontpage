@@ -141,15 +141,16 @@
         switch(numC){
           case "0":
             tooltip
-            .html( "This cluster contains the planets with the highest temperatures and mass, as well as a high radius and average density." +"</br>"+"</br>"+
-            "These planets also orbit close to their star and could be classified as dense gas giants or bigger Super-Eaths")
+            .html( "Cluster 0 is concetrated in the middle ranges across all attributes, specially in mass and radius" +"<br>"+"</br>"+
+            "This could signify that this planets are either small Neptune-like gas planets or Super-Earths")
             .style("opacity", 1);
             break;
          case "1":
           tooltip
-          .html( "Cluster 1 is strange as it contains the least amount of planets and its members are very spread in terms of their attributes." +"</br>"+"</br>"+
-          "Its most relevant characteristics are its high radius and orbit")
+          .html( "Cluster 1 is composed of the densest planets with the lowest mass, radius, and orbits; evenly spread in terms of temperature." +"</br>"+ "</br>"+
+          "Most likely these planets are terrestial planets like Earth or Venus")
           .style("opacity", 1);
+      
             break;
         case "2":
           tooltip
@@ -158,16 +159,12 @@
         .style("opacity", 1);
             break;
         case "3":
+
           tooltip
-          .html( "Cluster 3 has a very wide distribution across all atributes, usually concentrating in the middle ranges, specially in mass and radius" +"<br>"+"</br>"+
-          "This could signify that this planets are either small Neptune-like gas planets or Super-Earths")
+          .html( "This cluster contains the planets with the highest temperatures and mass, as well as a high radius and average density." +"</br>"+"</br>"+
+          "These planets also orbit close to their star and could be classified as dense gas giants or bigger Super-Eaths")
           .style("opacity", 1);
-            break;
-        case "4":
-          tooltip
-          .html( "Cluster 4 is composed of the densest planets with the lowest mass, radius, and orbits; evenly spread in terms of temperature." +"</br>"+ "</br>"+
-          "Most likely these planets are terrestial planets like Earth or Venus")
-          .style("opacity", 1);
+         
             break;
         }
        }
@@ -250,8 +247,6 @@
           break;
       }
      }
-   
-
     };
 
     const onMouseout = function(event, d){
@@ -299,7 +294,6 @@
           offTY = -60;
       }
 
-     
       tooltip.style("left", (xM+160) + "px")
       .style("top", (yM+410+offTY) + "px")
       .transition()
@@ -357,11 +351,10 @@
           selectedOption,
           axis,
           data,
-          
       } = props;
       let select = selection.selectAll('select').data([null]);
       let selCluster;
-      // 'Gaussian Mixture', 'KMeans', 'Aglomerative'
+     
       select = select.enter().append('select')
       .merge(select)
       .attr('id', 'drop')
@@ -370,26 +363,24 @@
               case 'Aglomerative':
                
                   selCluster = 2;
-
                   onOptionClick(selCluster,this.value,);
                   break;
+
               case 'Gaussian Mixture':
                
                   selCluster = 1;
-
                   onOptionClick(selCluster,this.value,);
                   break;
+
               case 'KMeans':
              
                   selCluster = 0;
-
                   onOptionClick(selCluster,this.value,);
                   break;
             
               default:
                
                   selCluster = 0;
-
                   onOptionClick(selCluster,this.value,);
                
           }
@@ -401,8 +392,6 @@
       .property('selected', d => d === selectedOption)
       .text(d => d);
   };
-
-  ///SPLOM////
 
   var size = 240,
       padding = 40,
@@ -431,11 +420,11 @@
     .attr("height", 80)
     .attr("transform", "translate(" + padding*2  + "," + padding * 2.2+ ")");
 
-    svg = d3.select(".transZ").append("svg")
-    .attr('class', 'svgSPLOM')
-    .attr("width", size * 5 + padding+20)
-    .attr("height", size * 5 + padding +100)
-    .attr("transform", "translate(" + offset + "," + padding * 2 + ")");
+  svg = d3.select(".transZ").append("svg")
+  .attr('class', 'svgSPLOM')
+  .attr("width", size * 5 + padding+20)
+  .attr("height", size * 5 + padding +100)
+  .attr("transform", "translate(" + offset + "," + padding * 2 + ")");
     
 
   var dataF = [];
@@ -457,10 +446,6 @@
 
   var  colorScale;
 
-  // let menusCSS = document.querySelector("#menus");
-  // menusCSS.style.left = `${(width- width/4 +800)/6}px`;
-  // menusCSS.style.top = `10px`;
-
   const onLegendChange = (methodsF) => {
     methodsFF = methodsF;
     
@@ -470,7 +455,7 @@
     d3.selectAll('.cluster2').remove();
     d3.selectAll('.cluster3').remove();
     d3.selectAll('.cluster4').remove();
-   // flag = 1;
+
    console.log(methodsF);
     render();
    
@@ -481,11 +466,9 @@
 
   const onXColumnClick = (select, name) => {
     selectedData = select;
-  //  d3.selectAll('.svgSPLOM').remove()
-  //  d3.selectAll('.svgL').remove()
-  d3.selectAll('.legend').remove();
-  d3.selectAll('.circleSP').remove();
 
+      d3.selectAll('.legend').remove();
+      d3.selectAll('.circleSP').remove();
 
       d3.selectAll('.cluster0').remove();
       d3.selectAll('.cluster1').remove();
@@ -493,13 +476,11 @@
       d3.selectAll('.cluster3').remove();
       d3.selectAll('.cluster4').remove();
 
-     
-
-   // dataSelector()
    methodsFF = ['0','1', '2', '3', '4', '5', '6', '7', '8'];
    console.log("column");
       render();
   };
+
   d3.select('#menus')
   .call(dropDown, {
       options: columnsD,
@@ -510,10 +491,7 @@
 
   ); 
 
-  //clusterKNNBIG.csv
-
-      d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/clusterP_KNN.csv').then(data => {
-          //console.log(data)
+  d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/clusterP_KNN.csv').then(data => {
       
           data.forEach(clearFunction);
 
@@ -527,18 +505,11 @@
 
               d.pl_bmasse = +d.pl_bmasse;
               d.pl_rade = +d.pl_rade;
-              // d.st_mass = +d.st_mass;
-              // d.st_teff = +d.st_teff;
-              // d.st_rad = +d.st_rad;
-              // d.st_lum = +d.st_lum;
-             
               d.pl_orbsmax = +d.pl_orbsmax;
               d.pl_dens = +d.pl_dens;
               d.pl_eqt = +d.pl_eqt;
-          // d.cluster = +d.cluster;
-          // d.disc_pubdate = new Date(d.disc_pubdate);
+
           });
-      // console.log(loadedData);
 
           var nest = d3.nest()
           .key(function(d) { return d.cluster; })
@@ -557,8 +528,6 @@
           methodsD.sort();
         
           methods0 = methodsD;
-      // methods = test;
-
 
           for(var i = 0, len = data.length; i < len-4; i++){
 
@@ -569,7 +538,6 @@
               }
           }
       
-
           data.sort(function(a,b){
               return a.disc_pubdate - b.disc_pubdate;
           });
@@ -581,15 +549,11 @@
               render();
             }
              
-        
-      
       
       });
 
-      // clusterEM.csv
-
       d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/clusterP_GM.csv').then(data => {
-         // console.log(data)
+
       
           data.forEach(clearFunction);
 
@@ -603,18 +567,12 @@
 
               d.pl_bmasse = +d.pl_bmasse;
               d.pl_rade = +d.pl_rade;
-              // d.st_mass = +d.st_mass;
-              // d.st_teff = +d.st_teff;
-              // d.st_rad = +d.st_rad;
-              // d.st_lum = +d.st_lum;
               d.pl_orbper = +d.pl_orbper;
               d.pl_orbsmax = +d.pl_orbsmax;
               d.pl_dens = +d.pl_dens;
               d.pl_eqt = +d.pl_eqt;
-          // d.cluster = +d.cluster;
-          // d.disc_pubdate = new Date(d.disc_pubdate);
+
           });
-      // console.log(loadedData);
 
           var nest = d3.nest()
           .key(function(d) { return d.cluster; })
@@ -633,8 +591,6 @@
           methodsD.sort();
          
           methods1 = methodsD;
-      // methods = test;
-
 
           for(var i = 0, len = data.length; i < len-4; i++){
 
@@ -645,7 +601,6 @@
               }
           }
       
-
           data.sort(function(a,b){
               return a.disc_pubdate - b.disc_pubdate;
           });
@@ -657,13 +612,11 @@
           if(selectedData == 1){
               render();
             }
-             
 
       });
 
       d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/clusterP_AC.csv').then(data => {
          
-      
           data.forEach(clearFunction);
 
           function clearFunction(i,n) {
@@ -676,18 +629,11 @@
 
               d.pl_bmasse = +d.pl_bmasse;
               d.pl_rade = +d.pl_rade;
-              // d.st_mass = +d.st_mass;
-              // d.st_teff = +d.st_teff;
-              // d.st_rad = +d.st_rad;
-              // d.st_lum = +d.st_lum;
-             
               d.pl_orbsmax = +d.pl_orbsmax;
               d.pl_dens = +d.pl_dens;
               d.pl_eqt = +d.pl_eqt;
-          // d.cluster = +d.cluster;
-          // d.disc_pubdate = new Date(d.disc_pubdate);
+
           });
-      // console.log(loadedData);
 
           var nest = d3.nest()
           .key(function(d) { return d.cluster; })
@@ -706,8 +652,6 @@
           methodsD.sort();
         
           methods2 = methodsD;
-      // methods = test;
-
 
           for(var i = 0, len = data.length; i < len-4; i++){
 
@@ -717,7 +661,6 @@
                   } 
               }
           }
-      
 
           data.sort(function(a,b){
               return a.disc_pubdate - b.disc_pubdate;
@@ -730,13 +673,10 @@
 
         if(selectedData == 2){
           render();
-        }
-         
-          
+        }   
       });
       d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_doubleHist.csv", function(data) {
   });
-
 
   const render = () => {
       var dataFF = [];
@@ -765,8 +705,6 @@
          methodsAux = methods2;
          break;
       }
-      // console.log(selectedData)
-      // console.log(methodsFF)
 
     var domainByTrait = {},
     traits = d3.keys(dataFF[0]).filter(v => columns.includes(v)),
@@ -776,7 +714,6 @@
       domainByTrait[trait] = d3.extent(dataFF, function(d) { return d[trait]; });
     });
 
-    
     colorScale = d3.scaleOrdinal()
     .domain(methodsAux)
     .range(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#ede279","#a6761d","#ffcabd"]);
@@ -790,8 +727,6 @@
     .on("end", brushend)
     .extent([[0,0],[size,size]]);
 
-
-    
     const gLegendEnter = svgL.append('g')
         .attr('class', 'legend');
     
@@ -830,26 +765,6 @@
         .attr("transform", function(d, i) { return "translate(0," + i * size + ")"; })
         .each(function(d) { y.domain(domainByTrait[d]); d3.select(this).call(yAxis); });
 
-
-    // const cellG = g.select('.cell');
-    // const cellGEnter = gEnter.append('g')
-    // .attr('class', 'cell')
-    
-    // var cell = cellG.merge(cellGEnter)
-    // .data(cross(traits, traits))
-    // .enter().append("g")
-    //   .attr("class", function(d) {return "cell" + d.i + d.j})
-    //   .attr("transform", function(d) { return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")"; })
-    //   .each(plot);
-
-    // cell.selectAll('.domain')
-    // .remove();
-    
-  //   var cellG = g.selectAll('.cell');
-  //   var cellGEnter = gEnter.append('g')
-  //   .attr('class', 'xAxis')
-  //   .attr('transform', `translate(0,${innerHeight})`);
-
     var cellg =  g.merge(gEnter).selectAll('.cell').data(cross(traits, traits));
 
     var cell = cellg
@@ -859,14 +774,8 @@
         .attr("transform", function(d) { return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")"; })
         .each(plot);
 
-  //   var cell = gEnter.selectAll(".cell")
-  //       .data(cross(traits, traits))
-  //     .enter().append("g")
-  //       .attr("class", function(d) {return "cell" + d.i + d.j})
-  //       .attr("transform", function(d) { return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")"; })
-  //       .each(plot);
     d3.selectAll('.textLabs').remove();
-    // Titles for the diagonal.
+
     cell.filter(function(d) { return d.i === d.j; }).append("text")
     .attr('class', 'textLabs')
         .attr("x", padding)
@@ -889,19 +798,12 @@
 
   var pp = cross(traits, traits);
 
-
-
   function plot(p) {
-   
       
       var cell = d3.select(this);
 
-    
-
       x.domain(domainByTrait[p.x]);
       y.domain(domainByTrait[p.y]);
-
-      
 
       cell.append("rect")
           .attr("class", "frame")
@@ -913,7 +815,6 @@
       const circles =  cell.merge(cell).selectAll('circle').data(dataFF);
 
       if(p.i === p.j){
-          // console.log(dataFF .filter( function(d){return d.cluster === "0"} ))
 
           const y2 = d3.scaleLinear()
           .range([padding / 2, size - padding / 2])
@@ -924,7 +825,6 @@
               .filter( function(d){return d.cluster === "0"} )
               .map(function(d){  return d[p.x]; }) );
 
-              // ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]
           var density2 =  kde( dataFF
               .filter( function(d){return d.cluster === "1"} )
               .map(function(d){  return d[p.x]; }) );
@@ -960,7 +860,6 @@
               .on('mouseout', onMouseout);
          }
              
-         
          if(methodsFF.includes("1")){
               cell.append("path")
               .attr("class", "cluster1")
@@ -978,7 +877,6 @@
               )
               .on('mouseover', onMouseover)
               .on('mouseout', onMouseout);
-
          }
           
          if(methodsFF.includes("2")){
@@ -999,7 +897,6 @@
           )
           .on('mouseover', onMouseover)
           .on('mouseout', onMouseout);
-
          }
 
          if(methodsFF.includes("3")){
@@ -1044,10 +941,6 @@
 
          }
 
-
-        
-            
-
           return;
       }
 
@@ -1070,59 +963,16 @@
          
       d3.selectAll('.circleSP').exit().remove();
   }
-     
-  //     function brushstart(p) {
-  //     if (brushCell !== this) {
-  //       d3.select(brushCell).call(brush.move, null);
-  //       brushCell = this;
-  //       x.domain(domainByTrait[p.x]);
-  //       y.domain(domainByTrait[p.y]);
-  //     }
-  //   }
-    
-   
-  //   function brushmove(p) {
-  //     var e = d3.brushSelection(this);
-  //     //console.log(e[0])
-  //     svg.selectAll("circle").classed("hidden", function(d) {
-  //       return !e
-  //         ? false
-  //         : (
-  //           e[0][0] > x(+d[p.x]) || x(+d[p.x]) > e[1][0]
-  //           || e[0][1] > y(+d[p.y]) || y(+d[p.y]) > e[1][1]
-  //         );
-  //     });
-  //   }
-  //     function brushend() {
-  //     var e = d3.brushSelection(this);
-  //     if (e === null) svg.selectAll(".hidden").classed("hidden", false);
-    
-  //     };
+
   var brushCell;
   var nn = 0;
-    // Clear the previously-active brush, if any.
+
     function brushstart(p) {
 
-  //     d3.selectAll('.cluster0')
-  //     .style("opacity", "0.1")
-  //    .style("fill", "grey")
-  //     d3.selectAll('.cluster1')
-  //     .style("opacity", "0.1")
-  //      .style("fill", "grey")
-  //     d3.selectAll('.cluster2')
-  //     .style("opacity", "0.1")
-  //     .style("fill", "grey")
-  //     d3.selectAll('.cluster3')
-  //     .style("opacity", "0.1")
-  //     .style("fill", "grey")
-  //     d3.selectAll('.cluster4')
-  //     .style("opacity", "0.1")
-  //      .style("fill", "grey")
       if (brushCell !== this) {
           console.log(p);
         d3.select(brushCell).call(brush.move, null);
         brushCell = this;
-        //console.log(d3.select(brushCell).attr("class"))
         
         switch(d3.select(brushCell).attr("class")) {
           case "cell00":
@@ -1179,11 +1029,9 @@
           case "cell32":
               nn = 17;
               break;
-
           case "cell33":
               nn = 18;
               break;
-
           case "cell34":
               nn = 19;
               break;
@@ -1202,15 +1050,13 @@
           case "cell44":
               nn = 24;
               break;
-    
-                                        
+                      
         }
        x.domain(domainByTrait[pp[nn].x]);
        y.domain(domainByTrait[pp[nn].y]);
       }
     }
 
-    // Highlight the selected circles.
     function brushmove(p) {
       var e = d3.brushSelection(this);
     
@@ -1224,35 +1070,9 @@
             || isNaN(x(+d[pp[nn].x])) || isNaN(y(+d[pp[nn].y]))
           );
       });
-      // cell.selectAll("circle").classed("selected", function(d) {
-         
-      //     return !e
-      //       ? false
-      //       : (
-      //         e[0][0] < x(+d[pp[nn].x]) || x(+d[pp[nn].x]) < e[1][0]
-      //         || e[0][1] < y(+d[pp[nn].y]) || y(+d[pp[nn].y]) < e[1][1]
-      //         || isNaN(x(+d[pp[nn].x])) || isNaN(y(+d[pp[nn].y]))
-      //       );
-      //   });
     }
 
-    // If the brush is empty, select all circles.
     function brushend() {
-      // d3.selectAll('.cluster0')
-      // .style("opacity", "0.6")
-      // .style("fill", "#1b9e77")
-      // d3.selectAll('.cluster1')
-      // .style("opacity", "0.6")
-      // .style("fill", "#d95f02")
-      // d3.selectAll('.cluster2')
-      // .style("opacity", "0.6")
-      // .style("fill", "#7570b3")
-      // d3.selectAll('.cluster3')
-      // .style("opacity", "0.6")
-      // .style("fill", "#e7298a")
-      // d3.selectAll('.cluster4')
-      // .style("opacity", "0.6")
-      // .style("fill", "#66a61e")
       var e = d3.brushSelection(this);
       if (e === null) cell.selectAll(".hidden").classed("hidden", false);
     }
@@ -1283,15 +1103,12 @@
       };
     }
     
-    
-
     const onMouseover = function(event, d){
 
       var numC = d3.select(this).attr("class");
       numC.toString();
       var colL;
       var circleCol;
-    // ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]
 
       switch(numC){
           case "cluster0":
@@ -1343,12 +1160,9 @@
       d3.selectAll('.cluster4')
       .style("opacity", "0.1")
       .style("fill", "grey");
-
       d3.selectAll('.'+numC)
       .style("opacity", "1")
       .style("fill", colL);
-
-      
     };
 
     const onMouseout = function(event, d){
@@ -1360,14 +1174,10 @@
       d3.selectAll('.circleSP')
       .style('fill',function(d){
           colorScale(d.cluster);
-          // d3.selectAll('.mypath')
-          // .style("opacity", "0.6")
-          // .style("fill", colL)
+      
           return  colorScale(d.cluster)
         
       });
-
-        // ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]
 
       d3.selectAll('.cluster0')
       .style("opacity", "0.6")
@@ -1385,13 +1195,6 @@
       .style("opacity", "0.6")
       .style("fill", "#66a61e");
 
-     
-
-      // d3.select(this)
-      // .style("opacity", "1")
-      // .style("fill", colL)
-
-      
     };
 
 })));

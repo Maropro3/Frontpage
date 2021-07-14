@@ -5,16 +5,14 @@ export const dropDown = (selection, props) => {
         selectedOption,
         axis,
         data,
-        
     } = props;
 
-   
     let dataF = data;
     let range = [];
     let select = selection.selectAll('select').data([null]);
     let selCluster;
     let units = "";
-    // 'Gaussian Mixture', 'KMeans', 'Aglomerative'
+   
     select = select.enter().append('select')
     .merge(select)
     .attr('id', 'drop')
@@ -24,21 +22,20 @@ export const dropDown = (selection, props) => {
              
                 selCluster = 2;
                 units = ""
-
                 onOptionClick(selCluster,this.value,);
                 break;
+
             case 'Gaussian Mixture':
              
                 selCluster = 1;
                 units = ""
-
                 onOptionClick(selCluster,this.value,);
                 break;
+
             case 'KMeans':
            
                 selCluster = 0;
                 units = ""
-
                 onOptionClick(selCluster,this.value,);
                 break;
           
@@ -46,7 +43,6 @@ export const dropDown = (selection, props) => {
              
                 selCluster = 0;
                 units = ""
-
                 onOptionClick(selCluster,this.value,);
              
         }
