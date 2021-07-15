@@ -816,9 +816,29 @@
 
       if(p.i === p.j){
 
+          var c0_size = dataFF
+          .filter( function(d){return d.cluster === "0"} )
+          .map(function(d){  return d[p.x]; }).length;
+
+          var c1_size = dataFF
+          .filter( function(d){return d.cluster === "1"} )
+          .map(function(d){  return d[p.x]; }).length;
+
+          var c2_size = dataFF
+          .filter( function(d){return d.cluster === "2"} )
+          .map(function(d){  return d[p.x]; }).length;
+
+          var c3_size = dataFF
+          .filter( function(d){return d.cluster === "3"} )
+          .map(function(d){  return d[p.x]; }).length;
+
+          var c4_size = dataFF
+          .filter( function(d){return d.cluster === "4"} )
+          .map(function(d){  return d[p.x]; }).length;
+
           const y2 = d3.scaleLinear()
           .range([padding / 2, size - padding / 2])
-          .domain([10,0]);
+          .domain([2.75,0]);
 
           var kde = kernelDensityEstimator(kernelEpanechnikov(0.1), x.ticks(100));
           var density1 =  kde( dataFF
@@ -853,7 +873,7 @@
               .attr("d",  d3.area()
                   .curve(d3.curveBasis)
                   .x(function(d) { return x(d[0]); })
-                  .y1(function(d) { return y2(d[1]); })
+                  .y1(function(d) { return y2(d[1]*c0_size/416); })
                   .y0(y2(0))
               )
               .on('mouseover', onMouseover)
@@ -872,7 +892,7 @@
               .attr("d",  d3.area()
                   .curve(d3.curveBasis)
                   .x(function(d) { return x(d[0]); })
-                  .y1(function(d) { return y2(d[1]); })
+                  .y1(function(d) { return y2(d[1]*c1_size/416); })
                   .y0(y2(0))
               )
               .on('mouseover', onMouseover)
@@ -892,7 +912,7 @@
           .attr("d",  d3.area()
               .curve(d3.curveBasis)
               .x(function(d) { return x(d[0]); })
-              .y1(function(d) { return y2(d[1]); })
+              .y1(function(d) { return y2(d[1]*c2_size/416); })
               .y0(y2(0))
           )
           .on('mouseover', onMouseover)
@@ -912,7 +932,7 @@
           .attr("d",  d3.area()
               .curve(d3.curveBasis)
               .x(function(d) { return x(d[0]); })
-              .y1(function(d) { return y2(d[1]); })
+              .y1(function(d) { return y2(d[1]*c3_size/416); })
               .y0(y2(0))
           )
           .on('mouseover', onMouseover)
@@ -933,7 +953,7 @@
           .attr("d",  d3.area()
               .curve(d3.curveBasis)
               .x(function(d) { return x(d[0]); })
-              .y1(function(d) { return y2(d[1]); })
+              .y1(function(d) { return y2(d[1]*c4_size/416); })
               .y0(y2(0))
           )
           .on('mouseover', onMouseover)
