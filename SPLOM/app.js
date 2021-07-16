@@ -379,14 +379,14 @@ const render = () => {
     .enter().append("g")
       .attr("class", "x axis")
       .attr("transform", function(d, i) { return "translate(" + (n - i - 1) * size + ",0)"; })
-      .each(function(d) { x.domain(domainByTrait[d]); d3.select(this).call(xAxis); });
+      .each(function(d) { x.domain([-0.1,1.1]).nice(); d3.select(this).call(xAxis); });
 
   gEnter.selectAll(".y.axis")
       .data(traits)
     .enter().append("g")
       .attr("class", "y axis")
       .attr("transform", function(d, i) { return "translate(0," + i * size + ")"; })
-      .each(function(d) { y.domain(domainByTrait[d]); d3.select(this).call(yAxis); });
+      .each(function(d) { y.domain([-0.1,1.1]).nice(); d3.select(this).call(yAxis); });
 
   var cellg =  g.merge(gEnter).selectAll('.cell').data(cross(traits, traits));
 
@@ -425,8 +425,8 @@ function plot(p) {
     
     var cell = d3.select(this);
 
-    x.domain(domainByTrait[p.x]);
-    y.domain(domainByTrait[p.y]);
+    x.domain([-0.1,1.1]);
+    y.domain([-0.1,1.1]);
 
     cell.append("rect")
         .attr("class", "frame")
@@ -455,9 +455,9 @@ function plot(p) {
         .filter( function(d){return d.cluster === "3"} )
         .map(function(d){  return d[p.x]; }).length
 
-        var c4_size = dataFF
-        .filter( function(d){return d.cluster === "4"} )
-        .map(function(d){  return d[p.x]; }).length
+        // var c4_size = dataFF
+        // .filter( function(d){return d.cluster === "4"} )
+        // .map(function(d){  return d[p.x]; }).length
 
         const y2 = d3.scaleLinear()
         .range([padding / 2, size - padding / 2])
@@ -480,9 +480,15 @@ function plot(p) {
                 .filter( function(d){return d.cluster === "3"} )
                 .map(function(d){  return d[p.x]; }) )
 
-        var density5 =  kde( dataFF
-            .filter( function(d){return d.cluster === "4"} )
-            .map(function(d){  return d[p.x]; }) )
+        // var density5 =  kde( dataFF
+        //     .filter( function(d){return d.cluster === "4"} )
+        //     .map(function(d){  return d[p.x]; }) )
+
+        var inc = 0;
+
+        if (selectedData == 0){
+            inc = 180
+        }
 
        if(methodsFF.includes("0")){
             cell.append("path")
@@ -496,7 +502,7 @@ function plot(p) {
             .attr("d",  d3.area()
                 .curve(d3.curveBasis)
                 .x(function(d) { return x(d[0]); })
-                .y1(function(d) { return y2(d[1]*c0_size/416); })
+                .y1(function(d) { return y2(d[1]*c0_size/(416+inc)); })
                 .y0(y2(0))
             )
             .on('mouseover', onMouseover)
@@ -515,7 +521,7 @@ function plot(p) {
             .attr("d",  d3.area()
                 .curve(d3.curveBasis)
                 .x(function(d) { return x(d[0]); })
-                .y1(function(d) { return y2(d[1]*c1_size/416); })
+                .y1(function(d) { return y2(d[1]*c1_size/(416+inc)); })
                 .y0(y2(0))
             )
             .on('mouseover', onMouseover)
@@ -535,7 +541,7 @@ function plot(p) {
         .attr("d",  d3.area()
             .curve(d3.curveBasis)
             .x(function(d) { return x(d[0]); })
-            .y1(function(d) { return y2(d[1]*c2_size/416); })
+            .y1(function(d) { return y2(d[1]*c2_size/(416+inc)); })
             .y0(y2(0))
         )
         .on('mouseover', onMouseover)
@@ -555,7 +561,7 @@ function plot(p) {
         .attr("d",  d3.area()
             .curve(d3.curveBasis)
             .x(function(d) { return x(d[0]); })
-            .y1(function(d) { return y2(d[1]*c3_size/416); })
+            .y1(function(d) { return y2(d[1]*c3_size/(416+inc)); })
             .y0(y2(0))
         )
         .on('mouseover', onMouseover)
@@ -563,26 +569,26 @@ function plot(p) {
 
        }
 
-       if(methodsFF.includes("4")){
+    //    if(methodsFF.includes("4")){
 
-        cell.append("path")
-        .attr("class", "cluster4")
-        .datum(density5)
-        .attr("fill", "#66a61e")
-        .attr("opacity", ".6")
-        .attr("stroke", "black")
-        .attr("stroke-width", 1)
-        .attr("stroke-linejoin", "round")
-        .attr("d",  d3.area()
-            .curve(d3.curveBasis)
-            .x(function(d) { return x(d[0]); })
-            .y1(function(d) { return y2(d[1]*c4_size/416); })
-            .y0(y2(0))
-        )
-        .on('mouseover', onMouseover)
-        .on('mouseout', onMouseout);
+    //     cell.append("path")
+    //     .attr("class", "cluster4")
+    //     .datum(density5)
+    //     .attr("fill", "#66a61e")
+    //     .attr("opacity", ".6")
+    //     .attr("stroke", "black")
+    //     .attr("stroke-width", 1)
+    //     .attr("stroke-linejoin", "round")
+    //     .attr("d",  d3.area()
+    //         .curve(d3.curveBasis)
+    //         .x(function(d) { return x(d[0]); })
+    //         .y1(function(d) { return y2(d[1]*c4_size/416); })
+    //         .y0(y2(0))
+    //     )
+    //     .on('mouseover', onMouseover)
+    //     .on('mouseout', onMouseout);
 
-       }
+    //    }
 
         return;
     }

@@ -34,9 +34,7 @@
     [{symbol:d3.symbol().type(d3.symbolSquare).size(40)},
       {symbol:d3.symbol().type(d3.symbolTriangle).size(40)}];  
     entries.append('path')
-   // .attr("transform", d => `translate(${xScale(xValue(d))},${yScale(yValue(d))})`)
       .attr("d", shapes)
-      //.attr("d",d3.symbol().type(d3.symbolSquare).size(40) )
       .attr('fill', colorScale);
     
     

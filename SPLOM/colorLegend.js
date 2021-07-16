@@ -169,36 +169,17 @@ export const colorLegend = (selection, props) => {
       switch(numC){
         case "0":
           tooltip
-          .html( "This cluster contains the planets with the highest temperatures and mass, as well as a high radius and average density." +"</br>"+"</br>"+
+          .html( " Exoplanets in this cluster exhibit high radius, mass and temperature, but low density." +"</br>"+"</br>"+
           "These planets also orbit close to their star and could be classified as dense gas giants or bigger Super-Eaths")
           .style("opacity", 1)
           break;
        case "1":
 
         tooltip
-        .html( "Cluster 1 is composed of the densest planets with the lowest mass radius, and orbits; evenly spread in terms of temperature." +"</br>"+ "</br>"+
-        "Most likely these planets are terrestial planets like Earth or Venus")
+        .html( "Members of this cluster have the opposite characteristics of Cluster 0: low mass, small radius and high density." +"</br>"+ "</br>"+
+        "These exoplanets could be labeled as terrestrial or in general smaller planets.")
         .style("opacity", 1)
      
-          break;
-      case "2":
-        tooltip
-      .html( "This cluster is the most compact across all attributes, with high mass, radius, temperature, but the lowest density and orbital axis."+"</br>"+"</br>"+
-      "The exoplanets in this cluster are problably gas gigants or Neptune-Like planets")
-      .style("opacity", 1)
-          break;
-      case "3":
-        tooltip
-        .html( "Cluster 3 is formed with the lowest temperature and highest orbital axis values, and its quite widely spread acroos the other atributes" +"</br>"+"</br>"+
-        "Its the smallest cluster, and it encompases the coldest and further away from their star planets")
-        .style("opacity", 1)
-          break;
-      case "4":
-        tooltip
-        .html( "These exoplanets are clustered arround the mid ranges for every atribute. " +"<br>"+"</br>"+
-        "This could signify that this planets are either small Neptune-Like gas planets or Super-Earths")
-        .style("opacity", 1)
-          break;
       }
      }
   //var color2 = color(d.data.Spectral_Type);
@@ -206,10 +187,10 @@ export const colorLegend = (selection, props) => {
   if (selectedData === 2){
 
     switch(numC){
-      case "0":
+      case "3":
         tooltip
-      .html( "Cluster 0 is formed with the lowest temperature and highest orbital axis values, as well as above average density and below average radius and mass" +"</br>"+"</br>"+
-      "These exoplanets colder, orbiting far away from their star and are likely rocky Earth-Like or Super-Earth exoplanets")
+      .html( "Cluster 3 is formed with the lowest temperature and highest orbital axis values, as well as above average density and below average radius and mass" +"</br>"+"</br>"+
+      "These exoplanets are colder, orbiting far away from their star and are likely rocky Earth-Like or Super-Earth exoplanets")
       .style("opacity", 1)
     
         break;
@@ -227,21 +208,16 @@ export const colorLegend = (selection, props) => {
       .html( "Cluster 3 is composed of the densest planets with the lowest mass, radius, and orbital distance; as well as above average temperature." +"</br>"+ "</br>"+
       "Most likely these planets are terrestial planets like Earth or Venus")
       .style("opacity", 1)
-     
-    case "3":
+      break;
+    case "0":
       tooltip
       .html( "This cluster has exoplanets with high mass, radius and temperature, but with the lowest density and orbital axis."+"</br>"+"</br>"+
       "The exoplanets in this cluster are problably gas gigants or Neptune-Like planets")
       .style("opacity", 1)
           break;
      
-        break;
-    case "4":
-      tooltip
-      .html( "These exoplanets are clustered arround the mid ranges for every atribute. " +"<br>"+"</br>"+
-      "This could signify that this planets are either small Neptune-Like gas planets or Super-Earths")
-      .style("opacity", 1)
-        break;
+   
+
     }
    }
   }

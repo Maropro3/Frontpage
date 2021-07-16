@@ -5,16 +5,15 @@ export const treemap = (selection, props) => {
     const nested1 = d3.nest()
     .key(d => d.st_spectype)
     .entries(dataJ)
-   // console.log(nested1)
+  
     const width = 360
     const height = 320
 
     const colorScalePl = d3.scaleOrdinal()
     .domain(['B A', 'F', 'G', 'K', 'M'])
-    .range(['#bee1fa','#faf4be','#fffc61','#ffd061','#ff9b61'
-    ]);
-    const colorValue = d => d.id
+    .range(['#bee1fa','#faf4be','#fffc61','#ffd061','#ff9b61']);
 
+    const colorValue = d => d.id
 
     d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/barPlot.csv').then(data => {
 
@@ -23,29 +22,26 @@ export const treemap = (selection, props) => {
     {"Spectral_Type":"F", "total":94 },
     {"Spectral_Type":"G", "total":239 },
     {"Spectral_Type":"K", "total":380 },
-    {"Spectral_Type":"M", "total":2403 },
-    ]
+    {"Spectral_Type":"M", "total":2403 }]
 
-        var subgroups = data.columns.slice(1)
+    var subgroups = data.columns.slice(1)
 
-        const groups = data.map(d => (d.Spectral_Type))
+    const groups = data.map(d => (d.Spectral_Type))
 
+    const x = d3.scaleBand()
+    .domain(groups)
+    .range([0, width])
+    .padding([0.2])
+    selection.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x).tickSizeOuter(0));
 
-        const x = d3.scaleBand()
-        .domain(groups)
-        .range([0, width])
-        .padding([0.2])
-        selection.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .call(d3.axisBottom(x).tickSizeOuter(0));
-  
-    // Add Y axis
-     const y = d3.scaleLinear()
-        .domain([0, 2500])
-        .range([ height, 0 ]);
-        selection.append("g")
-        .call(d3.axisRight(y))
-        .attr("transform", `translate(${width},0)`);
+    const y = d3.scaleLinear()
+      .domain([0, 2500])
+      .range([ height, 0 ]);
+      selection.append("g")
+      .call(d3.axisRight(y))
+      .attr("transform", `translate(${width},0)`);
 
     const stackedData = d3.stack()
     .keys(subgroups)
@@ -66,7 +62,6 @@ export const treemap = (selection, props) => {
                 colorRange.push(e.data.Spectral_Type)
             })
         }
-       
     });
    
     const color = d3.scaleOrdinal()
@@ -99,7 +94,6 @@ export const treemap = (selection, props) => {
     .attr("class", "tooltip2")
     .style("fill-opacity", 0);
 
-    // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function(event, d) {
       
         const subgroupName = d3.select(this.parentNode).datum().key;
@@ -109,18 +103,12 @@ export const treemap = (selection, props) => {
         var subgroupTotal = subgroupU+subgroupL;
         var tolSpect = d.data.Spectral_Type;
 
-        
         var color2 = color(d.data.Spectral_Type);
         tooltip
             .html( "<span style='color:" + color2 + ";'>"+"Spectral Type: "+ d.data.Spectral_Type+"</span>" +"<br>"+"Data Type: " + subgroupName + "<br>" + "Instances: " + subgroupValue+ "</br>"
             + "% of type in the exoplanet database: "+  Math.round((subgroupTotal/3144*100+ Number.EPSILON)*100)/100 +"%")
             .style("opacity", 1)
-            // .style("left", (event.pageX -95) + "px")
-            // .style("top", (event.pageY -90) + "px")
-            // .transition()
-            //     .duration(200) 
-            //     .style("fill-opacity", .9) 
-            //     .style('display','block'); 
+        
         if(subgroupName === "Labeled"){
             d3.selectAll('.circleG')
             .style('fill',function(d){
@@ -144,6 +132,7 @@ export const treemap = (selection, props) => {
               .style("fill", "grey")
               .style('opacity', 0.025)
         }
+
         if(subgroupName === "Unlabeled"){
             d3.selectAll('.rectP')
             .style('fill',function(d){
@@ -167,8 +156,7 @@ export const treemap = (selection, props) => {
               d3.selectAll('.circleG')
               .style("fill", "grey")
               .style('opacity', 0.2)
-        }
-           
+        } 
             
       }
       const mousemove = function(event, d) {
@@ -179,6 +167,7 @@ export const treemap = (selection, props) => {
         if(window.innerWidth<1900){
             offTY = -66
         }
+
         tooltip.style("left", (xM+1110) + "px")
         .style("top", (yM+650+offTY) + "px")
         .transition()
@@ -186,6 +175,7 @@ export const treemap = (selection, props) => {
             .style("fill-opacity", .9) 
             .style('display','block'); 
       }
+
       const mouseleave = function(event, d) {
         tooltip
           .style("opacity", 0)
@@ -205,30 +195,18 @@ export const treemap = (selection, props) => {
             .style('opacity',1)
       }
     
-    
     selection.append("g")
     .selectAll("g")
-    // Enter in the stack data = loop key per key = group per group
     .data(stackedData)
     .join("g")
         .attr("fill", "grey")
         .selectAll("rect")
-        // enter a second time = loop subgroup per subgroup to add all rectangles
         .data(d => d)
         .join("rect")
         .attr("x", d => x(d.data.Spectral_Type)+2)
         .attr("y", d => y(d[1]))
         .attr("height", d => y(d[0]) - y(d[1]))
         .attr("width",x.bandwidth()/2.5)    
-        // .attr("fill", function(d){
-          
-        //     if(d[0] === 0){
-        //         return(color(d.data.Spectral_Type))
-        //     }
-        //     else{
-        //         return "grey"
-        //     }
-        // })
         .attr("fill", function(d){
           
             if(d[0] === 0){
@@ -244,31 +222,27 @@ export const treemap = (selection, props) => {
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
 
-     
+  const mouseover2 = function(event, d) {
 
-
-
-const mouseover2 = function(event, d) {
-
-  var tolSpect = d.Spectral_Type;
-  d3.selectAll('.circleG')
-            .style('fill',function(d){
-              if(d.st_spectype !==tolSpect ){
-                return "grey"
-              }
-              else{
-                return  sss(d => d.cluster)
-              }
-            })
-            .style('opacity',function(d){
-                if(d.st_spectype !==tolSpect ){
-                  return 0.2
-                }
-                else{
-                  return  1
-                }
-              })
- 
+    var tolSpect = d.Spectral_Type;
+    d3.selectAll('.circleG')
+    .style('fill',function(d){
+      if(d.st_spectype !==tolSpect ){
+        return "grey"
+      }
+      else{
+        return  sss(d => d.cluster)
+      }
+    })
+    .style('opacity',function(d){
+        if(d.st_spectype !==tolSpect ){
+          return 0.2
+        }
+        else{
+          return  1
+        }
+      })
+  
     d3.selectAll('.rectP')
     .style('fill',function(d){
       if(d.st_spectype !==tolSpect ){
@@ -285,122 +259,54 @@ const mouseover2 = function(event, d) {
         else{
           return  1
         }
-      })
+    })
 
- 
+
     var color2 = color(d.Spectral_Type);
     tooltip
         .html( "<span style='color:" + color2 + ";'>"+"Spectral Type: "+ d.Spectral_Type+"</span>" +"</br>"+
         "% of total Main Sequence stars: "+  Math.round((d.total/3144*100+ Number.EPSILON)*100)/100 +"%" )
-        .style("opacity", 1)
-        // .style("left", (event.pageX -95) + "px")
-        // .style("top", (event.pageY -90) + "px")
-        // .transition()
-        //     .duration(200) 
-        //     .style("fill-opacity", .9) 
-        //     .style('display','block'); 
-        
+        .style("opacity", 1)      
   }
 
   const mousemove2 = function(event, d) {
-    var xM = d3.pointer(event, gZEnter.node())[0]
-        var  yM = d3.pointer(event, gZEnter.node())[1]
-      
-        var offTY = 0;
 
-        if(window.innerWidth<1900){
-            offTY = -66
-        }
-        tooltip.style("left", (xM+1126) + "px")
-        .style("top", (yM+700+offTY) + "px")
+    var xM = d3.pointer(event, gZEnter.node())[0]
+    var  yM = d3.pointer(event, gZEnter.node())[1]
+  
+    var offTY = 0;
+
+    if(window.innerWidth<1900){
+        offTY = -66
+    }
+    tooltip.style("left", (xM+1126) + "px")
+    .style("top", (yM+700+offTY) + "px")
     .transition()
-        .duration(200) 
-        .style("fill-opacity", .9) 
-        .style('display','block'); 
+    .duration(200) 
+    .style("fill-opacity", .9) 
+    .style('display','block'); 
   }
 
-        const x2 = d3.scaleBand()
-        .range([ 0, width ])
-        .domain(tStars.map(d => d.Spectral_Type))
-        .padding(0.2);
+  const x2 = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(tStars.map(d => d.Spectral_Type))
+  .padding(0.2);
 
-        const y2 = d3.scaleLinear()
-        .domain([0, 2500])
-        .range([ height, 0]);
+  const y2 = d3.scaleLinear()
+  .domain([0, 2500])
+  .range([ height, 0]);
 
-        selection.append("g")
-        .selectAll("g")
-        // Enter in the stack data = loop key per key = group per group
-        .data(tStars)
-        .join("rect")
-            .attr("fill", d => color(d.Spectral_Type))
-            .attr("x", d => x2(d.Spectral_Type)+24)
-            .attr("y", d => y2(d.total))
-            .attr("height", d => height - y2(d.total))
-            .attr("width",x.bandwidth()/2.5)    
-            .on("mouseover", mouseover2)
-            .on("mousemove", mousemove2)
-            .on("mouseleave", mouseleave)
-
-
-      
-        
-    })
-//     d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/treemapData.csv').then(dataT => {
-  
-    
-//         var root = d3.stratify()
-//         .id(function(d) { return d.name; })   // Name of the entity (column name is name in csv)
-//         .parentId(function(d) { return d.parent; })   // Name of the parent (column name is parent in csv)
-//         (dataT);
-//         root.sum(function(d) { return +d.value })   // Compute the numeric value for each entity
-
-//         d3.treemap()
-//         .size([width, height])
-//         .padding(4)
-//         (root)
-    
-//     console.log(root.leaves())
-
-
-//     selection
-//     .selectAll("rect")
-//     .data(root.leaves())
-//     .enter()
-//     .append("rect")
-//       .attr('x', function (d) { return d.x0; })
-//       .attr('y', function (d) { return d.y0; })
-//       .attr('width', function (d) { return d.x1 - d.x0; })
-//       .attr('height', function (d) { return d.y1 - d.y0; })
-//       .style("stroke", "black")
-//       .style("fill", d => colorScalePl(colorValue(d)) );
-
-//       selection
-//       .selectAll("text")
-//       .data(root.leaves())
-//       .enter()
-//       .append("text")
-//         .attr("x", function(d){ return d.x0+4})    // +10 to adjust position (more right)
-//         .attr("y", function(d){ return d.y0+13})    // +20 to adjust position (lower)
-//         .text(function(d){ return d.data.name + " "+ "("+ d.data.value + ")"})
-//         .attr("font-size", "12.5px")
-//         .attr("fill", "black")
-// //   // Then d3.treemap computes the position of each element of the hierarchy
-// //   // The coordinates are added to the root object above
-// //   d3.treemap()
-// //     .size([width, height])
-// //     .padding(4)
-// //     (root)
-
-//     })
-
-
-
-
-
-
-
-
-
-
+  selection.append("g")
+  .selectAll("g")
+  .data(tStars)
+  .join("rect")
+  .attr("fill", d => color(d.Spectral_Type))
+  .attr("x", d => x2(d.Spectral_Type)+24)
+  .attr("y", d => y2(d.total))
+  .attr("height", d => height - y2(d.total))
+  .attr("width",x.bandwidth()/2.5)    
+  .on("mouseover", mouseover2)
+  .on("mousemove", mousemove2)
+  .on("mouseleave", mouseleave)
+  })
 }

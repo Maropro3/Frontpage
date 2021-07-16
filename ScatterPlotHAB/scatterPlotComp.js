@@ -587,10 +587,6 @@ console.log(flagChangeL)
 
    
 
-
-
-
-
 lines.exit().remove();
     
     const shape = d3.scaleOrdinal(dataSol.map(d => d.pl_name), d3.symbols.map(s => d3.symbol().size(120).type(s)()))

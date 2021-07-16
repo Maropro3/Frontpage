@@ -554,7 +554,8 @@
        d3.selectAll('#svgM').call(d3.zoom().extent([[0, 0], [innerWidth, innerHeight]]).scaleExtent([1, 50]).translateExtent([[0, 0], [innerWidth, innerHeight]]).on("zoom",zoomed));
 
        circles.exit().remove();
-      
+
+    
    };
 
    const linePlot = (selection,props) => {
@@ -1360,6 +1361,8 @@
    .text(yLabelColumn + ":");
 
    const render = () => {
+
+       console.log(data);
 
        var dataM = data.filter(
            

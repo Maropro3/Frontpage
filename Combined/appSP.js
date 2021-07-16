@@ -269,6 +269,8 @@ gRangeYdef
 
 const render = () => {
 
+    console.log(data)
+
     var dataM = data.filter(
         
         v => methods.includes(v.discoverymethod)

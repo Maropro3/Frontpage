@@ -392,8 +392,6 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCom
     var gamma = 0.8;
     var lambda = 0.1;
 
-    
-
     loadedData.forEach(d => { 
 
         d.pl_bmasse = +d.pl_bmasse;
@@ -448,12 +446,10 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCom
     // console.log(d3.max(loadedData, d => d.pl_eqt))
     // console.log(d3.min(loadedData,d => d.pl_eqt))
 
-
     var nest = d3.nest()
     .key(function(d) { return d.discoverymethod; })
     .entries(loadedData);
     
-
     var test = []
     var a = 0;
     for(var i = 0, len=nest.length; i<len; i++){
@@ -469,7 +465,6 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCom
 
     methods = test;
 
-
     for(var i = 0, len = loadedData.length; i < len-4; i++){
 
         if (Object.prototype.toString.call(loadedData[i].disc_pubdate) === "[object Date]"){
@@ -479,11 +474,9 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCom
         }
     }
  
-
     loadedData.sort(function(a,b){
         return a.disc_pubdate - b.disc_pubdate;
     })
-
 
     // dataFilter.push({type: xColumn,name: NaN},
     //     {type: yColumn,name: NaN});
@@ -501,8 +494,6 @@ d3.csv('https://raw.githubusercontent.com/Maropro3/DataUpload/main/ExoplanetsCom
     // });
     //console.log(dataF);
   //  console.log(loadedData);
-
-
 
     loadedData.forEach(d => {
      

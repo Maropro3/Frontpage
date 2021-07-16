@@ -8,7 +8,6 @@ export const dropDown = (selection, props) => {
         
     } = props;
 
-   
     let dataF = data;
     let range = [];
     let select = selection.selectAll('select').data([null]);
@@ -41,7 +40,6 @@ export const dropDown = (selection, props) => {
                 units = ""
 
                 onOptionClick(selCluster,this.value,);
-             
         }
     });
 
