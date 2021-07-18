@@ -347,7 +347,7 @@ export const scatterPlotS = (selection, props) => {
     .merge(symbols)
     .transition().duration(2000)
     .attr("transform", d => `translate(${xScale(xValue(d))},${yScale(yValue(d))})`)
-    .attr("d", shape.type(d3.symbolTriangle))
+    .attr("d", shape.type(d3.symbolCross))
     .attr('fill', d => colorScale(colorValue(d)));
 
     d3.selectAll('.rectP')
